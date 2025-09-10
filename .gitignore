@@ -1,0 +1,34 @@
+backend/vendor/
+vendor/
+
+backend/rest/routes/stripe.php
+backend/rest/routes/stripe.env
+
+backend/vendor/stripe/stripe-php/README.md
+vendor/stripe/stripe-php/README.md
+
+*.env
+
+# IDE i editor fajlovi
+.vscode/
+
+
+node_modules/
+vendor/
+backend/vendor/
+
+# Projekt fajlovi i arhive
+Powder.ba.zip
+README.md
+composer.lock
+package-lock.json
+
+# Konfiguracije i tajne
+*.env
+backend/rest/routes/stripe.env
+backend/rest/routes/stripe.php
+
+# Stripe vendor README fajlovi (gdje se pojavljuju test keys)
+backend/vendor/stripe/stripe-php/README.md
+vendor/stripe/stripe-php/README.md
+

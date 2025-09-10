@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1",
+    "productImg": "https://ba.proteini.si/image/medium/11515",
+    "productName": "Battery Whey-5000gr",
+    "flavour": "Vanilla",
+    "price": "159",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "2",
+    "productImg": "https://ba.proteini.si/image/medium/9722",
+    "productName": "BATTERY CREATINE, 500g",
+    "flavour": "Bez Okusa",
+    "price": "69",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "3",
+    "productImg": "https://ba.proteini.si/image/medium/9996",
+    "productName": "IRONMAXX VITAMINS FOR HER, 150 kapsula",
+    "flavour": " ",
+    "price": "28",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "4",
+    "productImg": "https://ba.proteini.si/image/medium/9995",
+    "productName": "IRONMAXX VITAMINS FOR HIM, 150 kapsula",
+    "flavour": " ",
+    "price": "28",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "5",
+    "productImg": "https://ba.proteini.si/image/medium/12838",
+    "productName": "OLIMP I'M VEGGIE PROTEIN BAR, 50g, Chocolate - Peanut",
+    "flavour": " ",
+    "price": "5",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "6",
+    "productImg": "https://ba.proteini.si/image/medium/11797",
+    "productName": "IRONMAXX LAVA BAR, 40g",
+    "flavour": "Cookie & Cream",
+    "price": "4",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "7",
+    "productImg": "https://ba.proteini.si/image/medium/9728",
+    "productName": "OPTIMUM WHEY PROTEIN GOLD STANDARD, 908g",
+    "flavour": "Banana Vanilija",
+    "price": "95",
+    "description": "Lagan ko Novak"
+  },
+  {
+    "id": "8",
+    "productImg": "https://ba.proteini.si/image/medium/10814",
+    "productName": "USN 100% PLANT PROTEIN, 900g",
+    "flavour": "Jagoda",
+    "price": "60",
+    "description": "Lagan ko Novak"
+  }
+]

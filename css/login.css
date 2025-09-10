@@ -1,0 +1,66 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #3b5998;
+  overflow: hidden;
+}
+
+.full-page-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #0062e6, #33aeff);
+}
+
+.login-card {
+  width: 55%; /* povećano za ~20% */
+  min-width: 300px; /* da ne postane premala na malim ekranima */
+  display: flex;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card-img-left {
+  width: 34%; /* širina lijevog dijela */
+  background-color: #3f3f3f;
+  flex-shrink: 0; /* ne smanjuje previše */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img-left img {
+  width: 100%; /* zauzima cijelu širinu div-a */
+  height: auto; /* proporcionalno */
+  object-fit: contain; /* cijela slika je vidljiva */
+}
+
+.card-body {
+  padding: 4% 5%; /* proporcionalno */
+  flex: 1; /* zauzima preostali prostor */
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-google {
+  color: white !important;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white !important;
+  background-color: #3b5998;
+}
+
+#loginError {
+  display: none;
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "firstName": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "mobilenumber": "123-456-7890"
+  },
+  {
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com",
+    "mobileNumber": "987-654-3210"
+  },
+  {
+    "id": 3,
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "email": "alice.johnson@example.com",
+    "mobileNumber": "555-555-5555"
+  },
+  {
+    "id": 4,
+    "firstName": "Bob",
+    "lastName": "Brown",
+    "email": "bob.brown@example.com",
+    "mobileNumber": "111-222-3333"
+  }
+]

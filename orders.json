@@ -1,0 +1,52 @@
+[
+  {
+    "orderId": "1001",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "mobileNumber": "123-456-7890",
+    "city": "New York",
+    "address": "123 Main St",
+    "zipCode": "10001"
+  },
+  {
+    "orderId": "1002",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com",
+    "mobileNumber": "234-567-8901",
+    "city": "Los Angeles",
+    "address": "456 Oak St",
+    "zipCode": "90001"
+  },
+  {
+    "orderId": "1003",
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "email": "michael.johnson@example.com",
+    "mobileNumber": "345-678-9012",
+    "city": "Chicago",
+    "address": "789 Elm St",
+    "zipCode": "60601"
+  },
+  {
+    "orderId": "1004",
+    "firstName": "Emily",
+    "lastName": "Brown",
+    "email": "emily.brown@example.com",
+    "mobileNumber": "456-789-0123",
+    "city": "Houston",
+    "address": "987 Pine St",
+    "zipCode": "77001"
+  },
+  {
+    "orderId": "1005",
+    "firstName": "David",
+    "lastName": "Martinez",
+    "email": "david.martinez@example.com",
+    "mobileNumber": "567-890-1234",
+    "city": "Miami",
+    "address": "654 Maple St",
+    "zipCode": "33101"
+  }
+]

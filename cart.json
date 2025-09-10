@@ -1,0 +1,24 @@
+[
+  {
+    "productImg": "https://ba.proteini.si/image/medium/11515",
+    "productName": "Battery Whey-5000gr",
+    "flavour": "Vanilla",
+    "price": "159",
+    "descripton": "Lagan ko Novak",
+    "productType": "Protein Powder"
+  },
+  {
+    "productImg": "https://ba.proteini.si/image/medium/9722",
+    "productName": "BATTERY CREATINE, 500g",
+    "flavour": "Bez Okusa",
+    "price": "69",
+    "productType": "Creatine"
+  },
+  {
+    "productImg": "https://ba.proteini.si/image/medium/9996",
+    "productName": "IRONMAXX VITAMINS FOR HER, 150 kapsula",
+    "flavour": " ",
+    "price": "28",
+    "productype": "Vitamins"
+  }
+]

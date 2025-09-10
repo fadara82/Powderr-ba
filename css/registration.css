@@ -1,0 +1,79 @@
+/* Body sa centriranjem */
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #0062e6, #33aeff);
+  font-family: Arial, sans-serif;
+}
+
+/* Container za centriranje */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* osigurava vertikalno centriranje */
+}
+
+/* Kartica za formu */
+.card-body {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  max-width: 90%;
+  padding: 30px 25px;
+}
+
+/* Naslov */
+.card-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Labeli */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Input polja */
+.form-control {
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+/* Dugme */
+.btn-login {
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #0056b3;
+}
+
+/* Link ispod forme */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

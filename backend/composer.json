@@ -1,0 +1,10 @@
+{
+  "require": {
+    "flightphp/core": "^3.17",
+    "zircote/swagger-php": "3.3.7",
+    "firebase/php-jwt": "^6.11",
+    "stripe/stripe-php": "^17.6",
+    "sendgrid/sendgrid": "^8.1",
+    "phpmailer/phpmailer": "^6.10"
+  }
+}
