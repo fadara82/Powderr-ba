@@ -232,10 +232,7 @@ function loadAndRenderProducts() {
     url: API_BASE_URL + "/products/get",
     method: "GET",
     dataType: "json",
-    beforeSend: function (xhr) {
-      const token = Utilis.get_from_localstorage("token");
-      if (token) xhr.setRequestHeader("Authentication", token);
-    },
+
     success: function (data) {
       products = data;
       renderPage(1);
