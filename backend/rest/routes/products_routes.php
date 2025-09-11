@@ -187,22 +187,6 @@ Flight::route('GET /products/get/byid', function () {
 });
 
 
-<<<<<<< HEAD
-=======
-// Flight::route('PUT /products/update/@id', function ($id) {
-//             $payload = Flight::request()->data->getData();
-//             $json=json_encode($payload);
-//             Flight::json($json);
-//             return;
-
-   
-//         Flight::json(Flight::get("products_service")->get_byid($id,$json));
-
-    
-// });
-
-
->>>>>>> 392c69f97ccb183cdd6bbedbf6993937388ff759
 
 
 
@@ -257,12 +241,10 @@ Flight::route('GET /products/get/cart', function () {
 });
 
 
-<<<<<<< HEAD
 
 
 
 Flight::route('PUT /products/update/@id', function($id){
-    // Čitamo raw input i parsiramo JSON
     $input = file_get_contents('php://input');
     $productData = json_decode($input, true);
 
@@ -278,65 +260,3 @@ Flight::route('PUT /products/update/@id', function($id){
         Flight::json(["status" => "error", "message" => $e->getMessage()], 500);
     }
 });
-=======
-Flight::route('UPDATE /products/update/cart/byid', function () {
- /**
- * @OA\Put(
- *      path="/products/update/cart/byid/",
- *      tags={"products"},
- *      summary="Update products by id",
- *      @OA\Response(
- *           response=200,
- *           description="Updated product data or 500 status code exception otherwise"
- *      ),
- * * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Parameter(
- *           name="id",
- *           in="path",
- *           required=true,
- *           description="Product ID",
- *           @OA\Schema(type="number", example=1)
- *      )
- * )
- */
-        $payload = Flight::request()->query['id'];
-    $data = Flight::get("products_service")->updateCart($payload);
-        Flight::json($data, 200);
-    
-});
-
-
-Flight::route('UPDATE /products/updated/cart/byid', function () {
-
-         /**
- * @OA\Put(
- *      path="/products/updated/cart/byid/",
- *      tags={"products"},
- *      summary="Update product to not be in cart",
- *      @OA\Response(
- *           response=200,
- *           description="Updated product data or 500 status code exception otherwise"
- *      ),
- * * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Parameter(
- *           name="id",
- *           in="path",
- *           required=true,
- *           description="Product ID",
- *           @OA\Schema(type="number", example=1)
- *      )
- * )
- */
-        $payload = Flight::request()->query['id'];
-    $data = Flight::get("products_service")->deleteCart($payload);
-        Flight::json($data, 200);
-    
-});
-
-
-
->>>>>>> 392c69f97ccb183cdd6bbedbf6993937388ff759
