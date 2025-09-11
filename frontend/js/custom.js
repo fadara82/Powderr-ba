@@ -912,10 +912,20 @@ $(document).ready(function () {
           email: { required: true, email: true },
           password: { required: true },
         },
+        messages: {
+          email: {
+            required: "Please enter your email",
+            email: "Enter a valid email address",
+          },
+          password: {
+            required: "Please enter your password",
+          },
+        },
         submitHandler: function (form, event) {
           event.preventDefault();
 
-          var formData = $(form).serializeArray();
+          var formData = $(form).serialize();
+          console.log("Form data:", formData);
 
           $.ajax({
             url: API_BASE_URL + "/login",
@@ -927,10 +937,12 @@ $(document).ready(function () {
             },
 
             success: function (response) {
-              if (response.data && response.data.token) {
-                Utilis.set_to_localstorage("token", response.data.token);
+              console.log("Login response:", response);
 
-                const token = response.data.token;
+              if (response.success && response.token) {
+                Utilis.set_to_localstorage("token", response.token);
+
+                const token = response.token;
                 const payloadBase64 = token.split(".")[1];
                 const payloadJson = atob(payloadBase64);
                 const payload = JSON.parse(payloadJson);
@@ -938,11 +950,9 @@ $(document).ready(function () {
                   payload.role || (payload.user && payload.user.role);
                 console.log("User role:", role);
 
-                // Prvo ukloni blockUI
                 $.unblockUI();
                 $("a[href='#profile']").show();
 
-                // Zatim navigiraj
                 if (role === "admin") {
                   window.location.hash = "#admin";
                 } else {
@@ -950,13 +960,14 @@ $(document).ready(function () {
                 }
               } else {
                 $.unblockUI();
-                alert("Invalid login credentials!");
+                alert(response.message || "Invalid login credentials!");
               }
             },
 
-            error: function () {
+            error: function (xhr, status, error) {
               $.unblockUI();
-              alert("Invalid login credential or User doesn't exist");
+              console.error("Login error:", xhr.responseText);
+              alert("Server error: " + xhr.responseText);
             },
           });
         },
@@ -1268,7 +1279,7 @@ $(document).ready(function () {
       function updateOrder(id) {
         if (confirm("Update order?")) {
           $.ajax({
-            url: API_BASE_URL+'/orders/update/byid?id=${id}',
+            url: API_BASE_URL + "/orders/update/byid?id=${id}",
             type: "UPDATE",
             headers: {
               Authentication: Utilis.get_from_localstorage("token"),
@@ -1287,7 +1298,7 @@ $(document).ready(function () {
       function updateOrder2(id) {
         if (confirm("Update order (Back)?")) {
           $.ajax({
-            url: API_BASE_URL+ `/orders/update/byidB?id=${id}`,
+            url: API_BASE_URL + `/orders/update/byidB?id=${id}`,
             type: "UPDATE",
             headers: {
               Authentication: Utilis.get_from_localstorage("token"),
@@ -1306,7 +1317,7 @@ $(document).ready(function () {
       function deleteO(id) {
         if (confirm("Delete order?")) {
           $.ajax({
-            url: API_BASE_URL+`/orders/delete/byid?id=${id}`,
+            url: API_BASE_URL + `/orders/delete/byid?id=${id}`,
             type: "DELETE",
             headers: { Authentication: Utilis.get_from_localstorage("token") },
             success: function () {
