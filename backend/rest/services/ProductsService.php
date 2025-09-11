@@ -51,7 +51,6 @@ class ProductsService{
 
     }
 
-<<<<<<< HEAD
 
 
 public function updateProductById($id, $product) {
@@ -59,15 +58,6 @@ public function updateProductById($id, $product) {
 }
 
 
-=======
-//      public function updatep_byid($id,$product){
-//     return $this->product_dao->updatep_byid($id,$product);
-//    }
-
-  public function updateCart($id){
-    return $this->product_dao->updateCart($id);
- }
->>>>>>> 392c69f97ccb183cdd6bbedbf6993937388ff759
    public function deleteCart($id){
     return $this->product_dao->deleteCart($id);
  }
