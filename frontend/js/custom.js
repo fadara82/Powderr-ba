@@ -226,7 +226,7 @@ function loadAndRenderProducts() {
   });
 
   $.ajax({
-    url: "http://localhost/Powder.ba/backend/products/get",
+    url: "https://powderr-ba.onrender.com/products/get",
     method: "GET",
     dataType: "json",
     beforeSend: function (xhr) {
