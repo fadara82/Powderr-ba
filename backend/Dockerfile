@@ -9,20 +9,21 @@ RUN apt-get update && apt-get install -y \
 # Dodaj Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Postavi radni direktorij na backend
 WORKDIR /app
 
-# Kopiraj composer fajlove prvo (za cache)
-COPY composer.json composer.lock* ./
+# Kopiraj composer fajlove PRVO (da Docker cache radi)
+COPY backend/composer.json backend/composer.lock* ./
 
-# Instaliraj dependencije
+# Instaliraj PHP dependencije
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
 # Kopiraj ostatak aplikacije
-COPY . .
+COPY backend/ .
 
-# Render koristi PORT varijablu (default 10000)
+# Render očekuje PORT iz env
 ENV PORT=10000
 EXPOSE 10000
 
-# Pokreni ugrađeni PHP server
+# Pokreni Flight preko PHP built-in servera
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public", "public/index.php"]
