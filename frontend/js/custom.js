@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://powderr-ba.onrender.com";
+
 // --- GLOBALNE VARIJABLE ---
 var stripe, elements, cardElement;
 
@@ -65,7 +67,8 @@ function initializeStripeElements() {
       const amount = Math.round(totalPrice * 100);
 
       $.ajax({
-        url: "http://localhost/Powder.ba/backend/stripe/create-payment-intent",
+        url: API_BASE_URL + "/stripe/create-payment-intent",
+
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({ amount: amount }),
@@ -115,7 +118,7 @@ function initializeStripeElements() {
                 };
 
                 $.ajax({
-                  url: "http://localhost/Powder.ba/backend/orders",
+                  url: API_BASE_URL + "/orders",
                   method: "POST",
                   contentType: "application/json",
                   data: JSON.stringify(orderData),
@@ -226,7 +229,7 @@ function loadAndRenderProducts() {
   });
 
   $.ajax({
-    url: "https://powderr-ba.onrender.com/products/get",
+    url: API_BASE_URL + "/products/get",
     method: "GET",
     dataType: "json",
     beforeSend: function (xhr) {
@@ -245,7 +248,7 @@ function loadAndRenderProducts() {
 function deleteP(id) {
   if (confirm("Are you sure you want to delete?")) {
     $.ajax({
-      url: `http://localhost/Powder.ba/backend/products/delete/byid?id=${id}`,
+      url: API_BASE_URL + `products/delete/byid?id=${id}`,
       method: "DELETE",
 
       beforeSend: function (xhr) {
@@ -264,7 +267,7 @@ function deleteP(id) {
 
 function getId(id) {
   $.ajax({
-    url: `http://localhost/Powder.ba/backend/products/get/byid?id=${id}`,
+    url: API_BASE_URL + `products/get/byid?id=${id}`,
     method: "GET",
 
     success: function (item) {
@@ -334,7 +337,7 @@ function setupNavbar() {
 
 function getProteini() {
   $.ajax({
-    url: "http://localhost/Powder.ba/backend/products/get/proteini",
+    url: API_BASE_URL + "/products/get/proteini",
     method: "GET",
     dataType: "json",
     headers: {
@@ -351,7 +354,7 @@ function getProteini() {
 
 function getVitamini() {
   $.ajax({
-    url: "http://localhost/Powder.ba/backend/products/get/vitamini",
+    url: API_BASE_URL + "/products/get/vitamini",
     method: "GET",
     dataType: "json",
     beforeSend: function (xhr) {
@@ -373,7 +376,7 @@ function getVitamini() {
 
 function getKreatin() {
   $.ajax({
-    url: "http://localhost/Powder.ba/backend/products/get/creatine",
+    url: API_BASE_URL + "/products/get/creatine",
     method: "GET",
     dataType: "json",
 
@@ -388,7 +391,7 @@ function getKreatin() {
 
 function getCokoladice() {
   $.ajax({
-    url: "http://localhost/Powder.ba/backend/products/get/healthybar",
+    url: API_BASE_URL + "/products/get/healthybar",
     method: "GET",
     dataType: "json",
 
@@ -468,7 +471,7 @@ function renderCategory(data) {
 
 function checkProductAvailability(id, callback) {
   $.ajax({
-    url: `http://localhost/Powder.ba/backend/products/get/byid?id=${id}`,
+    url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
     headers: {
       Authentication: Utilis.get_from_localstorage("token"),
@@ -655,7 +658,7 @@ function unhideER() {
 function editProduct(id) {
   console.log(id);
   $.ajax({
-    url: `http://localhost/Powder.ba/backend/products/get/byid?id=${id}`,
+    url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
     headers: {
       Authentication: Utilis.get_from_localstorage("token"),
@@ -741,7 +744,7 @@ function editProduct(id) {
           formData["category"] = categorySelect || categoryText || "";
 
           $.ajax({
-            url: `http://localhost/Powder.ba/backend/products/update/${id}`,
+            url: API_BASE_URL + `/products/update/${id}`,
             method: "PUT",
             contentType: "application/json",
             data: JSON.stringify(formData),
@@ -770,7 +773,7 @@ function editProduct(id) {
 function deleteUser(id) {
   if (confirm("Are you sure you want to delete this user?")) {
     $.ajax({
-      url: `http://localhost/Powder.ba/backend/users/delete/byid?id=${id}`,
+      url: API_BASE_URL + `users/delete/byid?id=${id}`,
       method: "DELETE",
       beforeSend: function (xhr) {
         const token = Utilis.get_from_localstorage("token");
@@ -805,7 +808,7 @@ function showEdit() {
 function deleteUsers(id) {
   if (confirm("Are you sure you want to delete user?")) {
     $.ajax({
-      url: `http://localhost/Powder.ba/backend/users/delete/byid?id=${id}`,
+      url: API_BASE_URL + `/users/delete/byid?id=${id}`,
       method: "DELETE",
       beforeSend: function (xhr) {
         const token = Utilis.get_from_localstorage("token");
@@ -882,7 +885,7 @@ $(document).ready(function () {
           var formData = $(form).serialize();
 
           $.ajax({
-            url: "http://localhost/Powder.ba/backend/users",
+            url: API_BASE_URL + "/users",
             method: "POST",
             data: formData,
             success: function (response) {
@@ -915,7 +918,7 @@ $(document).ready(function () {
           var formData = $(form).serializeArray();
 
           $.ajax({
-            url: "http://localhost/Powder.ba/backend/login",
+            url: API_BASE_URL + "/login",
             method: "POST",
             data: formData,
 
@@ -1012,7 +1015,7 @@ $(document).ready(function () {
           });
 
         $.ajax({
-          url: "http://localhost/Powder.ba/backend/products",
+          url: API_BASE_URL + "/products",
           method: "POST",
           data: JSON.stringify(formDataObj),
           contentType: "application/json",
@@ -1107,7 +1110,7 @@ $(document).ready(function () {
 
       function getUsers() {
         $.ajax({
-          url: "http://localhost/Powder.ba/backend/users/get",
+          url: API_BASE_URL + "/users/get",
           method: "GET",
           dataType: "json",
           beforeSend: function (xhr) {
@@ -1168,7 +1171,7 @@ $(document).ready(function () {
 
       function deleteUser(id) {
         $.ajax({
-          url: `http://localhost/Powder.ba/backend/users/delete/byid?id=${id}`,
+          url: API_BASE_URL + `/users/delete/byid?id=${id}`,
           method: "DELETE",
           beforeSend: function (xhr) {
             const token = Utilis.get_from_localstorage("token");
@@ -1190,152 +1193,7 @@ $(document).ready(function () {
       }
     },
   });
-  /*
-  app.route({
-    view: "orders",
-    load: "orders.html",
-    onReady: function () {
-      renderCart();
 
-      $.ajax({
-        url: "http://localhost/Powder.ba/backend/orders/get",
-        method: "GET",
-        beforeSend: function (xhr) {
-          const token = Utilis.get_from_localstorage("token");
-          if (!token) {
-            alert("You are not logged in! Please log in.");
-            return false;
-          }
-          xhr.setRequestHeader("Authentication", token);
-        },
-        success: function (data) {
-          $("#tabeladiv").empty();
-
-          const cart = JSON.parse(localStorage.getItem("cart")) || [];
-          let productsList = cart
-            .map((p) => `${p.productName} (x${p.quantity})`)
-            .join(",<br>");
-
-          data.forEach((item) => {
-            let htmlt = `
-    <tr>
-  <td>${item.id}</td>
-  <td>${item.first_name}</td>
-  <td>${item.last_name}</td>
-  <td>${item.email}</td>
-  <td>${item.mobile_number}</td>
-  <td>${item.city}</td>
-  <td>${item.address}</td>
-  <td>${item.status}</td>
-  <td>${item.total_price}</td>
-<td class="small-text">${productsList || "-"}</td>  <td>
-    <button class="updateOrderBtn btn btn-sm btn-success" data-id="${
-      item.id
-    }">✔️</button>
-    
-    <button class="deleteOrderBtn btn btn-sm btn-danger" data-id="${
-      item.id
-    }">🗑️</button>
-  </td>
-</tr>
-
-      `;
-
-            $("#tabeladiv").append(htmlt);
-          });
-        },
-        error: function (xhr, status, error) {
-          console.error("Greška pri učitavanju narudžbi:", error);
-        },
-      });
-
-      $("#tabeladiv").on("click", ".updateOrderBtn", function () {
-        const id = $(this).data("id");
-        updateOrder(id);
-      });
-
-      $("#tabeladiv").on("click", ".deleteOrderBtn", function () {
-        const id = $(this).data("id");
-        deleteO(id);
-      });
-
-      function updateOrder(id) {
-        if (confirm("Are you sure you want to update order?")) {
-          $.ajax({
-            url: `http://localhost/Powder.ba/backend/orders/update/byid?id=${id}`,
-            method: "UPDATE",
-            beforeSend: function (xhr) {
-              const token = Utilis.get_from_localstorage("token");
-              if (!token) {
-                alert("You are not logged in! Please log in.");
-                return false;
-              }
-              xhr.setRequestHeader("Authentication", token);
-            },
-            success: function () {
-              alert("Order successfully updated.");
-              location.reload();
-            },
-            error: function (xhr, status, error) {
-              console.error("Error updating the order:", error);
-            },
-          });
-        }
-      }
-
-      function updateOrder2(id) {
-        if (confirm("Are you sure you want to update order?")) {
-          $.ajax({
-            url: `http://localhost/Powder.ba/backend/orders/update/byidB?id=${id}`,
-            method: "UPDATE",
-            beforeSend: function (xhr) {
-              const token = Utilis.get_from_localstorage("token");
-              if (!token) {
-                alert("You are not logged in! Please log in.");
-                return false;
-              }
-              xhr.setRequestHeader("Authentication", token);
-            },
-            success: function () {
-              alert("Order successfully updated.");
-              location.reload();
-            },
-            error: function (xhr, status, error) {
-              console.error("Error updating the order:", error);
-            },
-          });
-        }
-      }
-
-      function deleteO(id) {
-        if (confirm("Are you sure you want to delete?")) {
-          $.ajax({
-            url: `http://localhost/Powder.ba/backend/orders/delete/byid?id=${id}`,
-            method: "DELETE",
-            beforeSend: function (xhr) {
-              const token = Utilis.get_from_localstorage("token");
-              if (!token) {
-                alert("You are not logged in! Please log in.");
-                return false;
-              }
-              xhr.setRequestHeader("Authentication", token);
-            },
-            success: function () {
-              alert("Order successfully deleted.");
-              $(`#tabeladiv button.deleteOrderBtn[data-id="${id}"]`)
-                .closest("tr")
-                .remove();
-            },
-            error: function (xhr, status, error) {
-              console.error("Greška pri brisanju narudžbe:", error);
-            },
-          });
-        }
-      }
-    },
-  });
-
-  */
   app.route({
     view: "orders",
     load: "orders.html",
@@ -1344,7 +1202,7 @@ $(document).ready(function () {
 
       // GET orders
       $.get({
-        url: "http://localhost/Powder.ba/backend/orders/get",
+        url: API_BASE_URL + "/orders/get",
         beforeSend: function (xhr) {
           const token = Utilis.get_from_localstorage("token");
           if (!token) {
@@ -1410,7 +1268,7 @@ $(document).ready(function () {
       function updateOrder(id) {
         if (confirm("Update order?")) {
           $.ajax({
-            url: `http://localhost/Powder.ba/backend/orders/update/byid?id=${id}`,
+            url: API_BASE_URL+'/orders/update/byid?id=${id}',
             type: "UPDATE",
             headers: {
               Authentication: Utilis.get_from_localstorage("token"),
@@ -1429,7 +1287,7 @@ $(document).ready(function () {
       function updateOrder2(id) {
         if (confirm("Update order (Back)?")) {
           $.ajax({
-            url: `http://localhost/Powder.ba/backend/orders/update/byidB?id=${id}`,
+            url: API_BASE_URL+ `/orders/update/byidB?id=${id}`,
             type: "UPDATE",
             headers: {
               Authentication: Utilis.get_from_localstorage("token"),
@@ -1448,7 +1306,7 @@ $(document).ready(function () {
       function deleteO(id) {
         if (confirm("Delete order?")) {
           $.ajax({
-            url: `http://localhost/Powder.ba/backend/orders/delete/byid?id=${id}`,
+            url: API_BASE_URL+`/orders/delete/byid?id=${id}`,
             type: "DELETE",
             headers: { Authentication: Utilis.get_from_localstorage("token") },
             success: function () {
