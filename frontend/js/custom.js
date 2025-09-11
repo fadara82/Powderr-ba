@@ -349,27 +349,23 @@ function getProteini() {
   });
 }
 
-function getVitamini() {
-  $.ajax({
-    url: API_BASE_URL + "/products/get/vitamini",
-    method: "GET",
-    dataType: "json",
-    beforeSend: function (xhr) {
-      const token = Utilis.get_from_localstorage("token");
-      if (!token) {
-        alert("You are not logged in! Please log in.");
-        return false;
-      }
+$.ajax({
+  url: API_BASE_URL + "/products/get/vitamini",
+  method: "GET",
+  dataType: "json",
+  beforeSend: function (xhr) {
+    const token = Utilis.get_from_localstorage("token");
+    if (token) {
       xhr.setRequestHeader("Authentication", token);
-    },
-    success: function (data) {
-      renderCategory(data);
-    },
-    error: function (xhr, status, error) {
-      console.log("Error loading vitamini:", error);
-    },
-  });
-}
+    }
+  },
+  success: function (data) {
+    renderCategory(data);
+  },
+  error: function (xhr, status, error) {
+    console.log("Error loading vitamini:", error);
+  },
+});
 
 function getKreatin() {
   $.ajax({
