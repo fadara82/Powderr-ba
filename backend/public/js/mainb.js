@@ -1,313 +1,7 @@
 $(document).ready(function () {
-$("main#spapp > section").height($(document).height() - 60);
+  $("main#spapp > section").height($(document).height() - 60);
 
-  // var app = $.spapp({pageNotFound : 'error_404'
-
-// Deklariraj varijable globalno unutar ovog bloka (sve je u lokalnom scope-u)
-  var stripe;
-  var elements;
-  var cardElement;
-
-  function initializeStripe() {
-    if (typeof Stripe === "undefined") {
-      console.error("Stripe.js nije učitan!");
-      return false;
-    }
-
-    if (!stripe) {
-      stripe = Stripe(
-        "pk_test_51RttZ2FZT8D1aC1QLBomWg4d1jBzecHJ1W6szxOL6iX539rcIj9mArHMpu9tJXoDC3lFYtin9Uajy6wm9nVXQKBS00yQRYV8vG"
-      );
-      elements = stripe.elements();
-    }
-
-    if (cardElement) {
-      cardElement.unmount(); // ukloni prethodni ako postoji
-    }
-
-    cardElement = elements.create("card");
-    cardElement.mount("#card-element");
-
-    cardElement.on("change", function (event) {
-      if (event.error) {
-        $("#card-errors").text(event.error.message);
-      } else {
-        $("#card-errors").text("");
-      }
-
-new DataTable("#example");
-
-const itemsPerPage = 8;
-  let currentPage = 1;
-  let products = [];
-
-  // Dinamički izaberi gdje će se prikazivati proizvodi i paginacija
-  const container = $("#maindiv").length ? $("#maindiv") : $("#adminDiv");
-  const prevBtn = $("#prev").length ? $("#prev") : $("#adminPrev");
-  const nextBtn = $("#next").length ? $("#next") : $("#adminNext");
-  const pageInfo = $("#pageInfo").length ? $("#pageInfo") : $("#adminPageInfo");
-
-  function renderPage(page) {
-    container.empty();
-
-    const totalPages = Math.ceil(products.length / itemsPerPage);
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
-
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const pageItems = products.slice(startIndex, endIndex);
-
-    pageItems.forEach((item) => {
-      let html = `<div class="col mb-5" id="div1">
-          <div class="card h-100">
-            <div class="edit" style="display: flex; align-items: center; justify-content: space-between;">
-              <button onclick="editProduct(${item.id})">✏️</button> 
-              <button onclick="deleteP(${item.id})">🗑️</button>
-            </div>
-            <a href="#shopitem">
-              <img class="card-img-top slika" src="${item.productImg}" alt="..." onClick="getId(${item.id})" />
-            </a>
-            <div class="card-body p-4">
-              <div class="text-center">
-                <a href="#shopitem">
-                  <h5 class="fw-bolder title" onClick="getId(${item.id})">${item.productName}</h5>
-                  <h5 class="flavour">${item.flavour}</h5>
-                </a>
-                <strong class="price">${item.price} KM</strong>
-              </div>
-            </div>
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">
-                <a class="btn btn-outline-dark mt-auto" onclick="addToCart(${item.id})">Add to cart</a>
-              </div>
-            </div>
-          </div>
-        </div>`;
-      container.append(html);
-
-const savedProduct = localStorage.getItem("currentProduct");
-  if (savedProduct) {
-    const item = JSON.parse(savedProduct);
-
-    var html = `
-       <div class="col-md-6">
-          <img
-            class="card-img-top mb-5 mb-md-0"
-            src="${item.productImg}"
-            alt="..."
-          />
-        </div>
-        <div class="col-md-6">
-          <h1 class="display-5 fw-bolder title">${item.productName}</h1>
-          <div class="fs-5 mb-5">
-            <span>${item.price} KM</span>
-          </div>
-          <p class="lead">
-            ${item.description}
-            <p class="flavour">Flavour: ${item.flavour}</p>
-          </p>
-          <div class="d-flex">
-            <button
-              class="btn btn-outline-dark flex-shrink-0"
-              type="button"
-              id="addtocart"
-              onclick="addToCart(${item.id})"
-            >
-              <i class="bi-cart-fill me-1"></i>
-              Add to cart
-            </button>
-          </div>
-        </div>
-        <a href="#main">Back to Shop</a>
-    `;
-
-    $("#shopitemdiv").empty().append(html);
-  }
-
-function getId() {}
-
-$("#check").validate({
-    rules: {
-      firstName: {
-        required: true,
-        minlength: 2,
-      },
-      lastName: {
-        required: true,
-        minlength: 2,
-      },
-      email: {
-        required: true,
-        email: true,
-        minlength: 5,
-      },
-      mobilenumber: {
-        required: true,
-        minlength: 6,
-      },
-      city: {
-        required: true,
-        minlength: 5,
-      },
-      address: {
-        required: true,
-      },
-    },
-
-    submitHandler: function (form, event) {
-      event.preventDefault();
-
-      var formData = $(form).serializeArray();
-
-      console.log(formData);
-
-      $.ajax({
-        url: "http://localhost/Powder.ba/backend/orders",
-        method: "POST",
-        data: formData,
-        headers: {
-          Authentication: Utilis.get_from_localstorage("token"),
-        },
-        beforeSend: function (xhr) {
-          if (Utilis.get_from_localstorage("user")) {
-            xhr.setRequestHeader(
-              "Authentication",
-              JSON.parse(usert).data.token
-            );
-          }
-        },
-        success: function (response) {
-          console.log("Form data sent successfully:", response);
-        },
-        error: function (xhr, status, error) {
-          console.error("Error sending form data:", error);
-        },
-
-$("#regform").validate({
-    rules: {
-      fname: {
-        required: true,
-        minlength: 2,
-      },
-      lname: {
-        required: true,
-        minlength: 2,
-      },
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 6,
-      },
-      cpassword: {
-        required: true,
-      },
-    },
-    messages: {
-      fname: {
-        required: "Please enter your first name",
-        minlength: "First name must be at least 2 characters long",
-      },
-      lname: {
-        required: "Please enter your last name",
-        minlength: "Last name must be at least 2 characters long",
-      },
-      email: {
-        required: "Please enter your email",
-        email: "Enter a valid email address",
-      },
-      password: {
-        required: "Please enter a password",
-        minlength: "Password must be at least 6 characters long",
-      },
-      cpassword: {
-        required: "Please confirm your password",
-        equalTo: "Passwords do not match",
-      },
-    },
-    submitHandler: function (form, event) {
-      event.preventDefault();
-
-      var formData = $(form).serialize();
-
-      $.ajax({
-        url: "http://localhost/Powder.ba/backend/users",
-        method: "POST",
-        data: formData,
-
-        success: function (response) {
-          console.log("Form data sent successfully:", response);
-          // Handle success response (e.g., display a success message)
-          window.location.href = "#login";
-        },
-        error: function (xhr, status, error) {
-          console.error("Error sending form data:", error);
-          alert("This email or mobile phone is already registered");
-        },
-
-renderCart();
-
-$("#loginform").validate({
-    rules: {
-      email: { required: true, email: true },
-      password: { required: true },
-    },
-
-    submitHandler: function (form, event) {
-      event.preventDefault();
-
-      var formData = $(form).serializeArray();
-
-      $.ajax({
-        url: "http://localhost/Powder.ba/backend/login",
-        method: "POST",
-        data: formData,
-
-        success: function (response) {
-          if (response.data && response.data.token) {
-            Utilis.set_to_localstorage("token", response.data.token);
-
-            // Parsiranje tokena i dobijanje role
-            const token = response.data.token;
-            const payloadBase64 = token.split(".")[1];
-            const payloadJson = atob(payloadBase64);
-            const payload = JSON.parse(payloadJson);
-            const role = payload.role || (payload.user && payload.user.role);
-            console.log("User role:", role);
-
-            if (role === "admin") {
-              setTimeout(() => {
-                window.location = "http://localhost/Powder.ba/#admin";
-              }, 100);
-            } else {
-              window.location = "http://localhost/Powder.ba/#main";
-            }
-          } else {
-            console.error("Token nije pronađen u response-u!", response);
-            // Ovdje trebaš pokazati grešku korisniku, npr. modal ili alert
-
-            // Ako si koristio blockUI, obavezno unblock da ne zaleđuje
-
-            // Npr. prikaži grešku bez blokiranja:
-            alert("Neispravni login podaci!");
-          }
-        },
-
-        error: function () {
-          // Ako ajax poziv ne uspije, unblock UI
-          $.unblockUI();
-          alert("Greška na serveru, pokušajte kasnije.");
-        },
-
-        beforeSend: function () {
-          // Ako koristiš blockUI, blockiraj UI dok traje ajax
-          $.blockUI({ message: "Molimo sačekajte..."
-});
-
- // initialize
+  // var app = $.spapp({pageNotFound : 'error_404'}); // initialize
   var app = $.spapp({
     defaultView: "#main",
     templateDir: "./tmpl/",
@@ -373,7 +67,39 @@ $("#loginform").validate({
   app.run();
 });
 
+$(document).ready(function () {
+  // Deklariraj varijable globalno unutar ovog bloka (sve je u lokalnom scope-u)
+  var stripe;
+  var elements;
+  var cardElement;
 
+  function initializeStripe() {
+    if (typeof Stripe === "undefined") {
+      console.error("Stripe.js nije učitan!");
+      return false;
+    }
+
+    if (!stripe) {
+      stripe = Stripe(
+        "pk_test_51RttZ2FZT8D1aC1QLBomWg4d1jBzecHJ1W6szxOL6iX539rcIj9mArHMpu9tJXoDC3lFYtin9Uajy6wm9nVXQKBS00yQRYV8vG"
+      );
+      elements = stripe.elements();
+    }
+
+    if (cardElement) {
+      cardElement.unmount(); // ukloni prethodni ako postoji
+    }
+
+    cardElement = elements.create("card");
+    cardElement.mount("#card-element");
+
+    cardElement.on("change", function (event) {
+      if (event.error) {
+        $("#card-errors").text(event.error.message);
+      } else {
+        $("#card-errors").text("");
+      }
+    });
 
     console.log("Stripe Card Element montiran");
     return true;
@@ -539,9 +265,60 @@ window.onload = function () {
   }
 };
 
+$(document).ready(function () {
+  new DataTable("#example");
+});
 
+$(document).ready(function () {
+  const itemsPerPage = 8;
+  let currentPage = 1;
+  let products = [];
 
+  // Dinamički izaberi gdje će se prikazivati proizvodi i paginacija
+  const container = $("#maindiv").length ? $("#maindiv") : $("#adminDiv");
+  const prevBtn = $("#prev").length ? $("#prev") : $("#adminPrev");
+  const nextBtn = $("#next").length ? $("#next") : $("#adminNext");
+  const pageInfo = $("#pageInfo").length ? $("#pageInfo") : $("#adminPageInfo");
 
+  function renderPage(page) {
+    container.empty();
+
+    const totalPages = Math.ceil(products.length / itemsPerPage);
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageItems = products.slice(startIndex, endIndex);
+
+    pageItems.forEach((item) => {
+      let html = `<div class="col mb-5" id="div1">
+          <div class="card h-100">
+            <div class="edit" style="display: flex; align-items: center; justify-content: space-between;">
+              <button onclick="editProduct(${item.id})">✏️</button> 
+              <button onclick="deleteP(${item.id})">🗑️</button>
+            </div>
+            <a href="#shopitem">
+              <img class="card-img-top slika" src="${item.productImg}" alt="..." onClick="getId(${item.id})" />
+            </a>
+            <div class="card-body p-4">
+              <div class="text-center">
+                <a href="#shopitem">
+                  <h5 class="fw-bolder title" onClick="getId(${item.id})">${item.productName}</h5>
+                  <h5 class="flavour">${item.flavour}</h5>
+                </a>
+                <strong class="price">${item.price} KM</strong>
+              </div>
+            </div>
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                <a class="btn btn-outline-dark mt-auto" onclick="addToCart(${item.id})">Add to cart</a>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      container.append(html);
+    });
 
     $(".edit").hide();
 
@@ -639,21 +416,118 @@ function getId(id) {
   });
 }
 
+$(document).ready(function () {
+  const savedProduct = localStorage.getItem("currentProduct");
+  if (savedProduct) {
+    const item = JSON.parse(savedProduct);
 
+    var html = `
+       <div class="col-md-6">
+          <img
+            class="card-img-top mb-5 mb-md-0"
+            src="${item.productImg}"
+            alt="..."
+          />
+        </div>
+        <div class="col-md-6">
+          <h1 class="display-5 fw-bolder title">${item.productName}</h1>
+          <div class="fs-5 mb-5">
+            <span>${item.price} KM</span>
+          </div>
+          <p class="lead">
+            ${item.description}
+            <p class="flavour">Flavour: ${item.flavour}</p>
+          </p>
+          <div class="d-flex">
+            <button
+              class="btn btn-outline-dark flex-shrink-0"
+              type="button"
+              id="addtocart"
+              onclick="addToCart(${item.id})"
+            >
+              <i class="bi-cart-fill me-1"></i>
+              Add to cart
+            </button>
+          </div>
+        </div>
+        <a href="#main">Back to Shop</a>
+    `;
 
+    $("#shopitemdiv").empty().append(html);
+  }
+});
 
+$(document).ready(function () {
+  function getId() {}
+});
 
 /*
+$(document).ready(function () {
+  $("#check").validate({
+    rules: {
+      firstName: {
+        required: true,
+        minlength: 2,
+      },
+      lastName: {
+        required: true,
+        minlength: 2,
+      },
+      email: {
+        required: true,
+        email: true,
+        minlength: 5,
+      },
+      mobilenumber: {
+        required: true,
+        minlength: 6,
+      },
+      city: {
+        required: true,
+        minlength: 5,
+      },
+      address: {
+        required: true,
+      },
+    },
 
+    submitHandler: function (form, event) {
+      event.preventDefault();
+
+      var formData = $(form).serializeArray();
+
+      console.log(formData);
+
+      $.ajax({
+        url: "http://localhost/Powder.ba/backend/orders",
+        method: "POST",
+        data: formData,
+        headers: {
+          Authentication: Utilis.get_from_localstorage("token"),
+        },
+        beforeSend: function (xhr) {
+          if (Utilis.get_from_localstorage("user")) {
+            xhr.setRequestHeader(
+              "Authentication",
+              JSON.parse(usert).data.token
+            );
+          }
+        },
+        success: function (response) {
+          console.log("Form data sent successfully:", response);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error sending form data:", error);
+        },
+      });
     },
   });
 });
 */
 
 $(document).on("submit", "#a", function (e) {
-  e.preventDefault(); // Spriječi defaultno slanje
+  e.preventDefault();
 
-  // Provjera da li se već šalje (anti-dupli klik)
   if ($(this).data("submitted")) return;
   $(this).data("submitted", true);
 
@@ -680,13 +554,76 @@ $(document).on("submit", "#a", function (e) {
       console.error("Error sending form data:", error);
     },
     complete: function () {
-      // Omogući ponovno slanje ako treba
       $("#a").data("submitted", false);
     },
   });
 });
 
+$(document).ready(function () {
+  $("#regform").validate({
+    rules: {
+      fname: {
+        required: true,
+        minlength: 2,
+      },
+      lname: {
+        required: true,
+        minlength: 2,
+      },
+      email: {
+        required: true,
+        email: true,
+      },
+      password: {
+        required: true,
+        minlength: 6,
+      },
+      cpassword: {
+        required: true,
+      },
+    },
+    messages: {
+      fname: {
+        required: "Please enter your first name",
+        minlength: "First name must be at least 2 characters long",
+      },
+      lname: {
+        required: "Please enter your last name",
+        minlength: "Last name must be at least 2 characters long",
+      },
+      email: {
+        required: "Please enter your email",
+        email: "Enter a valid email address",
+      },
+      password: {
+        required: "Please enter a password",
+        minlength: "Password must be at least 6 characters long",
+      },
+      cpassword: {
+        required: "Please confirm your password",
+        equalTo: "Passwords do not match",
+      },
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
 
+      var formData = $(form).serialize();
+
+      $.ajax({
+        url: "http://localhost/Powder.ba/backend/users",
+        method: "POST",
+        data: formData,
+
+        success: function (response) {
+          console.log("Form data sent successfully:", response);
+          // Handle success response (e.g., display a success message)
+          window.location.href = "#login";
+        },
+        error: function (xhr, status, error) {
+          console.error("Error sending form data:", error);
+          alert("This email or mobile phone is already registered");
+        },
+      });
     },
   });
 });
@@ -1289,9 +1226,62 @@ function changeQuantity(id, change) {
   renderCart();
 }
 
+$(document).ready(function () {
+  renderCart();
+});
 
+$(document).ready(function () {
+  $("#loginform").validate({
+    rules: {
+      email: { required: true, email: true },
+      password: { required: true },
+    },
 
+    submitHandler: function (form, event) {
+      event.preventDefault();
 
+      var formData = $(form).serializeArray();
+
+      $.ajax({
+        url: "http://localhost/Powder.ba/backend/login",
+        method: "POST",
+        data: formData,
+
+        success: function (response) {
+          if (response.data && response.data.token) {
+            Utilis.set_to_localstorage("token", response.data.token);
+
+            // Parsiranje tokena i dobijanje role
+            const token = response.data.token;
+            const payloadBase64 = token.split(".")[1];
+            const payloadJson = atob(payloadBase64);
+            const payload = JSON.parse(payloadJson);
+            const role = payload.role || (payload.user && payload.user.role);
+            console.log("User role:", role);
+
+            if (role === "admin") {
+              setTimeout(() => {
+                window.location = "http://localhost/Powder.ba/#admin";
+              }, 100);
+            } else {
+              window.location = "http://localhost/Powder.ba/#main";
+            }
+          } else {
+            console.error("Token nije pronađen u response-u!", response);
+
+            alert("Neispravni login podaci!");
+          }
+        },
+
+        error: function () {
+          // Ako ajax poziv ne uspije, unblock UI
+          $.unblockUI();
+          alert("Greška na serveru, pokušajte kasnije.");
+        },
+
+        beforeSend: function () {
+          // Ako koristiš blockUI, blockiraj UI dok traje ajax
+          $.blockUI({ message: "Molimo sačekajte..." });
         },
 
         complete: function () {
