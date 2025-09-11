@@ -16,7 +16,7 @@ define('DB_HOST','127.0.0.1');
 
 // JWT Secret
 
-define("JWT_SECRET","Du4yVzaNMJbBVFgkUHTzX%=dSmkyKL");
+define("JWT_SECRET", getenv("JWT_SECRET"));
 
 
 ?>

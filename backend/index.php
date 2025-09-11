@@ -23,6 +23,7 @@ ini_set('display_errors', 1);
 Flight::map('error', function(Throwable $ex) {
     Flight::halt(500, $ex->getMessage());
 });
+define("JWT_SECRET", getenv("JWT_SECRET"));
 
 
 Flight::start();
