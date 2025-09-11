@@ -938,6 +938,9 @@ $(document).ready(function () {
 
             success: function (response) {
               console.log("Login response:", response);
+              console.log("Raw login response:", response);
+              console.log("Response.success:", response.success);
+              console.log("Response.token:", response.token);
 
               if (response.success && response.token) {
                 Utilis.set_to_localstorage("token", response.token);
