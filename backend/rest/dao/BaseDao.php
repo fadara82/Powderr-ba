@@ -10,17 +10,22 @@ class BaseDao {
     public function __construct($table) {
         $this->table = $table;
 
-        // Učitaj db.env
-        $env = parse_ini_file(__DIR__ . './db.env');
+        $dbName = getenv('DB_NAME');
+        $dbUser = getenv('DB_USER');
+        $dbPort = getenv('DB_PORT') ?: 3306;
+        $dbPass = getenv('DB_PASSWORD');
+        $dbHost = getenv('DB_HOST');
 
-        $dbName = $env['DB_NAME'] ?? '';
-        $dbUser = $env['DB_USER'] ?? '';
-        $dbPort = $env['DB_PORT'] ?? 3306;
-        $dbPass = $env['DB_PASSWORD'] ?? '';
-        $dbHost = $env['DB_HOST'] ?? '127.0.0.1';
+        if (!$dbName) {
+            $env = parse_ini_file(__DIR__ . '/../../db.env');
+            $dbName = $env['DB_NAME'] ?? '';
+            $dbUser = $env['DB_USER'] ?? '';
+            $dbPort = $env['DB_PORT'] ?? 3306;
+            $dbPass = $env['DB_PASSWORD'] ?? '';
+            $dbHost = $env['DB_HOST'] ?? '127.0.0.1';
+        }
 
         try {
-            // Establish PDO database connection
             $this->connection = new PDO(
                 "mysql:host={$dbHost};dbname={$dbName};port={$dbPort}",
                 $dbUser,
