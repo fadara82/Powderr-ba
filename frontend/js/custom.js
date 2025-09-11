@@ -640,7 +640,7 @@ function changeQuantity(id, change) {
 
 function logout() {
   window.localStorage.clear();
-  window.location = "http://localhost/Powder.ba/#login";
+  window.location.href = "#login";
 }
 
 $(document).ready(() => {
