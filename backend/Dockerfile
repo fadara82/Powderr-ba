@@ -7,13 +7,13 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /app/backend
 
-COPY composer.json composer.lock* ./
+COPY backend/composer.json backend/composer.lock* ./
 
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-COPY . .
+COPY backend . 
 
 ENV PORT=10000
 EXPOSE 10000
