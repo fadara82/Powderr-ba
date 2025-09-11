@@ -1,23 +1,28 @@
-# Koristi oficijelnu PHP sliku
 FROM php:8.2-cli
 
-# Instaliraj potrebne ekstenzije
-RUN docker-php-ext-install pdo pdo_mysql
+# Instalacija potrebnih paketa i PHP ekstenzija
+RUN apt-get update && apt-get install -y \
+    git unzip libzip-dev libpng-dev libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql zip gd mbstring \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instaliraj Composer
+# Dodaj Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Postavi radni direktorij
 WORKDIR /app
 
-# Kopiraj sve fajlove u kontejner
-COPY . .
+# Kopiraj composer fajlove prvo (za cache)
+COPY composer.json composer.lock* ./
 
 # Instaliraj dependencije
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-# Otvori port koji Render koristi
+# Kopiraj ostatak aplikacije
+COPY . .
+
+# Render koristi PORT varijablu (default 10000)
+ENV PORT=10000
 EXPOSE 10000
 
-# Pokreni PHP built-in server i postavi public kao root
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
+# Pokreni ugrađeni PHP server
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "public", "public/index.php"]
