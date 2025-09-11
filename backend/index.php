@@ -20,8 +20,8 @@ Flight::route('/web', function () {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-Flight::map('error', function(Exception $ex){
-    Flight::json(['error' => $ex->getMessage()], 500);
+Flight::map('error', function(Throwable $ex) {
+    Flight::halt(500, $ex->getMessage());
 });
 
 
