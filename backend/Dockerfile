@@ -7,15 +7,16 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app/backend
+WORKDIR /app
 
-COPY backend/composer.json backend/composer.lock* ./
+COPY composer.json composer.lock* ./
 
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
-COPY backend . 
+COPY . .
 
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "public", "public/index.php"]
+# Pokrećemo PHP server direktno sa index.php u rootu
+CMD ["php", "-S", "0.0.0.0:10000", "index.php"]
