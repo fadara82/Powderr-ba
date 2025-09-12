@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://powderr-ba.onrender.com/";
+const API_BASE_URL = "https://powderr-ba.onrender.com";
 window.Utilis = {
   set_to_localstorage: function (key, value) {
     window.localStorage.setItem(key, JSON.stringify(value));
@@ -279,7 +279,7 @@ function deleteP(id) {
 
 function getId(id) {
   $.ajax({
-    url: API_BASE_URL + `products/get/byid?id=${id}`,
+    url: API_BASE_URL + "/products/get/byid?id=${id}",
     method: "GET",
 
     success: function (item) {
@@ -785,7 +785,7 @@ function editProduct(id) {
 function deleteUser(id) {
   if (confirm("Are you sure you want to delete this user?")) {
     $.ajax({
-      url: API_BASE_URL + `users/delete/byid?id=${id}`,
+      url: API_BASE_URL + `/users/delete/byid?id=${id}`,
       method: "DELETE",
       beforeSend: function (xhr) {
         const token = Utilis.get_from_localstorage("token");
