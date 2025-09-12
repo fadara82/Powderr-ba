@@ -81,9 +81,13 @@ function initializeStripeElements() {
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({ amount: amount }),
-        headers: {
-          Authentication: Utilis.get_from_localstorage("token"),
+        beforeSend: function (xhr) {
+          const token = Utilis.get_from_localstorage("token");
+          if (token) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+          }
         },
+
         success: function (data) {
           if (!data.clientSecret) {
             alert("Nema clientSecret u odgovoru backend-a!");
