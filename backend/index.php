@@ -12,11 +12,13 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+Flight::route('OPTIONS /*', function() {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
     http_response_code(200);
     exit();
-}
-
+});
 
 Flight::route('/', function () {
   echo 'hello world!';
@@ -32,7 +34,7 @@ ini_set('display_errors', 1);
 Flight::map('error', function(Throwable $ex) {
     Flight::halt(500, $ex->getMessage());
 });
-define("JWT_SECRET", getenv("JWT_SECRET"));
 
+define("JWT_SECRET", getenv("JWT_SECRET"));
 
 Flight::start();
