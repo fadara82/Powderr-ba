@@ -279,7 +279,7 @@ function deleteP(id) {
 
 function getId(id) {
   $.ajax({
-    url: API_BASE_URL + "/products/get/byid?id=${id}",
+    url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
 
     success: function (item) {
