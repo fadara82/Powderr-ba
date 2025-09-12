@@ -131,9 +131,13 @@ function initializeStripeElements() {
                   method: "POST",
                   contentType: "application/json",
                   data: JSON.stringify(orderData),
-                  headers: {
-                    Authentication: Utilis.get_from_localstorage("token"),
+                  beforeSend: function (xhr) {
+                    const token = Utilis.get_from_localstorage("token");
+                    if (token) {
+                      xhr.setRequestHeader("Authorization", "Bearer " + token);
+                    }
                   },
+
                   success: function () {
                     alert(
                       "Your order has been successfully processed. Thank you!"
@@ -259,7 +263,9 @@ function deleteP(id) {
 
       beforeSend: function (xhr) {
         const token = Utilis.get_from_localstorage("token");
-        if (token) xhr.setRequestHeader("Authentication", token);
+        if (token) {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
+        }
       },
       success: function (response) {
         location.reload();
@@ -346,9 +352,7 @@ function getProteini() {
     url: API_BASE_URL + "/products/get/proteini",
     method: "GET",
     dataType: "json",
-    headers: {
-      Authorization: "Bearer " + Utilis.get_from_localstorage("token"),
-    },
+
     success: function (data) {
       renderCategory(data);
     },
@@ -365,12 +369,7 @@ $.ajax({
   url: API_BASE_URL + "/products/get/vitamini",
   method: "GET",
   dataType: "json",
-  beforeSend: function (xhr) {
-    const token = Utilis.get_from_localstorage("token");
-    if (token) {
-      xhr.setRequestHeader("Authorization", "Bearer " + token);
-    }
-  },
+
   success: function (data) {
     renderCategory(data);
   },
@@ -387,12 +386,6 @@ function getKreatin() {
     url: API_BASE_URL + "/products/get/creatine",
     method: "GET",
     dataType: "json",
-    beforeSend: function (xhr) {
-      const token = Utilis.get_from_localstorage("token");
-      if (token) {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-      }
-    },
 
     success: function (data) {
       renderCategory(data);
@@ -421,32 +414,29 @@ function getCokoladice() {
 $("#btnCart")
   .off("click")
   .on("click", function (e) {
-    e.preventDefault(); // sprječava default navigaciju
+    e.preventDefault(); //
 
-    var token = Utilis.get_from_localstorage("token"); // dohvat tokena
+    var token = Utilis.get_from_localstorage("token");
 
     if (!token) {
-      // pokaži modal
       $("#loginPromptModal").modal("show");
 
       $("#loginNowBtn")
         .off("click")
         .on("click", function () {
           $("#loginPromptModal").modal("hide");
-          window.location.hash = "#login"; // SPA login view
+          window.location.hash = "#login";
         });
 
       $("#loginCancelBtn")
         .off("click")
         .on("click", function () {
           $("#loginPromptModal").modal("hide");
-          // ostajemo na mainu
         });
 
-      return; // prekini dalje
+      return;
     }
 
-    // Ako je token prisutan, ide normalno
     window.location.hash = "#shopingcart";
   });
 
@@ -487,8 +477,11 @@ function checkProductAvailability(id, callback) {
   $.ajax({
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
-    headers: {
-      Authentication: Utilis.get_from_localstorage("token"),
+    beforeSend: function (xhr) {
+      const token = Utilis.get_from_localstorage("token");
+      if (token) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      }
     },
     success: function (product) {
       if (!product) {
@@ -511,8 +504,7 @@ function checkProductAvailability(id, callback) {
 }
 
 function addToCart(id) {
-  const token = localStorage.getItem("token");
-
+  const token = Utilis.get_from_localstorage("token");
   if (!token) {
     // pokaži modal umjesto alert/redirect
     const loginModal = new bootstrap.Modal(
@@ -674,8 +666,11 @@ function editProduct(id) {
   $.ajax({
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
-    headers: {
-      Authentication: Utilis.get_from_localstorage("token"),
+    beforeSend: function (xhr) {
+      const token = Utilis.get_from_localstorage("token");
+      if (token) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      }
     },
     success: function (item) {
       if (!item || item.id != id) {
@@ -762,8 +757,11 @@ function editProduct(id) {
             method: "PUT",
             contentType: "application/json",
             data: JSON.stringify(formData),
-            headers: {
-              Authentication: Utilis.get_from_localstorage("token"),
+            beforeSend: function (xhr) {
+              const token = Utilis.get_from_localstorage("token");
+              if (token) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+              }
             },
             success: function (response) {
               console.log("Form data sent successfully:", response);
@@ -791,12 +789,9 @@ function deleteUser(id) {
       method: "DELETE",
       beforeSend: function (xhr) {
         const token = Utilis.get_from_localstorage("token");
-        if (!token) {
-          alert("You are not logged in! Please sign in.");
-          return false;
+        if (token) {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
         }
-        console.log("Sending token in header:", token);
-        xhr.setRequestHeader("Authentication", token);
       },
       success: function (response) {
         console.log("Delete successful:", response);
@@ -826,11 +821,9 @@ function deleteUsers(id) {
       method: "DELETE",
       beforeSend: function (xhr) {
         const token = Utilis.get_from_localstorage("token");
-        if (!token) {
-          alert("You are not logged in! Please log in.");
-          return false;
+        if (token) {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
         }
-        xhr.setRequestHeader("Authentication", token);
       },
       success: function () {
         window.location.reload();
@@ -1047,7 +1040,12 @@ $(document).ready(function () {
           method: "POST",
           data: JSON.stringify(formDataObj),
           contentType: "application/json",
-          headers: { Authentication: Utilis.get_from_localstorage("token") },
+          beforeSend: function (xhr) {
+            const token = Utilis.get_from_localstorage("token");
+            if (token) {
+              xhr.setRequestHeader("Authorization", "Bearer " + token);
+            }
+          },
           success: function (response) {
             console.log("Proizvod dodan:", response);
             loadAndRenderProducts();
@@ -1143,11 +1141,9 @@ $(document).ready(function () {
           dataType: "json",
           beforeSend: function (xhr) {
             const token = Utilis.get_from_localstorage("token");
-            if (!token) {
-              alert("You are not logged in! Please log in.");
-              return false;
+            if (token) {
+              xhr.setRequestHeader("Authorization", "Bearer " + token);
             }
-            xhr.setRequestHeader("Authentication", token);
           },
           success: function (data) {
             console.log("Users data:", data);
@@ -1203,11 +1199,9 @@ $(document).ready(function () {
           method: "DELETE",
           beforeSend: function (xhr) {
             const token = Utilis.get_from_localstorage("token");
-            if (!token) {
-              alert("You are not logged in! Please log in.");
-              return false;
+            if (token) {
+              xhr.setRequestHeader("Authorization", "Bearer " + token);
             }
-            xhr.setRequestHeader("Authentication", token);
           },
           success: function () {
             alert("User successfully deleted.");
@@ -1233,11 +1227,9 @@ $(document).ready(function () {
         url: API_BASE_URL + "/orders/get",
         beforeSend: function (xhr) {
           const token = Utilis.get_from_localstorage("token");
-          if (!token) {
-            alert("You are not logged in! Please log in.");
-            return false;
+          if (token) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
           }
-          xhr.setRequestHeader("Authentication", token);
         },
         success: function (data) {
           $("#tabeladiv").empty();
@@ -1298,8 +1290,11 @@ $(document).ready(function () {
           $.ajax({
             url: API_BASE_URL + "/orders/update/byid?id=${id}",
             type: "UPDATE",
-            headers: {
-              Authentication: Utilis.get_from_localstorage("token"),
+            beforeSend: function (xhr) {
+              const token = Utilis.get_from_localstorage("token");
+              if (token) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+              }
             },
             success: function () {
               alert("Order updated.");
@@ -1317,8 +1312,11 @@ $(document).ready(function () {
           $.ajax({
             url: API_BASE_URL + `/orders/update/byidB?id=${id}`,
             type: "UPDATE",
-            headers: {
-              Authentication: Utilis.get_from_localstorage("token"),
+            beforeSend: function (xhr) {
+              const token = Utilis.get_from_localstorage("token");
+              if (token) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+              }
             },
             success: function () {
               alert("Order updated (Back).");
@@ -1336,7 +1334,12 @@ $(document).ready(function () {
           $.ajax({
             url: API_BASE_URL + `/orders/delete/byid?id=${id}`,
             type: "DELETE",
-            headers: { Authentication: Utilis.get_from_localstorage("token") },
+            beforeSend: function (xhr) {
+              const token = Utilis.get_from_localstorage("token");
+              if (token) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+              }
+            },
             success: function () {
               alert("Order deleted.");
               $(`#tabeladiv button.deleteOrderBtn[data-id="${id}"]`)
@@ -1356,7 +1359,7 @@ $(document).ready(function () {
     view: "profile",
     load: "profile.html",
     onReady: function () {
-      var token = Utilis.get_from_localstorage("token"); // dohvat tokena
+      var token = Utilis.get_from_localstorage("token");
 
       if (!token) {
         $("#profilePromptModal").modal("show");
@@ -1365,14 +1368,14 @@ $(document).ready(function () {
           .off("click")
           .on("click", function () {
             $("#profilePromptModal").modal("hide");
-            window.location.hash = "#login"; // SPA login view
+            window.location.hash = "#login";
           });
 
         $("#profieCancelBtn")
           .off("click")
           .on("click", function () {
             $("#profilePromptModal").modal("hide");
-            window.location.hash = "#main"; // vraćanje na main
+            window.location.hash = "#main";
           });
 
         return;
