@@ -387,6 +387,12 @@ function getKreatin() {
     url: API_BASE_URL + "/products/get/creatine",
     method: "GET",
     dataType: "json",
+    beforeSend: function (xhr) {
+      const token = Utilis.get_from_localstorage("token");
+      if (token) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      }
+    },
 
     success: function (data) {
       renderCategory(data);
