@@ -347,13 +347,16 @@ function getProteini() {
     method: "GET",
     dataType: "json",
     headers: {
-      Authentication: Utilis.get_from_localstorage("token"),
+      Authorization: "Bearer " + Utilis.get_from_localstorage("token"),
     },
     success: function (data) {
       renderCategory(data);
     },
     error: function (xhr, status, error) {
-      console.log("Error loading proteini:", error);
+      console.log("Error loading proteini:");
+      console.log("Status:", status);
+      console.log("Error:", error);
+      console.log("Response:", xhr.responseText);
     },
   });
 }
@@ -365,14 +368,17 @@ $.ajax({
   beforeSend: function (xhr) {
     const token = Utilis.get_from_localstorage("token");
     if (token) {
-      xhr.setRequestHeader("Authentication", token);
+      xhr.setRequestHeader("Authorization", "Bearer " + token);
     }
   },
   success: function (data) {
     renderCategory(data);
   },
   error: function (xhr, status, error) {
-    console.log("Error loading vitamini:", error);
+    console.log("Error loading vitamini:");
+    console.log("Status:", status);
+    console.log("Error:", error);
+    console.log("Response:", xhr.responseText);
   },
 });
 
