@@ -7,12 +7,17 @@ window.Utilis = {
   get_from_localstorage: function (key) {
     return JSON.parse(window.localStorage.getItem(key));
   },
+  set_token: function (token) {
+    window.localStorage.setItem("token", token);
+  },
+
+  get_token: function () {
+    return window.localStorage.getItem("token");
+  },
 };
 
-// --- GLOBALNE VARIJABLE ---
 var stripe, elements, cardElement;
 
-// --- INICIJALIZACIJA STRIPE i VALIDACIJA FORME ---
 function initializeStripeElements() {
   if (typeof Stripe === "undefined") {
     console.error("Stripe.js nije učitan!");
@@ -176,7 +181,6 @@ function initializeStripeElements() {
   return true;
 }
 
-// --- FUNKCIJA ZA UČITAVANJE I PRIKAZ PROIZVODA ---
 function loadAndRenderProducts() {
   const container = $("#maindiv");
   const prevBtn = $("#prev");
@@ -418,7 +422,7 @@ function getCokoladice() {
 $("#btnCart")
   .off("click")
   .on("click", function (e) {
-    e.preventDefault(); //
+    e.preventDefault();
 
     var token = Utilis.get_from_localstorage("token");
 
@@ -510,7 +514,6 @@ function checkProductAvailability(id, callback) {
 function addToCart(id) {
   const token = Utilis.get_from_localstorage("token");
   if (!token) {
-    // pokaži modal umjesto alert/redirect
     const loginModal = new bootstrap.Modal(
       document.getElementById("loginPromptModal")
     );
@@ -518,7 +521,7 @@ function addToCart(id) {
 
     document.getElementById("loginNowBtn").onclick = function () {
       loginModal.hide();
-      window.location.hash = "#login"; // SPA login view
+      window.location.hash = "#login";
     };
     return;
   }
@@ -682,7 +685,6 @@ function editProduct(id) {
         return;
       }
 
-      // Modal HTML
       var html = `
                 <form class="modal show" id="exampleModale" tabindex="-1" role="dialog" style="display:block;">
                   <div class="modal-dialog" role="document">
@@ -751,7 +753,6 @@ function editProduct(id) {
             formData[field.name] = field.value;
           });
 
-          // Dodaj 'category' polje koje backend očekuje
           var categorySelect = $("#categorySelect").val();
           var categoryText = $("#categoryText").val();
           formData["category"] = categorySelect || categoryText || "";
@@ -838,11 +839,13 @@ function deleteUsers(id) {
     });
   }
 }
+
 function initProfileModals() {
+  // --- Uređivanje podataka ---
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
-      const token = Utilis.get_from_localstorage("token");
+      const token = Utilis.get_token(); // čisti token
       if (!token) {
         alert("Niste prijavljeni! Molimo prijavite se.");
         return;
@@ -852,10 +855,7 @@ function initProfileModals() {
         url: API_BASE_URL + "/user/editme",
         method: "GET",
         beforeSend: function (xhr) {
-          const token = Utilis.get_from_localstorage("token");
-          if (token) {
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-          }
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function (res) {
           if (!res.user) {
@@ -876,7 +876,7 @@ function initProfileModals() {
       });
     });
 
-  // Spremanje izmjena
+  // --- Spremanje izmjena ---
   $(document)
     .off("click", "#saveEditBtn")
     .on("click", "#saveEditBtn", function () {
@@ -888,7 +888,7 @@ function initProfileModals() {
         mobile_number: modal.find("#mobile").val(),
       };
 
-      const token = Utilis.get_from_localstorage("token");
+      const token = Utilis.get_token();
       if (!token) {
         alert("Niste prijavljeni! Molimo prijavite se.");
         return;
@@ -899,10 +899,7 @@ function initProfileModals() {
         method: "POST",
         data: payload,
         beforeSend: function (xhr) {
-          const token = Utilis.get_from_localstorage("token");
-          if (token) {
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-          }
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function (res) {
           alert(res.message || "Podaci uspješno ažurirani");
@@ -915,7 +912,7 @@ function initProfileModals() {
       });
     });
 
-  // Promjena passworda
+  // --- Promjena passworda ---
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -935,23 +932,23 @@ function initProfileModals() {
         return;
       }
 
-      const token = Utilis.get_from_localstorage("token");
+      const token = Utilis.get_token();
       if (!token) {
         alert("Niste prijavljeni! Molimo prijavite se.");
         return;
       }
 
-      const payload = { newPassword };
+      const payload = {
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      };
 
       $.ajax({
         url: API_BASE_URL + "/change-password",
         method: "POST",
         data: payload,
         beforeSend: function (xhr) {
-          const token = Utilis.get_from_localstorage("token");
-          if (token) {
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-          }
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function (res) {
           alert(res.message || "Password changed successfully");
@@ -971,7 +968,6 @@ function initProfileModals() {
     });
 }
 
-// --- SPAPP ROUTES SETUP ---
 $(document).ready(function () {
   $("main#spapp > section").height($(document).height() - 60);
 
@@ -1087,7 +1083,7 @@ $(document).ready(function () {
                 response.data.success &&
                 response.data.token
               ) {
-                Utilis.set_to_localstorage("token", response.data.token);
+                Utilis.set_token(response.data.token);
 
                 const token = response.data.token;
                 const payloadBase64 = token.split(".")[1];
@@ -1490,7 +1486,7 @@ $(document).ready(function () {
     view: "profileusers",
     load: "profileusers.html",
     onReady: function () {
-      var token = Utilis.get_from_localstorage("token");
+      var token = Utilis.get_token();
 
       if (!token) {
         $("#profilePromptModal").modal("show");
@@ -1512,7 +1508,7 @@ $(document).ready(function () {
         return;
       }
 
-      initProfileModals();
+      initProfileModals(token);
     },
   });
 
