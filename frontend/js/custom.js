@@ -841,142 +841,89 @@ function deleteUsers(id) {
   }
 }
 
-function initProfileModals() {
-  // --- Uređivanje podataka ---
-  $("#editDataBtn")
-    .off("click")
-    .on("click", () => {
-      const token = Utilis.get_token();
-      if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
-        return;
-      }
+// --- Spremanje izmjena ---
+$(document)
+  .off("click", "#saveEditBtn")
+  .on("click", "#saveEditBtn", function () {
+    const modal = $("#editDataModal");
+    const payload = {
+      first_name: modal.find("#fname").val(),
+      last_name: modal.find("#lname").val(),
+      email: modal.find("#email").val(),
+      mobile_number: modal.find("#mobile").val(),
+    };
 
-      $.ajax({
-        url: API_BASE_URL + "/user/editmey",
-        method: "GET",
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + token);
-        },
-        success: function (res) {
-          if (!res.user) {
-            alert("Korisnik nije pronađen!");
-            return;
-          }
+    const token = Utilis.get_token();
+    if (!token) {
+      alert("Niste prijavljeni! Molimo prijavite se.");
+      return;
+    }
 
-          const modal = $("#editDataModal");
-          modal.find("#fname").val(res.user.first_name);
-          modal.find("#lname").val(res.user.last_name);
-          modal.find("#email").val(res.user.email);
-          modal.find("#mobile").val(res.user.mobile_number);
-          modal.addClass("show");
-        },
-        error: function (xhr) {
-          alert(xhr.responseJSON?.error || "Greška pri dohvaćanju podataka");
-        },
-      });
+    $.ajax({
+      url: API_BASE_URL + "/user/update",
+      method: "POST",
+      contentType: "application/json", // ⬅️ važno
+      data: JSON.stringify(payload), // ⬅️ šaljemo JSON
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: function (res) {
+        alert(res.message || "Podaci uspješno ažurirani");
+        modal.removeClass("show");
+        window.location.reload();
+      },
+      error: function (xhr) {
+        alert(xhr.responseJSON?.error || "Greška pri spremanju promjena");
+      },
     });
+  });
 
-  // --- Spremanje izmjena ---
-  $(document)
-    .off("click", "#saveEditBtn")
-    .on("click", "#saveEditBtn", function () {
-      const modal = $("#editDataModal");
-      const payload = {
-        first_name: modal.find("#fname").val(),
-        last_name: modal.find("#lname").val(),
-        email: modal.find("#email").val(),
-        mobile_number: modal.find("#mobile").val(),
-      };
+// --- Promjena passworda ---
+$("#savePasswordBtn")
+  .off("click")
+  .on("click", () => {
+    const modal = $("#changePasswordModal");
+    const inputs = modal.find("input");
+    const currentPassword = inputs.eq(0).val();
+    const newPassword = inputs.eq(1).val();
+    const confirmPassword = inputs.eq(2).val();
 
-      const token = Utilis.get_token();
-      if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
-        return;
-      }
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert("Please fill all fields");
+      return;
+    }
 
-      $.ajax({
-        url: API_BASE_URL + "/user/update",
-        method: "POST",
-        data: payload,
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + token);
-        },
-        success: function (res) {
-          alert(res.message || "Podaci uspješno ažurirani");
-          modal.removeClass("show");
-          window.location.reload();
-        },
-        error: function (xhr) {
-          alert(xhr.responseJSON?.error || "Greška pri spremanju promjena");
-        },
-      });
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const token = Utilis.get_token();
+    if (!token) {
+      alert("Niste prijavljeni! Molimo prijavite se.");
+      return;
+    }
+
+    const payload = { newPassword: newPassword };
+
+    $.ajax({
+      url: API_BASE_URL + "/change-password",
+      method: "POST",
+      contentType: "application/json", // ⬅️ važno
+      data: JSON.stringify(payload), // ⬅️ šaljemo JSON
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
+      },
+      success: function (res) {
+        alert(res.message || "Password changed successfully");
+        modal.removeClass("show");
+        inputs.val("");
+      },
+      error: function (xhr) {
+        alert(xhr.responseJSON?.error || "Error changing password");
+      },
     });
-
-  // --- Otvaranje Change Password modala ---
-  $("#changePasswordBtn")
-    .off("click")
-    .on("click", () => {
-      const token = Utilis.get_token();
-      if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
-        return;
-      }
-      $("#changePasswordModal").addClass("show");
-    });
-
-  // --- Promjena passworda ---
-  $("#savePasswordBtn")
-    .off("click")
-    .on("click", () => {
-      const modal = $("#changePasswordModal");
-      const inputs = modal.find("input");
-      const currentPassword = inputs.eq(0).val();
-      const newPassword = inputs.eq(1).val();
-      const confirmPassword = inputs.eq(2).val();
-
-      if (!currentPassword || !newPassword || !confirmPassword) {
-        alert("Please fill all fields");
-        return;
-      }
-
-      if (newPassword !== confirmPassword) {
-        alert("Passwords do not match");
-        return;
-      }
-
-      const token = Utilis.get_token();
-      if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
-        return;
-      }
-
-      const payload = { newPassword: newPassword };
-
-      $.ajax({
-        url: API_BASE_URL + "/change-password",
-        method: "POST",
-        data: payload,
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + token);
-        },
-        success: function (res) {
-          alert(res.message || "Password changed successfully");
-          modal.removeClass("show");
-          inputs.val("");
-        },
-        error: function (xhr) {
-          alert(xhr.responseJSON?.error || "Error changing password");
-        },
-      });
-    });
-
-  $(document)
-    .off("click", ".closeModal")
-    .on("click", ".closeModal", function () {
-      $(this).closest(".modal-custom").removeClass("show");
-    });
-}
+  });
 
 $(document).ready(function () {
   $("main#spapp > section").height($(document).height() - 60);

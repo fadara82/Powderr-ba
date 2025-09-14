@@ -42,23 +42,6 @@ Flight::route('POST /change-password', function () {
 });
 
 
-Flight::route('POST /logout', function() {
-    try {
-        $token = Flight::request()->getHeader("Authentication");
-        if (!$token) {
-            Flight::halt(401, "Missing authentication header");
-        }
-
-        $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
-
-        Flight::json([
-            'jwt_decoded' => $decoded_token,
-            'user' => $decoded_token->user
-        ]);
-    } catch (\Exception $e) {
-        Flight::halt(401, $e->getMessage());
-    }
-});
 
 
 /**
@@ -138,9 +121,15 @@ Flight::route('POST /change-password', function () {
 });
 
 
-Flight::route('GET /user/editmey', function() {
+Flight::route('GET /user/editme', function() {
     try {
-        $token = Flight::request()->getHeader("Authentication");
+        $authHeader = Flight::request()->getHeader("Authorization");
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            Flight::halt(401, "Missing or invalid Authorization header");
+        }
+
+        $token = $matches[1];
+
         $decoded = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         $userId = $decoded->user->id;
 
@@ -149,10 +138,9 @@ Flight::route('GET /user/editmey', function() {
 
         Flight::json(['user' => $user]);
     } catch (\Exception $e) {
-        Flight::halt(401, $e->getMessage());
+        Flight::halt(401, "Invalid token: " . $e->getMessage());
     }
 });
-
 
 Flight::route('POST /user/update', function () {
     try {
