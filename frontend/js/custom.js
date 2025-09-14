@@ -842,6 +842,7 @@ function deleteUsers(id) {
 }
 
 function initProfileModals() {
+  // --- Edit Data ---
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
@@ -913,8 +914,19 @@ function initProfileModals() {
       });
     });
 
-  // --- Change Password ---
+  // --- Open Change Password Modal ---
+  $("#changePasswordBtn")
+    .off("click")
+    .on("click", () => {
+      const token = Utilis.get_token();
+      if (!token) {
+        alert("Niste prijavljeni! Molimo prijavite se.");
+        return;
+      }
+      $("#changePasswordModal").addClass("show");
+    });
 
+  // --- Save Password ---
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -954,7 +966,6 @@ function initProfileModals() {
           alert(res.message || "Password changed successfully");
           modal.removeClass("show");
           inputs.val("");
-          modal.find("input").val("");
         },
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Error changing password");
@@ -962,6 +973,7 @@ function initProfileModals() {
       });
     });
 
+  // --- Close any modal ---
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
@@ -1398,7 +1410,6 @@ $(document).ready(function () {
         },
       });
 
-      // Delegirani event handleri (kratki jQuery stil)
       $("#tabeladiv")
         .on("click", ".updateOrderBtn", function () {
           updateOrder($(this).data("id"));
@@ -1410,7 +1421,6 @@ $(document).ready(function () {
           deleteO($(this).data("id"));
         });
 
-      // Funkcije
       function updateOrder(id) {
         if (confirm("Update order?")) {
           $.ajax({
