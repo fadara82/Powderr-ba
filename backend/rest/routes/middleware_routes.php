@@ -5,8 +5,12 @@ use Firebase\JWT\Key;
 
 Flight::route("/*", function () {
     $url = Flight::request()->url;
+    $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
-    // Rute koje ne trebaju token
+    if ($method === 'OPTIONS') {
+        return true;
+    }
+
     if (
         strpos($url, '/login') === 0 ||
         strpos($url, '/registration') === 0 ||
@@ -31,11 +35,10 @@ Flight::route("/*", function () {
     try {
         $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         Flight::set('jwt_token', $token);
-        Flight::set('user', $decoded_token); 
+        Flight::set('user', $decoded_token);
     } catch (\Exception $e) {
         Flight::halt(401, json_encode(["message" => "Invalid token: " . $e->getMessage()]));
     }
 
     return true;
 });
-
