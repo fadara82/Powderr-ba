@@ -92,7 +92,6 @@ Flight::route('POST /change-password', function () {
         }
 
         $token = str_replace("Bearer ", "", $authHeader);
-
         $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         $userId = $decoded_token->user->id ?? null;
 
@@ -100,14 +99,16 @@ Flight::route('POST /change-password', function () {
             Flight::halt(401, "Invalid token: user ID missing");
         }
 
-        $payload = Flight::request()->data;
-        if (!isset($payload['newPassword'])) {
+        // --- OVDJE PARSIRAJ JSON ---
+        $input = json_decode(file_get_contents("php://input"), true);
+
+        if (!isset($input['newPassword'])) {
             Flight::json(['error' => 'Missing newPassword'], 400);
             return;
         }
 
         $authService = Flight::get('auth_service');
-        $result = $authService->change_user_password($userId, $payload['newPassword']);
+        $result = $authService->change_user_password($userId, $input['newPassword']);
 
         if ($result['success']) {
             Flight::json(['message' => $result['message']]);
