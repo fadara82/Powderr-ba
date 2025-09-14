@@ -32,13 +32,15 @@ Flight::route("/*", function () {
         Flight::halt(401, json_encode(["message" => "Missing or invalid Authorization header"]));
     }
 
+   
+
     try {
-        $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
-        Flight::set('jwt_token', $token);
-        Flight::set('user', $decoded_token);
-    } catch (\Exception $e) {
-        Flight::halt(401, json_encode(["message" => "Invalid token: " . $e->getMessage()]));
-    }
+    $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
+    Flight::set('jwt_token', $token);
+    Flight::set('user', $decoded_token->user); 
+} catch (\Exception $e) {
+    Flight::halt(401, json_encode(["message" => "Invalid token: " . $e->getMessage()]));
+}
 
     return true;
 });
