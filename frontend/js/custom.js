@@ -842,7 +842,6 @@ function deleteUsers(id) {
 }
 
 function initProfileModals() {
-  // --- Edit Data ---
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
@@ -853,7 +852,7 @@ function initProfileModals() {
       }
 
       $.ajax({
-        url: API_BASE_URL + "/user/editme", // ⬅️ ispravljeno
+        url: API_BASE_URL + "/user/editme",
         method: "GET",
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -898,8 +897,8 @@ function initProfileModals() {
       $.ajax({
         url: API_BASE_URL + "/user/update",
         method: "POST",
-        contentType: "application/json", // ⬅️ JSON
-        data: JSON.stringify(payload), // ⬅️ JSON
+        contentType: "application/json",
+        data: JSON.stringify(payload),
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
@@ -915,6 +914,7 @@ function initProfileModals() {
     });
 
   // --- Change Password ---
+
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -945,8 +945,8 @@ function initProfileModals() {
       $.ajax({
         url: API_BASE_URL + "/change-password",
         method: "POST",
-        contentType: "application/json", // ⬅️ JSON
-        data: JSON.stringify(payload), // ⬅️ JSON
+        contentType: "application/json",
+        data: JSON.stringify(payload),
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
@@ -954,6 +954,7 @@ function initProfileModals() {
           alert(res.message || "Password changed successfully");
           modal.removeClass("show");
           inputs.val("");
+          modal.find("input").val("");
         },
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Error changing password");
@@ -961,7 +962,6 @@ function initProfileModals() {
       });
     });
 
-  // --- Close modal ---
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
