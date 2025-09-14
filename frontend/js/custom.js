@@ -842,7 +842,6 @@ function deleteUsers(id) {
 }
 
 function initProfileModals() {
-  // --- Uređivanje podataka ---
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
@@ -877,7 +876,6 @@ function initProfileModals() {
       });
     });
 
-  // --- Spremanje izmjena ---
   $(document)
     .off("click", "#saveEditBtn")
     .on("click", "#saveEditBtn", function () {
@@ -913,7 +911,6 @@ function initProfileModals() {
       });
     });
 
-  // --- Promjena passworda ---
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -939,15 +936,13 @@ function initProfileModals() {
         return;
       }
 
-      const payload = {
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-      };
+      // payload koji backend očekuje
+      const payload = { newPassword: newPassword };
 
       $.ajax({
         url: API_BASE_URL + "/change-password",
         method: "POST",
-        data: payload,
+        data: payload, // šalje se kao form-data (što Flight očekuje)
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },

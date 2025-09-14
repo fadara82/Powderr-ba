@@ -52,7 +52,6 @@ class AuthDao extends BaseDao {
         }
     }
 
-    // PROMJENA LOZINKE
     public function change_user_password($userId, $newPassword) {
         $sql = "UPDATE users SET password = :password WHERE id = :userId";
 

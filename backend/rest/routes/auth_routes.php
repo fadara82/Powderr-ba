@@ -103,12 +103,13 @@ Flight::route('POST /logout', function() {
      */
 Flight::route('POST /change-password', function () {
     try {
-        $token = Flight::request()->getHeader("Authentication");
-        if (!$token) {
-            Flight::halt(401, "Missing authentication header");
+        $authHeader = Flight::request()->getHeader("Authorization");
+        if (!$authHeader) {
+            Flight::halt(401, "Missing Authorization header");
         }
 
-        // Dekodiranje JWT
+        $token = str_replace("Bearer ", "", $authHeader);
+
         $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         $userId = $decoded_token->user->id ?? null;
 
@@ -137,19 +138,9 @@ Flight::route('POST /change-password', function () {
 });
 
 
-Flight::route('GET /user/editme', function() {
+Flight::route('GET /user/editmey', function() {
     try {
-        $authHeader = Flight::request()->getHeader("Authorization");
-        $token = null;
-
-        if ($authHeader && preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            $token = $matches[1];
-        }
-
-        if (!$token) {
-            Flight::halt(401, "Missing or invalid Authorization header");
-        }
-
+        $token = Flight::request()->getHeader("Authentication");
         $decoded = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         $userId = $decoded->user->id;
 
@@ -158,39 +149,46 @@ Flight::route('GET /user/editme', function() {
 
         Flight::json(['user' => $user]);
     } catch (\Exception $e) {
-        Flight::halt(401, "Invalid token: " . $e->getMessage());
+        Flight::halt(401, $e->getMessage());
     }
 });
 
 
-Flight::route('POST /user/update', function() {
+Flight::route('POST /user/update', function () {
     try {
-        $token = Flight::request()->getHeader("Authentication");
-        if (!$token) Flight::halt(401, "Missing authentication header");
+        $authHeader = Flight::request()->getHeader("Authorization");
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            Flight::halt(401, "Missing or invalid Authorization header");
+        }
 
-        $decoded = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
-        $userId = $decoded->user->id ?? null;
-        if (!$userId) Flight::halt(401, "Invalid token");
+        $token = $matches[1];
 
-        $payload = Flight::request()->data;
+        $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
+        $userId = $decoded_token->user->id ?? null;
+
+        if (!$userId) {
+            Flight::halt(401, "Invalid token: user ID missing");
+        }
+
+        $payload = Flight::request()->data->getData();
+        if (empty($payload)) {
+            Flight::json(['error' => 'Missing data'], 400);
+            return;
+        }
 
         $authService = Flight::get('auth_service');
-        $result = $authService->update_user($userId, [
-            'first_name' => $payload['first_name'],
-            'last_name' => $payload['last_name'],
-            'email' => $payload['email'],
-            'mobile_number' => $payload['mobile_number']
-        ]);
+        $result = $authService->update_user($userId, $payload);
 
         if ($result['success']) {
             Flight::json(['message' => $result['message']]);
         } else {
-            Flight::json(['error' => $result['message']], 500);
+            Flight::json(['error' => $result['message']], 400);
         }
 
     } catch (\Exception $e) {
-        Flight::halt(401, $e->getMessage());
+        Flight::halt(401, "Unauthorized: " . $e->getMessage());
     }
 });
+
 
 
