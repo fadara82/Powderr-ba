@@ -149,7 +149,7 @@ function initializeStripeElements() {
                     $("#order").attr("disabled", false);
                     form.reset();
                     cardElement.clear();
-                    window.location.hash = "#main";
+                    window.location = "http://localhost/Powder.ba/#main";
                   },
                   error: function (xhr) {
                     alert(
@@ -849,7 +849,7 @@ function initProfileModals() {
       }
 
       $.ajax({
-        url: API_BASE_URL + "/user/me",
+        [url]: API_BASE_URL + "/user/me",
         method: "GET",
         beforeSend: function (xhr) {
           const token = Utilis.get_from_localstorage("token");
