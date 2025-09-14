@@ -137,7 +137,7 @@ Flight::route('POST /change-password', function () {
 });
 
 
-Flight::route('GET /user/me', function() {
+Flight::route('GET /user/mee', function() {
     try {
         $token = Flight::request()->getHeader("Authentication");
         $decoded = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
@@ -154,7 +154,6 @@ Flight::route('GET /user/me', function() {
 
 
 
-// Update podataka logovanog korisnika
 Flight::route('POST /user/update', function() {
     try {
         $token = Flight::request()->getHeader("Authentication");

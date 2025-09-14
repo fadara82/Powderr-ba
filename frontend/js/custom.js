@@ -849,7 +849,7 @@ function initProfileModals() {
       }
 
       $.ajax({
-        [url]: API_BASE_URL + "/user/me",
+        [url]: API_BASE_URL + "/user/mee",
         method: "GET",
         beforeSend: function (xhr) {
           const token = Utilis.get_from_localstorage("token");
