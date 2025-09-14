@@ -149,7 +149,7 @@ function initializeStripeElements() {
                     $("#order").attr("disabled", false);
                     form.reset();
                     cardElement.clear();
-                    window.location = "http://localhost/Powder.ba/#main";
+                    window.location.hash = "#main";
                   },
                   error: function (xhr) {
                     alert(
@@ -262,7 +262,7 @@ function loadAndRenderProducts() {
 function deleteP(id) {
   if (confirm("Are you sure you want to delete?")) {
     $.ajax({
-      url: API_BASE_URL + `products/delete/byid?id=${id}`,
+      url: API_BASE_URL + `/products/delete/byid?id=${id}`,
       method: "DELETE",
 
       beforeSend: function (xhr) {
