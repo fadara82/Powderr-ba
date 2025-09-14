@@ -35,21 +35,6 @@ Flight::route('GET /products/get/proteini', function () {
 Flight::route('GET /products/get/vitamini', function () {
 
 
-        /**
- * @OA\Get(
- *      path="/products/get/vitamini",
- *      tags={"products"},
- *      summary="Get products that are Vitamins",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Array of all products that are Vitamins in the databases"
- *      )
- * )
- * */
-
 
         $data = Flight::get("products_service")->get_vitamini();
         Flight::json($data, 200);
@@ -57,23 +42,6 @@ Flight::route('GET /products/get/vitamini', function () {
 });
 
 Flight::route('GET /products/get/creatine', function () {
-
-
-        /**
- * @OA\Get(
- *      path="/products/get/creatine",
- *      tags={"products"},
- *      summary="Get products that are Creatine",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Array of all products that are Creatine in the databases"
- *      )*
- * )
- * */
-
 
         $data = Flight::get("products_service")->get_creatine();
         Flight::json($data, 200);
@@ -84,22 +52,6 @@ Flight::route('GET /products/get/creatine', function () {
 Flight::route('GET /products/get/healthybar', function () {
 
 
-        /**
- * @OA\Get(
- *      path="/products/get/healthybar",
- *      tags={"products"},
- *      summary="Get products that are Healthy Bars",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Array of all products that are Healthy Bars in the databases"
- *      )
- * )
- * */
-
-
         $data = Flight::get("products_service")->get_healthybars();
         Flight::json($data, 200);
     
@@ -107,25 +59,6 @@ Flight::route('GET /products/get/healthybar', function () {
 
 
 Flight::route('GET /products/get/byid', function () {
-
-
-   
- /**
-     * @OA\Get(
-     *      path="/products/get/byid",
-     *      tags={"products"},
-     *      summary="Get product by id",
-     * security={
-     *          {"ApiKey": {}}   
-     *      },
-     *      @OA\Response(
-     *           response=200,
-     *           description="Product data, or false if product does not exist"
-     *      ),
-     *      @OA\Parameter(@OA\Schema(type="number"), in="query", name="id", example="1", description="Product ID")
-     * )
-     */
-
 
     $payload = Flight::request()->query['id'];
     $data = Flight::get("products_service")->get_byid($payload);
@@ -141,21 +74,6 @@ Flight::route('GET /products/get/byid', function () {
 
 Flight::route('DELETE /products/delete/byid', function () {
 
-         /**
-     * @OA\Delete(
-     *      path="/products/delete/byid",
-     *      tags={"products"},
-     *      summary="Delete product by id",
-     * security={
-     *          {"ApiKey": {}}   
-     *      },
-     *      @OA\Response(
-     *           response=200,
-     *           description="Deleted product data or 500 status code exception otherwise"
-     *      ),
-     *      @OA\Parameter(@OA\Schema(type="number"), in="query", name="id", example="1", description="Product ID")
-     * )
-     */
         $payload = Flight::request()->query['id'];
     $data = Flight::get("products_service")->delete_byid($payload);
         Flight::json($data, 200);
@@ -164,23 +82,6 @@ Flight::route('DELETE /products/delete/byid', function () {
 
 
 Flight::route('GET /products/get/cart', function () {
-
-      /**
- * @OA\Get(
- *      path="/products/get/cart",
- *      tags={"products"},
- *      summary="Get products that are in Cart",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Array of all products that are in Cart in the databases"
- *      )
- * )
- * */
-
-
 
         $data = Flight::get("products_service")->getCart();
         Flight::json($data, 200);
