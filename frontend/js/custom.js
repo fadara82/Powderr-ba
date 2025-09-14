@@ -842,6 +842,7 @@ function deleteUsers(id) {
 }
 
 function initProfileModals() {
+  // --- Uređivanje podataka ---
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
@@ -852,7 +853,7 @@ function initProfileModals() {
       }
 
       $.ajax({
-        url: API_BASE_URL + "/user/editme",
+        url: API_BASE_URL + "/user/editmey",
         method: "GET",
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
@@ -876,6 +877,7 @@ function initProfileModals() {
       });
     });
 
+  // --- Spremanje izmjena ---
   $(document)
     .off("click", "#saveEditBtn")
     .on("click", "#saveEditBtn", function () {
@@ -911,6 +913,19 @@ function initProfileModals() {
       });
     });
 
+  // --- Otvaranje Change Password modala ---
+  $("#changePasswordBtn")
+    .off("click")
+    .on("click", () => {
+      const token = Utilis.get_token();
+      if (!token) {
+        alert("Niste prijavljeni! Molimo prijavite se.");
+        return;
+      }
+      $("#changePasswordModal").addClass("show");
+    });
+
+  // --- Promjena passworda ---
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -936,13 +951,12 @@ function initProfileModals() {
         return;
       }
 
-      // payload koji backend očekuje
       const payload = { newPassword: newPassword };
 
       $.ajax({
         url: API_BASE_URL + "/change-password",
         method: "POST",
-        data: payload, // šalje se kao form-data (što Flight očekuje)
+        data: payload,
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
