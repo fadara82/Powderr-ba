@@ -1098,7 +1098,7 @@ $(document).ready(function () {
                 console.log("User role:", role);
 
                 $.unblockUI();
-                $("a[href='#profile']").show();
+                $("a[href='#profileusers']").show();
 
                 if (role === "admin") {
                   window.location.hash = "#admin";
@@ -1487,8 +1487,8 @@ $(document).ready(function () {
   });
 
   app.route({
-    view: "profile",
-    load: "profile.html",
+    view: "profileusers",
+    load: "profileusers.html",
     onReady: function () {
       var token = Utilis.get_from_localstorage("token");
 
