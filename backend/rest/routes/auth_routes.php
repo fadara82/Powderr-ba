@@ -139,7 +139,17 @@ Flight::route('POST /change-password', function () {
 
 Flight::route('GET /user/editme', function() {
     try {
-        $token = Flight::request()->getHeader("Authentication");
+        $authHeader = Flight::request()->getHeader("Authorization");
+        $token = null;
+
+        if ($authHeader && preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            $token = $matches[1];
+        }
+
+        if (!$token) {
+            Flight::halt(401, "Missing or invalid Authorization header");
+        }
+
         $decoded = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         $userId = $decoded->user->id;
 
@@ -148,10 +158,9 @@ Flight::route('GET /user/editme', function() {
 
         Flight::json(['user' => $user]);
     } catch (\Exception $e) {
-        Flight::halt(401, $e->getMessage());
+        Flight::halt(401, "Invalid token: " . $e->getMessage());
     }
 });
-
 
 
 Flight::route('POST /user/update', function() {
