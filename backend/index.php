@@ -1,13 +1,4 @@
 <?php
-
-require_once "vendor/autoload.php";
-require "rest/routes/middleware_routes.php";
-require "rest/routes/orders_routes.php";
-require "rest/routes/products_routes.php";
-require "rest/routes/users_routes.php";
-require "rest/routes/auth_routes.php";
-require 'rest/routes/stripe.php';
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
@@ -19,6 +10,14 @@ Flight::route('OPTIONS /*', function() {
     http_response_code(200);
     exit();
 });
+
+require_once "vendor/autoload.php";
+require "rest/routes/middleware_routes.php";
+require "rest/routes/orders_routes.php";
+require "rest/routes/products_routes.php";
+require "rest/routes/users_routes.php";
+require "rest/routes/auth_routes.php";
+require 'rest/routes/stripe.php';
 
 Flight::route('/', function () {
   echo 'hello world!';
