@@ -849,7 +849,7 @@ function initProfileModals() {
       }
 
       $.ajax({
-        url: "http://localhost/Powder.ba/backend/user/me",
+        url: API_BASE_URL + "/user/me",
         method: "GET",
         beforeSend: function (xhr) {
           const token = Utilis.get_from_localstorage("token");
@@ -895,7 +895,7 @@ function initProfileModals() {
       }
 
       $.ajax({
-        url: "http://localhost/Powder.ba/backend/user/update",
+        url: API_BASE_URL + "/user/update",
         method: "POST",
         data: payload,
         beforeSend: function (xhr) {
@@ -944,7 +944,7 @@ function initProfileModals() {
       const payload = { newPassword };
 
       $.ajax({
-        url: "http://localhost/Powder.ba/backend/change-password",
+        url: API_BASE_URL + "/change-password",
         method: "POST",
         data: payload,
         beforeSend: function (xhr) {
