@@ -259,27 +259,6 @@ function loadAndRenderProducts() {
     },
   });
 }
-function deleteP(id) {
-  if (confirm("Are you sure you want to delete?")) {
-    $.ajax({
-      url: API_BASE_URL + `/products/delete/byid?id=${id}`,
-      method: "DELETE",
-
-      beforeSend: function (xhr) {
-        const token = Utilis.get_from_localstorage("token");
-        if (token) {
-          xhr.setRequestHeader("Authorization", "Bearer " + token);
-        }
-      },
-      success: function (response) {
-        location.reload();
-      },
-      error: function (xhr, status, error) {
-        console.error("Error sending form data:", error);
-      },
-    });
-  }
-}
 
 function getId(id) {
   $.ajax({
