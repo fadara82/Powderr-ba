@@ -141,7 +141,7 @@ function initializeStripeElements() {
                   contentType: "application/json",
                   data: JSON.stringify(orderData),
                   beforeSend: function (xhr) {
-                    const token = Utilis.get_from_localstorage("token");
+                    const token = Utilis.get_token();
                     if (token) {
                       xhr.setRequestHeader("Authorization", "Bearer " + token);
                     }
@@ -270,7 +270,8 @@ function deleteP(id) {
       method: "DELETE",
 
       beforeSend: function (xhr) {
-        const token = Utilis.get_from_localstorage("token");
+        const token = Utilis.get_token();
+
         if (token) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         }
@@ -327,7 +328,7 @@ function setupNavbar() {
     return;
   }
 
-  const token = Utilis.get_from_localstorage("token");
+  const token = Utilis.get_token();
 
   if (token) {
     try {
@@ -486,7 +487,7 @@ function checkProductAvailability(id, callback) {
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
     beforeSend: function (xhr) {
-      const token = Utilis.get_from_localstorage("token");
+      const token = Utilis.get_token();
       if (token) {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       }
@@ -512,7 +513,7 @@ function checkProductAvailability(id, callback) {
 }
 
 function addToCart(id) {
-  const token = Utilis.get_from_localstorage("token");
+  const token = Utilis.get_token();
   if (!token) {
     const loginModal = new bootstrap.Modal(
       document.getElementById("loginPromptModal")
@@ -674,7 +675,7 @@ function editProduct(id) {
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
     beforeSend: function (xhr) {
-      const token = Utilis.get_from_localstorage("token");
+      const token = Utilis.get_token();
       if (token) {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
       }
@@ -763,7 +764,7 @@ function editProduct(id) {
             contentType: "application/json",
             data: JSON.stringify(formData),
             beforeSend: function (xhr) {
-              const token = Utilis.get_from_localstorage("token");
+              const token = Utilis.get_token();
               if (token) {
                 xhr.setRequestHeader("Authorization", "Bearer " + token);
               }
@@ -793,7 +794,7 @@ function deleteUser(id) {
       url: API_BASE_URL + `/users/delete/byid?id=${id}`,
       method: "DELETE",
       beforeSend: function (xhr) {
-        const token = Utilis.get_from_localstorage("token");
+        const token = Utilis.get_token();
         if (token) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         }
@@ -825,7 +826,7 @@ function deleteUsers(id) {
       url: API_BASE_URL + `/users/delete/byid?id=${id}`,
       method: "DELETE",
       beforeSend: function (xhr) {
-        const token = Utilis.get_from_localstorage("token");
+        const token = Utilis.get_token();
         if (token) {
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         }
@@ -845,7 +846,7 @@ function initProfileModals() {
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
-      const token = Utilis.get_token(); // čisti token
+      const token = Utilis.get_token();
       if (!token) {
         alert("Niste prijavljeni! Molimo prijavite se.");
         return;
@@ -1173,7 +1174,7 @@ $(document).ready(function () {
           data: JSON.stringify(formDataObj),
           contentType: "application/json",
           beforeSend: function (xhr) {
-            const token = Utilis.get_from_localstorage("token");
+            const token = Utilis.get_token();
             if (token) {
               xhr.setRequestHeader("Authorization", "Bearer " + token);
             }
@@ -1416,7 +1417,7 @@ $(document).ready(function () {
             url: API_BASE_URL + "/orders/update/byid?id=${id}",
             type: "UPDATE",
             beforeSend: function (xhr) {
-              const token = Utilis.get_from_localstorage("token");
+              const token = Utilis.get_token();
               if (token) {
                 xhr.setRequestHeader("Authorization", "Bearer " + token);
               }
@@ -1438,7 +1439,7 @@ $(document).ready(function () {
             url: API_BASE_URL + `/orders/update/byidB?id=${id}`,
             type: "UPDATE",
             beforeSend: function (xhr) {
-              const token = Utilis.get_from_localstorage("token");
+              const token = Utilis.get_token();
               if (token) {
                 xhr.setRequestHeader("Authorization", "Bearer " + token);
               }
