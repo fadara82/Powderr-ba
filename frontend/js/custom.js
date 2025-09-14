@@ -964,7 +964,6 @@ function initProfileModals() {
       });
     });
 
-  // Zatvaranje modala
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
