@@ -9,54 +9,14 @@ Flight::set('products_service', new ProductsService());
 Flight::route('POST /products', function () {
   
 
-    /**
-     * @OA\Post(
-     *      path="/products/",
-     *      tags={"products"},
-     *      summary="Add products data to the database",
-     * security={
-     *          {"ApiKey": {}}   
-     *      },
-     *      @OA\Response(
-     *           response=200,
-     *           description="Products Data"
-     *      ),
-     *      @OA\RequestBody(
-     *          description="Products data payload",
-     *          @OA\JsonContent(
-     *              required={"productImg","productName","flavour","price","description"},
-     *              @OA\Property(property="id", type="string", example="1", description="Product ID"),
-     *              @OA\Property(property="productImg", type="string", example="https://ba.proteini.si/image/medium/9782", description="Product Img Link"),
-     *              @OA\Property(property="productName", type="string", example="Battery Whey Protein",description="Name of Product"),
-     *              @OA\Property(property="flavour", type="string", example="Vanilla",description="Flavour of Product"),
-     *              @OA\Property(property="price", type="string", example="125",description="Price of Product"),
-     *              @OA\Property(property="description", type="string", example="Jako odlican produkt",description="Description of Product"),
-     *              @OA\Property(property="category", type="string", example="Protein",description="Category of Product"),
-
-     *          )
-     *      )
-     * )
-     */
+ 
        $payload = Flight::request()->data;    
    Flight::get("products_service")->add_products($payload);
 });
 
 
 Flight::route('GET /products/get', function () {
-        /**
- * @OA\Get(
- *      path="/products/get",
- *      tags={"products"},
- *      summary="Get all products",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Array of all doctors in the databases"
- *      )
- * )
- */
+
     
         $data = Flight::get("products_service")->get_products();
         Flight::json($data, 200);
@@ -66,20 +26,7 @@ Flight::route('GET /products/get', function () {
 Flight::route('GET /products/get/proteini', function () {
 
 
-        /**
- * @OA\Get(
- *      path="/products/get/protein",
- *      tags={"products"},
- *      summary="Get products that are protein",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Array of all products that are Protein in the databases"
- *      )
- * )
- * */
+ 
         $data = Flight::get("products_service")->get_protein();
         Flight::json($data, 200);
     
