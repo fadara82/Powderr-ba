@@ -5,19 +5,13 @@ require_once __DIR__ . "/../services/ProductsService.php";
 header("Access-Control-Allow-Origin: *");
 
 Flight::set('products_service', new ProductsService());
+
 Flight::route('POST /products', function () {
-    $payload = json_decode(file_get_contents("php://input"), true);
+  
 
-    if (!$payload) {
-        Flight::halt(400, "Invalid JSON payload");
-    }
-
-    try {
-        $result = Flight::get("products_service")->add_products($payload);
-        Flight::json($result, 201);
-    } catch (Exception $e) {
-        Flight::halt(500, $e->getMessage());
-    }
+ 
+$payload = Flight::request()->data->getData();
+   Flight::get("products_service")->add_products($payload);
 });
 
 
