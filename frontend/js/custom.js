@@ -149,7 +149,7 @@ function initializeStripeElements() {
                     $("#order").attr("disabled", false);
                     form.reset();
                     cardElement.clear();
-                    window.location = "http://localhost/Powder.ba/#main";
+                    window.location.hash = "#main";
                   },
                   error: function (xhr) {
                     alert(
