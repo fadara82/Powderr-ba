@@ -425,7 +425,7 @@ $("#btnCart")
   .on("click", function (e) {
     e.preventDefault();
 
-    var token = Utilis.get_from_localstorage("token");
+    var token = Utilis.get_token();
 
     if (!token) {
       $("#loginPromptModal").modal("show");
