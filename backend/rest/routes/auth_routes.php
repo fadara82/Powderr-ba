@@ -137,7 +137,7 @@ Flight::route('POST /change-password', function () {
 });
 
 
-Flight::route('GET /user/mee', function() {
+Flight::route('GET /user/editme', function() {
     try {
         $token = Flight::request()->getHeader("Authentication");
         $decoded = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
