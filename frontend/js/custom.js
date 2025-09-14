@@ -839,7 +839,6 @@ function deleteUsers(id) {
   }
 }
 function initProfileModals() {
-  // Otvaranje modala
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
@@ -853,7 +852,10 @@ function initProfileModals() {
         url: "http://localhost/Powder.ba/backend/user/me",
         method: "GET",
         beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authentication", token);
+          const token = Utilis.get_from_localstorage("token");
+          if (token) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+          }
         },
         success: function (res) {
           if (!res.user) {
@@ -897,7 +899,10 @@ function initProfileModals() {
         method: "POST",
         data: payload,
         beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authentication", token);
+          const token = Utilis.get_from_localstorage("token");
+          if (token) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+          }
         },
         success: function (res) {
           alert(res.message || "Podaci uspješno ažurirani");
@@ -943,7 +948,10 @@ function initProfileModals() {
         method: "POST",
         data: payload,
         beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authentication", token);
+          const token = Utilis.get_from_localstorage("token");
+          if (token) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+          }
         },
         success: function (res) {
           alert(res.message || "Password changed successfully");
@@ -991,7 +999,7 @@ $(document).ready(function () {
           lname: { required: true, minlength: 2 },
           email: { required: true, email: true },
           password: { required: true, minlength: 6 },
-          cpassword: { required: true, equalTo: "#floatingPassword" }, // ispravljeno id
+          cpassword: { required: true, equalTo: "#floatingPassword" },
         },
         messages: {
           fname: {
@@ -1199,10 +1207,8 @@ $(document).ready(function () {
       const token = Utilis.get_from_localstorage("token");
 
       if (!token) {
-        // Pokaži modal
         $("#checkoutPromptModal").modal("show");
 
-        // Klik na "Prijavi me" vodi na login
         $("#checkoutLoginBtn")
           .off("click")
           .on("click", function () {
@@ -1210,17 +1216,15 @@ $(document).ready(function () {
             window.location.hash = "#login";
           });
 
-        // Klik na "Ne" vraća na main/shop
         $("#checkoutCancelBtn")
           .off("click")
           .on("click", function () {
             window.location.hash = "#main";
           });
 
-        return; // prekini dalje učitavanje checkouta
+        return;
       }
 
-      // Ako je korisnik prijavljen, učitaj Stripe i košaricu
       initializeStripeElements();
       renderCart();
     },
@@ -1230,17 +1234,16 @@ $(document).ready(function () {
     view: "shopingcart",
     load: "shopingcart.html",
     onReady: function () {
-      var token = Utilis.get_from_localstorage("token"); // dohvat tokena
+      var token = Utilis.get_from_localstorage("token");
 
       if (!token) {
-        // pokaži modal umjesto alert/redirect
         $("#loginPromptModal").modal("show");
 
         $("#loginNowBtn")
           .off("click")
           .on("click", function () {
             $("#loginPromptModal").modal("hide");
-            window.location.hash = "#login"; // SPA login view
+            window.location.hash = "#login";
           });
 
         $("#loginCancelBtn")
@@ -1500,7 +1503,7 @@ $(document).ready(function () {
             window.location.hash = "#login";
           });
 
-        $("#profileCancelBtn") // ispravljeno, bilo je "profie"
+        $("#profileCancelBtn")
           .off("click")
           .on("click", function () {
             $("#profilePromptModal").modal("hide");
@@ -1510,7 +1513,6 @@ $(document).ready(function () {
         return;
       }
 
-      // 🔹 ovdje inicijalizuješ modale
       initProfileModals();
     },
   });
