@@ -842,7 +842,6 @@ function deleteUsers(id) {
 }
 
 function initProfileModals() {
-  // --- Edit Data ---
   $("#editDataBtn")
     .off("click")
     .on("click", () => {
@@ -914,7 +913,6 @@ function initProfileModals() {
       });
     });
 
-  // --- Open Change Password Modal ---
   $("#changePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -926,7 +924,6 @@ function initProfileModals() {
       $("#changePasswordModal").addClass("show");
     });
 
-  // --- Save Password ---
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
@@ -964,16 +961,14 @@ function initProfileModals() {
         },
         success: function (res) {
           alert(res.message || "Password changed successfully");
-          modal.removeClass("show");
-          inputs.val("");
         },
         error: function (xhr) {
+          console.log("RAW response:", xhr.responseText);
           alert(xhr.responseJSON?.error || "Error changing password");
         },
       });
     });
 
-  // --- Close any modal ---
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {

@@ -14,10 +14,8 @@ class UsersDao extends BaseDao {
                 VALUES (:first_name, :last_name, :email, :mobile_number, :password, :role)";
 
         try {
-            // Hash password
             $hashed_password = password_hash($user['password'], PASSWORD_DEFAULT);
 
-            // Default role ako nije postavljena
             $role = $user['role'] ?? 'user';
 
             $statement = $this->connection->prepare($sql);

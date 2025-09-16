@@ -21,26 +21,6 @@ Flight::route('POST /login', function () {
     }
 });
 
-Flight::route('POST /change-password', function () {
-    $payload = Flight::request()->data;
-
-    $authService = Flight::get('auth_service');
-
-    // Ovdje očekujemo da payload sadrži 'userId' i 'newPassword'
-    if (!isset($payload['userId']) || !isset($payload['newPassword'])) {
-        Flight::json(['error' => 'Missing parameters'], 400);
-        return;
-    }
-
-    $result = $authService->change_user_password($payload['userId'], $payload['newPassword']);
-
-    if ($result['success']) {
-        Flight::json(['message' => $result['message']]);
-    } else {
-        Flight::json(['error' => $result['message']], 500);
-    }
-});
-
 
 
 
@@ -87,11 +67,11 @@ Flight::route('POST /change-password', function () {
 Flight::route('POST /change-password', function () {
     try {
         $authHeader = Flight::request()->getHeader("Authorization");
-        if (!$authHeader) {
-            Flight::halt(401, "Missing Authorization header");
+        if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+            Flight::halt(401, "Missing or invalid Authorization header");
         }
 
-        $token = str_replace("Bearer ", "", $authHeader);
+        $token = $matches[1];
         $decoded_token = JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
         $userId = $decoded_token->user->id ?? null;
 
@@ -99,9 +79,7 @@ Flight::route('POST /change-password', function () {
             Flight::halt(401, "Invalid token: user ID missing");
         }
 
-        // --- OVDJE PARSIRAJ JSON ---
         $input = json_decode(file_get_contents("php://input"), true);
-
         if (!isset($input['newPassword'])) {
             Flight::json(['error' => 'Missing newPassword'], 400);
             return;
@@ -117,7 +95,7 @@ Flight::route('POST /change-password', function () {
         }
 
     } catch (\Exception $e) {
-        Flight::halt(401, $e->getMessage());
+        Flight::halt(401, "Unauthorized: " . $e->getMessage());
     }
 });
 
