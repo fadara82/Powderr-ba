@@ -1419,7 +1419,7 @@ $(document).ready(function () {
       function updateOrder(id) {
         if (confirm("Update order?")) {
           $.ajax({
-            url: API_BASE_URL + `/orders/update/${id}`,
+            url: API_BASE_URL + `/orders/update/byid?id=${id}`,
             type: "PUT",
             beforeSend: function (xhr) {
               const token = Utilis.get_token();

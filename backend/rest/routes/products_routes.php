@@ -108,3 +108,6 @@ Flight::route('PUT /products/update/@id', function($id){
         Flight::json(["status" => "error", "message" => $e->getMessage()], 500);
     }
 });
+
+
+
