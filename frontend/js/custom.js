@@ -1441,7 +1441,7 @@ $(document).ready(function () {
       function updateOrder2(id) {
         if (confirm("Update order (Back)?")) {
           $.ajax({
-            url: API_BASE_URL + `/orders/update/byidB?id=${id}`,
+            url: API_BASE_URL + `/orders/updateB/${id}`,
             type: "PUT",
             beforeSend: function (xhr) {
               const token = Utilis.get_token();

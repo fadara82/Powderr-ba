@@ -127,31 +127,10 @@ Flight::route('DELETE /orders/delete/byid', function () {
 });
 
 
+
 Flight::route('PUT /orders/update/byid', function () {
 
       
-   /**
- * @OA\Put(
- *      path="/orders/update/byid/",
- *      tags={"orders"},
- *      summary="Update order by id",
- * security={
-     *          {"ApiKey": {}}   
-     *      },
- *      @OA\Response(
- *           response=200,
- *           description="Updated order data or 500 status code exception otherwise"
- *      ),
- * 
- *      @OA\Parameter(
- *           name="id",
- *           in="path",
- *           required=true,
- *           description="Order ID",
- *           @OA\Schema(type="number", example=1)
- *      )
- * )
- */
         $payload = Flight::request()->query['id'];
     $data = Flight::get("orders_service")->update_byidO($payload);
         Flight::json($data, 200);
@@ -163,5 +142,4 @@ Flight::route('PUT /orders/update/byidB', function () {
     $data = Flight::get("orders_service")->update_byidB($id);
     Flight::json($data, 200);
 });
-
 
