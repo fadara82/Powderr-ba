@@ -435,6 +435,7 @@ $("#btnCart")
         .on("click", function () {
           $("#loginPromptModal").modal("hide");
           window.location.hash = "#login";
+          location.reload();
         });
 
       $("#loginCancelBtn")
@@ -523,6 +524,7 @@ function addToCart(id) {
     document.getElementById("loginNowBtn").onclick = function () {
       loginModal.hide();
       window.location.hash = "#login";
+      location.reload();
     };
     return;
   }
@@ -658,6 +660,7 @@ function changeQuantity(id, change) {
 function logout() {
   window.localStorage.clear();
   window.location.href = "#login";
+  location.reload();
 }
 
 $(document).ready(() => {
@@ -1038,6 +1041,7 @@ $(document).ready(function () {
             success: function (response) {
               console.log("Form data sent successfully:", response);
               window.location.href = "#login";
+              location.reload();
             },
 
             error: function (xhr, status, error) {
@@ -1223,6 +1227,7 @@ $(document).ready(function () {
           .on("click", function () {
             $("#checkoutPromptModal").modal("hide");
             window.location.hash = "#login";
+            location.reload();
           });
 
         $("#checkoutCancelBtn")
@@ -1252,6 +1257,7 @@ $(document).ready(function () {
           .on("click", function () {
             $("#loginPromptModal").modal("hide");
             window.location.hash = "#login";
+            location.reload();
           });
 
         $("#loginCancelBtn")
@@ -1507,6 +1513,7 @@ $(document).ready(function () {
           .on("click", function () {
             $("#profilePromptModal").modal("hide");
             window.location.hash = "#login";
+            location.reload();
           });
 
         $("#profileCancelBtn")
