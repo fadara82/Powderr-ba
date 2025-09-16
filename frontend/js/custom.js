@@ -1119,6 +1119,12 @@ $(document).ready(function () {
               console.error("Login error:", xhr.responseText);
               alert("Server error: " + xhr.responseText);
             },
+            complete: function () {
+              // 🧹 ovdje garantuje da se blok uvijek ukloni
+              $.unblockUI();
+              $(".modal-backdrop").remove();
+              $("body").removeClass("modal-open").css("overflow", "auto");
+            },
           });
         },
       });
