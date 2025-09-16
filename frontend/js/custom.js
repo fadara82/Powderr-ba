@@ -1104,6 +1104,8 @@ $(document).ready(function () {
                 $.unblockUI();
                 $("a[href='#profileusers']").show();
 
+                setupNavbar();
+
                 if (role === "admin") {
                   window.location.hash = "#admin";
                 } else {
@@ -1120,7 +1122,6 @@ $(document).ready(function () {
               alert("Server error: " + xhr.responseText);
             },
             complete: function () {
-              // 🧹 ovdje garantuje da se blok uvijek ukloni
               $.unblockUI();
               $(".modal-backdrop").remove();
               $("body").removeClass("modal-open").css("overflow", "auto");
