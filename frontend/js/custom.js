@@ -445,7 +445,7 @@ $("#btnCart")
 
       return;
     }
-
+    renderCart();
     window.location.hash = "#shopingcart";
   });
 
