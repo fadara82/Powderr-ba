@@ -15,36 +15,7 @@ class OrdersDao extends BaseDao {
         parent::__construct('orders');
     }
 
-/*
-public function add_orders($order) {
-    $sql = "INSERT INTO orders 
-            (first_name, last_name, email, mobile_number, city, address, total_price, product_description) 
-            VALUES 
-            (:first_name, :last_name, :email, :mobile_number, :city, :address, :total_price, :product_description)";
 
-    try {
-        $statement = $this->connection->prepare($sql);
-
-        $statement->bindValue(':first_name', $order['fName']);
-        $statement->bindValue(':last_name', $order['lastName']);
-        $statement->bindValue(':email', $order['email']);
-        $statement->bindValue(':mobile_number', $order['mobilenumber']);
-        $statement->bindValue(':city', $order['city']);
-        $statement->bindValue(':address', $order['address']);
-        $statement->bindValue(':total_price', $order['total_price']);
-        $statement->bindValue(':product_description', $order['product_description']);
-
-        $statement->execute();
-
-    
-
-        return $order;  // Narudžba se vraća čak i ako email ne ode
-    } catch (PDOException $e) {
-        error_log('Error adding order: ' . $e->getMessage());
-        throw new Exception('Failed to add order');
-    }
-}
-*/
 
 public function add_orders($order) {
     $sql = "INSERT INTO orders 
@@ -66,17 +37,15 @@ public function add_orders($order) {
 
         $statement->execute();
 
-        // Send confirmation email
         $this->sendConfirmationEmail($order['email'], $order['fName'], $order['product_description'], $order['total_price']);
 
-        return $order;  // Return order even if email fails
+        return $order;  
     } catch (PDOException $e) {
         error_log('Error adding order: ' . $e->getMessage());
         throw new Exception('Failed to add order');
     }
 }
 
-// Function to send email
 private function sendConfirmationEmail($toEmail, $toName, $productDescription, $totalPrice) {
     $mail = new PHPMailer(true);
 
@@ -154,7 +123,6 @@ public function delete_byidO($id){
 
 public function update_byidO($id) {
     try {
-        // 1️⃣ Dohvati narudžbu po ID prije update-a
         $stmt = $this->connection->prepare("SELECT * FROM orders WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -164,13 +132,11 @@ public function update_byidO($id) {
             throw new Exception("Order not found");
         }
 
-        // 2️⃣ Update statusa
         $sql = "UPDATE orders SET status = 'SENT' WHERE id = :id";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        // 3️⃣ Pošalji email
         $this->sendSentEmail($order['email'], $order['first_name'], $order['product_description'], $order['total_price']);
 
         return $order;
@@ -181,7 +147,6 @@ public function update_byidO($id) {
     }
 }
 
-// Funkcija za slanje emaila kada je narudžba poslana
 private function sendSentEmail($toEmail, $toName, $productDescription, $totalPrice) {
     $mail = new PHPMailer(true);
 
