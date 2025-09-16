@@ -103,49 +103,50 @@ private function sendConfirmationEmail($toEmail, $toName, $productDescription, $
     }
 }
 
-public function delete_byidO($id){
-    $sql = "DELETE  FROM orders WHERE id = :id";
-    try {
-        $statement = $this->connection->prepare($sql);
-        
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        
-        $statement->execute();
-        
-        $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $orders;
-    } catch (PDOException $e) {
-        error_log('Error getting product by ID: ' . $e->getMessage());
-        throw new Exception('Failed to get product by ID');
-    }
-}
-
-public function update_byidO($id) {
-    try {
-        $stmt = $this->connection->prepare("SELECT * FROM orders WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        $order = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$order) {
-            throw new Exception("Order not found");
+  public function delete_byidO($id) {
+        $sql = "DELETE FROM orders WHERE id = :id";
+        try {
+            $statement = $this->connection->prepare($sql);
+            $statement->bindParam(':id', $id, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->rowCount() > 0; // true ako je obrisano
+        } catch (PDOException $e) {
+            error_log('Error deleting order: ' . $e->getMessage());
+            throw new Exception('Failed to delete order');
         }
-
-        $sql = "UPDATE orders SET status = 'SENT' WHERE id = :id";
-        $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
-
-        $this->sendSentEmail($order['email'], $order['first_name'], $order['product_description'], $order['total_price']);
-
-        return $order;
-
-    } catch (PDOException $e) {
-        error_log('Error updating order: ' . $e->getMessage());
-        throw new Exception('Failed to update order');
     }
-}
+
+
+ public function update_byidO($id) {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM orders WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $order = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$order) {
+                throw new Exception("Order not found");
+            }
+
+            $sql = "UPDATE orders SET status = 'SENT' WHERE id = :id";
+            $statement = $this->connection->prepare($sql);
+            $statement->bindParam(':id', $id, PDO::PARAM_INT);
+            $statement->execute();
+
+            $this->sendSentEmail(
+                $order['email'], 
+                $order['first_name'], 
+                $order['product_description'], 
+                $order['total_price']
+            );
+
+            return $order;
+
+        } catch (PDOException $e) {
+            error_log('Error updating order: ' . $e->getMessage());
+            throw new Exception('Failed to update order');
+        }
+    }
 
 private function sendSentEmail($toEmail, $toName, $productDescription, $totalPrice) {
     $mail = new PHPMailer(true);
@@ -186,22 +187,19 @@ private function sendSentEmail($toEmail, $toName, $productDescription, $totalPri
 
 public function update_byidB($id){
     $sql = "UPDATE orders SET status = 'Ordered' WHERE id = :id";
-;
     try {
         $statement = $this->connection->prepare($sql);
-        
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        
         $statement->execute();
-        
-        $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $orders;
+
+        // vrati true ako je update izvršen na barem jednom redu
+        return $statement->rowCount() > 0;
     } catch (PDOException $e) {
-        error_log('Error getting product by ID: ' . $e->getMessage());
-        throw new Exception('Failed to get product by ID');
+        error_log('Error updating order (Back): ' . $e->getMessage());
+        throw new Exception('Failed to update order (Back)');
     }
 }
+
 }
 
 

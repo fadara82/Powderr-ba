@@ -218,38 +218,6 @@ public function updateProductById($id, $product) {
 }
 
 
-// public function updatep_byid($id,$product){
-
-//     $sql = "UPDATE products 
-//         SET productImg = :productImg, 
-//             productName = :productName, 
-//             flavour = :flavour, 
-//             price = :price, 
-//             description = :description, 
-//             category = :category";
-
-//         try {
-//             $statement = $this->connection->prepare($sql);
-//                     $statement->bindParam(':id', $id, PDO::PARAM_INT);
-
-
-//     $statement->bindValue(':productImg', $product['image']);      
-//     $statement->bindValue(':productName', $product['productName']);        
-//     $statement->bindValue(':flavour', $product['flavour']);                
-//     $statement->bindValue(':price', $product['price']); 
-//     $statement->bindValue(':description', $product['desc']);      
-//     $statement->bindValue(':category', $product['category']);        
-
-//             // Execute the prepared statement
-//             $statement->execute();
-
-           
-//             return $product;
-//         } catch (PDOException $e) {
-//             error_log('Error adding order: ' . $e->getMessage());
-//             throw new Exception('Failed to add order');
-//         }
-// }
 
 
  }

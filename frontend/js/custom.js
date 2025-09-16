@@ -1419,8 +1419,8 @@ $(document).ready(function () {
       function updateOrder(id) {
         if (confirm("Update order?")) {
           $.ajax({
-            url: API_BASE_URL + `/orders/update/byid?id=${id}`,
-            type: "UPDATE",
+            url: API_BASE_URL + `/orders/update/${id}`,
+            type: "PUT",
             beforeSend: function (xhr) {
               const token = Utilis.get_token();
               if (token) {
@@ -1442,7 +1442,7 @@ $(document).ready(function () {
         if (confirm("Update order (Back)?")) {
           $.ajax({
             url: API_BASE_URL + `/orders/update/byidB?id=${id}`,
-            type: "UPDATE",
+            type: "PUT",
             beforeSend: function (xhr) {
               const token = Utilis.get_token();
               if (token) {

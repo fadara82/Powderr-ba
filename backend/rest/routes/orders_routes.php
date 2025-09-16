@@ -127,7 +127,7 @@ Flight::route('DELETE /orders/delete/byid', function () {
 });
 
 
-Flight::route('UPDATE /orders/update/byid', function () {
+Flight::route('PUT /orders/update/byid', function () {
 
       
    /**
@@ -158,7 +158,7 @@ Flight::route('UPDATE /orders/update/byid', function () {
     
 });
 
-Flight::route('UPDATE /orders/update/byidB', function () {
+Flight::route('PUT /orders/update/byidB', function () {
     $id = Flight::request()->query['id'];
     $data = Flight::get("orders_service")->update_byidB($id);
     Flight::json($data, 200);
