@@ -11170,9 +11170,10 @@ a {
 
 @media (min-width: 1025px) {
   .h-custom {
-    height: 100vh !important;
+    min-height: 100vh !important;
   }
 }
+
 
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
   font-size: 1rem;
