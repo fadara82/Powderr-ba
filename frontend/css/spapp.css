@@ -22,7 +22,30 @@ main#spapp > section:target ~ * {
   display: none;
 }
 main#spapp > section {
-  height: auto !important; /* prilagodi visinu sadržaju */
-  min-height: 100vh; /* minimalno cijeli ekran */
-  overflow: hidden; /* sakrij višak ako postoji */
+  height: auto !important;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#navbarDropdown2 {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  #navbarDropdown2 {
+    display: inline-block !important;
+  }
+}
+
+#adminop2 {
+  display: none;
+}
+
+@media (max-width: 550px) {
+  #adminop {
+    display: none;
+  }
+  #adminop2 {
+    display: inline;
+  }
 }

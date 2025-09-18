@@ -287,6 +287,8 @@ function deleteP(id) {
 }
 
 function getId(id) {
+  $("#shopitemdiv").html("<p>Loading...</p>");
+
   $.ajax({
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
