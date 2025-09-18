@@ -293,10 +293,8 @@ function getId(id) {
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
     success: function (item) {
-      // spremi u localStorage
       localStorage.setItem("currentProduct", JSON.stringify(item));
-
-      // prebaci na shopitem view
+      renderProduct(item);
       window.location.hash = "#shopitem";
     },
     error: function (xhr, status, error) {
