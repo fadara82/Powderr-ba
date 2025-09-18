@@ -1144,24 +1144,25 @@ $(document).ready(function () {
       if (savedProduct) {
         const item = JSON.parse(savedProduct);
 
-        // povuci prave podatke sa backend-a
-        $.get(API_BASE_URL + "/products/get/" + item.id, function (product) {
-          let images =
-            product.images && product.images.length > 0
-              ? product.images
-              : [product.productImg];
+        $.get(
+          API_BASE_URL + "/products/get/byid?id=" + item.id,
+          function (product) {
+            let images =
+              product.images && product.images.length > 0
+                ? product.images
+                : [product.productImg];
 
-          let carouselItems = "";
-          images.forEach((img, i) => {
-            carouselItems += `
+            let carouselItems = "";
+            images.forEach((img, i) => {
+              carouselItems += `
             <div class="carousel-item ${i === 0 ? "active" : ""}">
               <img class="d-block w-100" src="${img}" alt="Product image ${
-              i + 1
-            }">
+                i + 1
+              }">
             </div>`;
-          });
+            });
 
-          var html = `
+            var html = `
           <div class="col-md-6">
             <div id="productCarousel" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">${carouselItems}</div>
@@ -1192,8 +1193,9 @@ $(document).ready(function () {
           </div>
         `;
 
-          $("#shopitemdiv").empty().append(html);
-        });
+            $("#shopitemdiv").empty().append(html);
+          }
+        );
       }
     },
   });
