@@ -41,7 +41,7 @@ main#spapp > section {
   display: none;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 500px) {
   #adminop {
     display: none;
   }

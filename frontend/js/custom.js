@@ -310,9 +310,11 @@ function getId(id) {
               </button>
             </div>
           </div>
-<a href="#main" class="btn-outline-small">
-    <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
-  </a>      `;
+<a href="#main" class="btn btn-outline-dark btn-sm mt-3">
+  <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
+</a>
+
+     `;
       $("#shopitemdiv").empty().append(html);
     },
     error: function (xhr, status, error) {
