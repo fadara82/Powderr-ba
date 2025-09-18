@@ -35,21 +35,31 @@ public function __construct(){
     }
 }
     
-     public function get_products(){
+    public function get_products(){
     $sql = "SELECT * FROM products";
     try {
         $statement = $this->connection->prepare($sql);
-        
         $statement->execute();
-        
-        $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $orders;
+        $products = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($products as &$p) {
+            if (!empty($p["productImg"])) {
+                $decoded = json_decode($p["productImg"], true);
+                if ($decoded && is_array($decoded)) {
+                    // ako je JSON niz → uzmi prvu sliku
+                    $p["productImg"] = $decoded[0];
+                }
+                // ako nije JSON → ostaje originalni string
+            }
+        }
+
+        return $products;
     } catch (PDOException $e) {
-        error_log('Error getting orders: ' . $e->getMessage());
-        throw new Exception('Failed to get orders');
+        error_log('Error getting products: ' . $e->getMessage());
+        throw new Exception('Failed to get products');
     }
 }
+
  
 
 public function get_protein(){
