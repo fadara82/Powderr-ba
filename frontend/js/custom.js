@@ -1143,26 +1143,54 @@ $(document).ready(function () {
       const savedProduct = localStorage.getItem("currentProduct");
       if (savedProduct) {
         const item = JSON.parse(savedProduct);
+
+        let images = item.images ? item.images : [item.productImg];
+
+        let carouselItems = "";
+        images.forEach((img, i) => {
+          carouselItems += `
+          <div class="carousel-item ${i === 0 ? "active" : ""}">
+            <img class="d-block w-100" src="${img}" alt="Product image ${
+            i + 1
+          }">
+          </div>`;
+        });
+
         var html = `
-          <div class="col-md-6">
-            <img class="card-img-top mb-5 mb-md-0" src="${item.productImg}" alt="..." />
-          </div>
-          <div class="col-md-6">
-            <h1 class="display-5 fw-bolder title">${item.productName}</h1>
-            <div class="fs-5 mb-5"><span>${item.price} KM</span></div>
-            <p class="lead">${item.description}<p class="flavour">Flavour: ${item.flavour}</p></p>
-            <div class="d-flex">
-              <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addToCart(${item.id})">
-                <i class="bi-cart-fill me-1"></i> Add to cart
-              </button>
+        <div class="col-md-6">
+          <div id="productCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              ${carouselItems}
             </div>
+            <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-<div class="back-to-shop">
-  <a href="#main" class="btn-outline-small">
-    <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
-  </a>
-</div>
-    `;
+        </div>
+
+        <div class="col-md-6">
+          <h1 class="display-5 fw-bolder title">${item.productName}</h1>
+          <div class="fs-5 mb-5"><span>${item.price} KM</span></div>
+          <p class="lead">${item.description}<p class="flavour">Flavour: ${item.flavour}</p></p>
+          <div class="d-flex">
+            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addToCart(${item.id})">
+              <i class="bi-cart-fill me-1"></i> Add to cart
+            </button>
+          </div>
+        </div>
+
+        <div class="back-to-shop">
+          <a href="#main" class="btn-outline-small">
+            <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
+          </a>
+        </div>
+      `;
+
         $("#shopitemdiv").empty().append(html);
       }
     },
@@ -1368,7 +1396,6 @@ $(document).ready(function () {
     onReady: function () {
       renderCart();
 
-      // GET orders
       $.get({
         url: API_BASE_URL + "/orders/get",
         beforeSend: function (xhr) {

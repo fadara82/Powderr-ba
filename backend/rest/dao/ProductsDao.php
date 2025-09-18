@@ -114,7 +114,7 @@ public function get_healthybars(){
         throw new Exception('Failed to get protein products');
     }
 }
-
+/*
 public function get_byid($id){
     $sql = "SELECT * FROM products WHERE id = :id";
     try {
@@ -122,6 +122,33 @@ public function get_byid($id){
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
         $product = $statement->fetch(PDO::FETCH_ASSOC); // fetch umjesto fetchAll
+        return $product;
+    } catch (PDOException $e) {
+        error_log('Error getting product by ID: ' . $e->getMessage());
+        throw new Exception('Failed to get product by ID');
+    }
+}
+*/
+
+public function get_byid($id){
+    $sql = "SELECT * FROM products WHERE id = :id";
+    try {
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $product = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($product && !empty($product["productImg"])) {
+            $decoded = json_decode($product["productImg"], true);
+            if ($decoded && is_array($decoded)) {
+                $product["images"] = $decoded; 
+            } else {
+                $product["images"] = [$product["productImg"]];
+            }
+        } else {
+            $product["images"] = [];
+        }
+
         return $product;
     } catch (PDOException $e) {
         error_log('Error getting product by ID: ' . $e->getMessage());
