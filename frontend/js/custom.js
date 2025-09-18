@@ -287,20 +287,8 @@ function deleteP(id) {
 }
 
 function getId(id) {
-  $("#shopitemdiv").html("<p>Loading...</p>");
-
-  $.ajax({
-    url: API_BASE_URL + `/products/get/byid?id=${id}`,
-    method: "GET",
-    success: function (item) {
-      localStorage.setItem("currentProduct", JSON.stringify(item));
-      renderProduct(item);
-      window.location.hash = "#shopitem";
-    },
-    error: function (xhr, status, error) {
-      console.error("Error loading product:", error);
-    },
-  });
+  localStorage.setItem("pendingProductId", id);
+  window.location.hash = "#shopitem";
 }
 
 function setupNavbar() {
@@ -1124,63 +1112,65 @@ $(document).ready(function () {
     view: "shopitem",
     load: "shopitem.html",
     onReady: function () {
-      const savedProduct = localStorage.getItem("currentProduct");
-      if (savedProduct) {
-        const item = JSON.parse(savedProduct);
+      const pendingId = localStorage.getItem("pendingProductId");
+      if (!pendingId) return;
 
-        $.get(
-          API_BASE_URL + "/products/get/byid?id=" + item.id,
-          function (product) {
-            let images =
-              product.images && product.images.length > 0
-                ? product.images
-                : [product.productImg];
+      $("#shopitemdiv").html("<p>Loading...</p>");
 
-            let carouselItems = "";
-            images.forEach((img, i) => {
-              carouselItems += `
-            <div class="carousel-item ${i === 0 ? "active" : ""}">
-              <img class="d-block w-100" src="${img}" alt="Product image ${
-                i + 1
-              }">
-            </div>`;
-            });
+      $.get(
+        API_BASE_URL + "/products/get/byid?id=" + pendingId,
+        function (product) {
+          localStorage.setItem("currentProduct", JSON.stringify(product));
 
-            var html = `
-          <div class="col-md-6">
-            <div id="productCarousel" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">${carouselItems}</div>
-              <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-              </a>
-              <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-              </a>
-            </div>
-          </div>
+          let images =
+            product.images && product.images.length > 0
+              ? product.images
+              : [product.productImg];
 
-          <div class="col-md-6">
-            <h1 class="display-5 fw-bolder title">${product.productName}</h1>
-            <div class="fs-5 mb-5"><span>${product.price} KM</span></div>
-            <p class="lead">${product.description}<p class="flavour">Flavour: ${product.flavour}</p></p>
-            <div class="d-flex">
-              <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addToCart(${product.id})">
-                <i class="bi-cart-fill me-1"></i> Add to cart
-              </button>
-            </div>
-          </div>
+          let carouselItems = "";
+          images.forEach((img, i) => {
+            carouselItems += `
+          <div class="carousel-item ${i === 0 ? "active" : ""}">
+            <img class="d-block w-100" src="${img}" alt="Product image ${
+              i + 1
+            }">
+          </div>`;
+          });
 
-          <div class="back-to-shop">
-            <a href="#main" class="btn-outline-small">
-              <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
+          let html = `
+        <div class="col-md-6">
+          <div id="productCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">${carouselItems}</div>
+            <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
             </a>
           </div>
-        `;
+        </div>
 
-            $("#shopitemdiv").empty().append(html);
-          }
-        );
-      }
+        <div class="col-md-6">
+          <h1 class="display-5 fw-bolder title">${product.productName}</h1>
+          <div class="fs-5 mb-5"><span>${product.price} KM</span></div>
+          <p class="lead">${product.description}<p class="flavour">Flavour: ${product.flavour}</p></p>
+          <div class="d-flex">
+            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addToCart(${product.id})">
+              <i class="bi-cart-fill me-1"></i> Add to cart
+            </button>
+          </div>
+        </div>
+
+        <div class="back-to-shop mt-3">
+          <a href="#main" class="btn-outline-small">
+            <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
+          </a>
+        </div>
+      `;
+
+          $("#shopitemdiv").empty().append(html);
+        }
+      );
     },
   });
 
