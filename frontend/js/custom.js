@@ -292,30 +292,12 @@ function getId(id) {
   $.ajax({
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
-
     success: function (item) {
+      // spremi u localStorage
       localStorage.setItem("currentProduct", JSON.stringify(item));
 
-      var html = `
-         <div class="col-md-6">
-            <img class="card-img-top mb-5 mb-md-0" src="${item.productImg}" alt="..." />
-          </div>
-          <div class="col-md-6">
-            <h1 class="display-5 fw-bolder title">${item.productName}</h1>
-            <div class="fs-5 mb-5"><span>${item.price} KM</span></div>
-            <p class="lead">${item.description}<p class="flavour">Flavour: ${item.flavour}</p></p>
-            <div class="d-flex">
-              <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addToCart(${id})">
-                <i class="bi-cart-fill me-1"></i> Add to cart
-              </button>
-            </div>
-          </div>
-<a href="#main" class="btn btn-outline-dark btn-sm mt-3">
-  <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
-</a>
-
-     `;
-      $("#shopitemdiv").empty().append(html);
+      // prebaci na shopitem view
+      window.location.hash = "#shopitem";
     },
     error: function (xhr, status, error) {
       console.error("Error loading product:", error);
