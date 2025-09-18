@@ -49,3 +49,9 @@ main#spapp > section {
     display: inline;
   }
 }
+
+@media (max-width: 300px) {
+  #shopo {
+    display: block !important;
+  }
+}

@@ -1056,7 +1056,7 @@ $(document).ready(function () {
             data: formData,
 
             beforeSend: function () {
-              $.blockUI({ message: "Molimo sačekajte..." });
+              $.blockUI({ message: "Please wait" });
             },
 
             success: function (response) {
