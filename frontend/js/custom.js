@@ -1278,7 +1278,7 @@ $(document).ready(function () {
           .off("click")
           .on("click", function () {
             $("#loginPromptModal").modal("hide");
-            window.location.hash = "#main"; // vraćanje na main
+            window.location.hash = "#main";
           });
 
         return;
@@ -1519,7 +1519,10 @@ $(document).ready(function () {
       const token = Utilis.get_token();
 
       if (!token) {
-        // blokiraj pristup stranici
+        $("#profilePromptModal").modal({
+          backdrop: "static",
+          keyboard: false,
+        });
         $("#profilePromptModal").modal("show");
 
         $("#profileLoginBtn")
@@ -1527,7 +1530,6 @@ $(document).ready(function () {
           .on("click", function () {
             $("#profilePromptModal").modal("hide");
             window.location.hash = "#login";
-            location.reload();
           });
 
         $("#profileCancelBtn")
@@ -1537,12 +1539,9 @@ $(document).ready(function () {
             window.location.hash = "#main";
           });
 
-        // --- najbitnije ---
-        $("#profileusers").empty(); // očisti sekciju da se ne prikaže sadržaj
         return;
       }
 
-      // Ako je logovan, tek onda inicijaliziraj profile
       initProfileModals();
     },
   });
