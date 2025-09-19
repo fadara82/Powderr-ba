@@ -335,7 +335,9 @@ function getProteini() {
     dataType: "json",
 
     success: function (data) {
-      renderCategory(data);
+      products = data;
+      currentPage = 1;
+      renderPage(currentPage);
     },
     error: function (xhr, status, error) {
       console.log("Error loading proteini:");
