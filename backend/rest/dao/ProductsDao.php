@@ -46,7 +46,7 @@ public function __construct(){
             if (!empty($p["productImg"])) {
                 $decoded = json_decode($p["productImg"], true);
                 if ($decoded && is_array($decoded)) {
-                    
+
                     $p["productImg"] = $decoded[0];
                 }
             }
@@ -60,84 +60,98 @@ public function __construct(){
 }
 
  
-
 public function get_protein(){
     $sql = "SELECT * FROM products WHERE category = 'Proteini'";
     try {
         $statement = $this->connection->prepare($sql);
-        
         $statement->execute();
-        
         $products = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+
+        foreach ($products as &$p) {
+            if (!empty($p["productImg"])) {
+                $decoded = json_decode($p["productImg"], true);
+                if ($decoded && is_array($decoded)) {
+                    $p["productImg"] = $decoded[0];
+                }
+            }
+        }
+
         return $products;
     } catch (PDOException $e) {
         error_log('Error getting protein products: ' . $e->getMessage());
         throw new Exception('Failed to get protein products');
     }
 }
-
 
 public function get_vitamini(){
     $sql = "SELECT * FROM products WHERE category = 'Vitamini'";
     try {
         $statement = $this->connection->prepare($sql);
-        
         $statement->execute();
-        
         $products = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+
+        foreach ($products as &$p) {
+            if (!empty($p["productImg"])) {
+                $decoded = json_decode($p["productImg"], true);
+                if ($decoded && is_array($decoded)) {
+                    $p["productImg"] = $decoded[0];
+                }
+            }
+        }
+
         return $products;
     } catch (PDOException $e) {
-        error_log('Error getting protein products: ' . $e->getMessage());
-        throw new Exception('Failed to get protein products');
+        error_log('Error getting vitamin products: ' . $e->getMessage());
+        throw new Exception('Failed to get vitamin products');
     }
 }
+
 public function get_creatine(){
     $sql = "SELECT * FROM products WHERE category = 'Creatine'";
     try {
         $statement = $this->connection->prepare($sql);
-        
         $statement->execute();
-        
         $products = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+
+        foreach ($products as &$p) {
+            if (!empty($p["productImg"])) {
+                $decoded = json_decode($p["productImg"], true);
+                if ($decoded && is_array($decoded)) {
+                    $p["productImg"] = $decoded[0];
+                }
+            }
+        }
+
         return $products;
     } catch (PDOException $e) {
-        error_log('Error getting protein products: ' . $e->getMessage());
-        throw new Exception('Failed to get protein products');
+        error_log('Error getting creatine products: ' . $e->getMessage());
+        throw new Exception('Failed to get creatine products');
     }
 }
+
 public function get_healthybars(){
     $sql = "SELECT * FROM products WHERE category = 'Cokoladice'";
     try {
         $statement = $this->connection->prepare($sql);
-        
         $statement->execute();
-        
         $products = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+
+        foreach ($products as &$p) {
+            if (!empty($p["productImg"])) {
+                $decoded = json_decode($p["productImg"], true);
+                if ($decoded && is_array($decoded)) {
+                    $p["productImg"] = $decoded[0];
+                }
+            }
+        }
+
         return $products;
     } catch (PDOException $e) {
-        error_log('Error getting protein products: ' . $e->getMessage());
-        throw new Exception('Failed to get protein products');
+        error_log('Error getting healthy bars products: ' . $e->getMessage());
+        throw new Exception('Failed to get healthy bars products');
     }
 }
-/*
-public function get_byid($id){
-    $sql = "SELECT * FROM products WHERE id = :id";
-    try {
-        $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
-        $product = $statement->fetch(PDO::FETCH_ASSOC); // fetch umjesto fetchAll
-        return $product;
-    } catch (PDOException $e) {
-        error_log('Error getting product by ID: ' . $e->getMessage());
-        throw new Exception('Failed to get product by ID');
-    }
-}
-*/
+
 
 public function get_byid($id){
     $sql = "SELECT * FROM products WHERE id = :id";

@@ -1028,7 +1028,6 @@ $(document).ready(function () {
       });
     },
   });
-
   app.route({
     view: "login",
     load: "login.html",
@@ -1055,8 +1054,7 @@ $(document).ready(function () {
             required: "Please enter your password",
             minlength: "Password must be at least 6 characters long",
             maxlength: "Password cannot be longer than 20 characters",
-            strongPassword:
-              "Password must contain at least one letter and one number",
+            pattern: "Password must contain at least one letter and one number",
           },
         },
         submitHandler: function (form, event) {
@@ -1069,7 +1067,6 @@ $(document).ready(function () {
             url: API_BASE_URL + "/login",
             method: "POST",
             data: formData,
-            dataType: "json",
 
             beforeSend: function () {
               $.blockUI({ message: "Please wait" });
@@ -1091,6 +1088,7 @@ $(document).ready(function () {
 
                 $.unblockUI();
                 $("a[href='#profileusers']").show();
+
                 setupNavbar();
 
                 if (role === "admin") {
