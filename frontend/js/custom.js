@@ -662,76 +662,64 @@ function editProduct(id) {
         return;
       }
 
-      var html = `
-                <form class="modal show" id="exampleModale" tabindex="-1" role="dialog" style="display:block;">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title">Edit Product</h5>
-                        <button type="button" class="close" aria-label="Close" onclick="$('#exampleModale').remove()">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                         <img src="${
-                           Array.isArray(item.productImg)
-                             ? item.productImg[0]
-                             : item.productImg
-                         }" style="max-height:100px; max-width:100px;">
-<input type="text" name="image" id="addimage" value="${
-        Array.isArray(item.productImg)
-          ? item.productImg.join(", ")
-          : item.productImg
-      }" placeholder="Add Image link" style="flex:1;">
+      let imgs = item.images || [];
+      let previewImg = imgs.length > 0 ? imgs[0] : "";
+      let inputVal = imgs.join(", ");
 
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                          <label style="flex-basis:150px;">Product Name</label>
-                          <input type="text" name="productName" value="${
-                            item.productName
-                          }" style="flex:1;">
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                          <label style="flex-basis:150px;">Flavour</label>
-                          <input type="text" name="flavour" value="${
-                            item.flavour
-                          }" style="flex:1;">
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                          <label style="flex-basis:150px;">Price</label>
-                          <input type="text" name="price" value="${
-                            item.price
-                          }" style="flex:1;">
-                        </div>
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                          <label style="flex-basis:150px;">Description</label>
-                          <input type="text" name="desc" value="${
-                            item.description
-                          }" style="flex:1;">
-                        </div>
-                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
-                          <label style="width:150px;">Category</label>
-                          <input type="text" id="categoryText" value="${
-                            item.category
-                          }" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
-                          <select id="categorySelect" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
-                            <option value="">Select Category</option>
-                            <option value="Proteini">Proteini</option>
-                            <option value="Vitamini">Vitamini</option>
-                            <option value="Creatine">Creatine</option>
-                            <option value="Cokoladice">Cokoladice</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="$('#exampleModale').remove()">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-            `;
+      var html = `
+        <form class="modal show" id="exampleModale" tabindex="-1" role="dialog" style="display:block;">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="close" aria-label="Close" onclick="$('#exampleModale').remove()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <img src="${previewImg}" style="max-height:100px; max-width:100px;">
+                  <input type="text" name="image" id="addimage" 
+                         value="${inputVal}" 
+                         placeholder="Add Image link(s), separate by comma" 
+                         style="flex:1;">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label style="flex-basis:150px;">Product Name</label>
+                  <input type="text" name="productName" value="${item.productName}" style="flex:1;">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label style="flex-basis:150px;">Flavour</label>
+                  <input type="text" name="flavour" value="${item.flavour}" style="flex:1;">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label style="flex-basis:150px;">Price</label>
+                  <input type="text" name="price" value="${item.price}" style="flex:1;">
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label style="flex-basis:150px;">Description</label>
+                  <input type="text" name="desc" value="${item.description}" style="flex:1;">
+                </div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                  <label style="width:150px;">Category</label>
+                  <input type="text" id="categoryText" value="${item.category}" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
+                  <select id="categorySelect" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
+                    <option value="">Select Category</option>
+                    <option value="Proteini">Proteini</option>
+                    <option value="Vitamini">Vitamini</option>
+                    <option value="Creatine">Creatine</option>
+                    <option value="Cokoladice">Cokoladice</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="$('#exampleModale').remove()">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      `;
 
       $("#modalje").empty().append(html);
 
