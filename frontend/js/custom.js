@@ -181,79 +181,78 @@ function initializeStripeElements() {
   return true;
 }
 
-function loadAndRenderProducts() {
+let products = [];
+let currentPage = 1;
+const itemsPerPage = 8;
+
+function renderPage(page) {
   const container = $("#maindiv");
   const prevBtn = $("#prev");
   const nextBtn = $("#next");
   const pageInfo = $("#pageInfo");
 
-  let products = [];
-  let currentPage = 1;
-  const itemsPerPage = 8;
+  container.empty();
 
-  function renderPage(page) {
-    container.empty();
+  const totalPages = Math.ceil(products.length / itemsPerPage);
+  if (page < 1) page = 1;
+  if (page > totalPages) page = totalPages;
 
-    const totalPages = Math.ceil(products.length / itemsPerPage);
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const pageItems = products.slice(startIndex, endIndex);
 
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const pageItems = products.slice(startIndex, endIndex);
-
-    pageItems.forEach((item) => {
-      let html = `<div class="col mb-5" id="div1">
-          <div class="card h-100">
-            <div class="edit" style="display: flex; align-items: center; justify-content: space-between;">
-              <button onclick="editProduct(${item.id})">✏️</button> 
-              <button onclick="deleteP(${item.id})">🗑️</button>
-            </div>
-            <a href="#shopitem">
-              <img class="card-img-top slika" src="${item.productImg}" alt="..." onClick="getId(${item.id})" />
-            </a>
-            <div class="card-body p-4">
-              <div class="text-center">
-                <a href="#shopitem">
-                  <h5 class="fw-bolder title" onClick="getId(${item.id})">${item.productName}</h5>
-                  <h5 class="flavour">${item.flavour}</h5>
-                </a>
-                <strong class="price">${item.price} KM</strong>
-              </div>
-            </div>
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center">
-                <a class="btn btn-outline-dark mt-auto" onclick="addToCart(${item.id})">Add to cart</a>
-              </div>
+  pageItems.forEach((item) => {
+    let html = `
+      <div class="col mb-5" id="div1">
+        <div class="card h-100">
+          <div class="edit" style="display: flex; align-items: center; justify-content: space-between;">
+            <button onclick="editProduct(${item.id})">✏️</button> 
+            <button onclick="deleteP(${item.id})">🗑️</button>
+          </div>
+          <a href="#shopitem">
+            <img class="card-img-top slika" src="${item.productImg}" alt="..." onClick="getId(${item.id})" />
+          </a>
+          <div class="card-body p-4">
+            <div class="text-center">
+              <a href="#shopitem">
+                <h5 class="fw-bolder title" onClick="getId(${item.id})">${item.productName}</h5>
+                <h5 class="flavour">${item.flavour}</h5>
+              </a>
+              <strong class="price">${item.price} KM</strong>
             </div>
           </div>
-        </div>`;
-      container.append(html);
-    });
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <a class="btn btn-outline-dark mt-auto" onclick="addToCart(${item.id})">Add to cart</a>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    container.append(html);
+  });
 
-    $(".edit").hide();
+  $(".edit").hide();
 
-    currentPage = page;
+  currentPage = page;
+  pageInfo.text(`Stranica ${currentPage} od ${totalPages}`);
+  prevBtn.prop("disabled", currentPage === 1);
+  nextBtn.prop("disabled", currentPage === totalPages);
 
-    pageInfo.text(`Stranica ${currentPage} od ${totalPages}`);
-    prevBtn.prop("disabled", currentPage === 1);
-    nextBtn.prop("disabled", currentPage === totalPages);
-  }
-
+  // navigation
   prevBtn.off("click").on("click", function () {
     if (currentPage > 1) renderPage(currentPage - 1);
   });
 
   nextBtn.off("click").on("click", function () {
-    const totalPages = Math.ceil(products.length / itemsPerPage);
     if (currentPage < totalPages) renderPage(currentPage + 1);
   });
+}
 
+function loadAndRenderProducts() {
   $.ajax({
     url: API_BASE_URL + "/products/get",
     method: "GET",
     dataType: "json",
-
     success: function (data) {
       products = data;
       renderPage(1);
@@ -263,6 +262,7 @@ function loadAndRenderProducts() {
     },
   });
 }
+
 function deleteP(id) {
   if (confirm("Are you sure you want to delete?")) {
     $.ajax({
