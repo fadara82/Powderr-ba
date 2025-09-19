@@ -1066,7 +1066,8 @@ $(document).ready(function () {
           $.ajax({
             url: API_BASE_URL + "/login",
             method: "POST",
-            data: "json",
+            data: formData,
+            dataType: "json",
 
             beforeSend: function () {
               $.blockUI({ message: "Please wait" });
