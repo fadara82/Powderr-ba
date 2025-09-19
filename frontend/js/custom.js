@@ -1522,8 +1522,8 @@ $(document).ready(function () {
         $("#profilePromptModal").modal({
           backdrop: "static",
           keyboard: false,
+          show: true,
         });
-        $("#profilePromptModal").modal("show");
 
         $("#profileLoginBtn")
           .off("click")
