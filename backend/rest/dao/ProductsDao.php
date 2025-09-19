@@ -11,20 +11,24 @@ public function __construct(){
 }
 
 
-    public function add_products($product) {
-    $sql = "INSERT INTO products (productImg, productName, flavour, price, description, category,quantity) 
-            VALUES (:productImg, :productName, :flavour, :price, :description, :category,:quantity)";
+  public function add_products($product) {
+    $sql = "INSERT INTO products 
+            (productImg, productName, flavour, price, description, category, quantity) 
+            VALUES (:productImg, :productName, :flavour, :price, :description, :category, :quantity)";
 
     try {
         $statement = $this->connection->prepare($sql);
 
-        $statement->bindValue(':productImg', $product['productImg']);
+        $imgs = array_map('trim', explode(',', $product['productImg']));
+        $productImg = json_encode($imgs);
+
+        $statement->bindValue(':productImg', $productImg);
         $statement->bindValue(':productName', $product['productName']);
         $statement->bindValue(':flavour', $product['flavour']);
         $statement->bindValue(':price', $product['price']);
         $statement->bindValue(':description', $product['description']);
         $statement->bindValue(':category', $product['category']);
-    $statement->bindValue(':quantity', $product['quantity']);
+        $statement->bindValue(':quantity', $product['quantity']);
 
         $statement->execute();
 
@@ -34,7 +38,7 @@ public function __construct(){
         throw new Exception('Failed to add product');
     }
 }
-    
+
     public function get_products(){
     $sql = "SELECT * FROM products";
     try {
@@ -250,7 +254,10 @@ public function updateProductById($id, $product) {
     try {
         $stmt = $this->connection->prepare($sql);
 
-        $stmt->bindValue(':productImg', $product['image']);
+        $imgs = array_map('trim', explode(',', $product['image']));
+        $productImg = json_encode($imgs);
+
+        $stmt->bindValue(':productImg', $productImg);
         $stmt->bindValue(':productName', $product['productName']);
         $stmt->bindValue(':flavour', $product['flavour']);
         $stmt->bindValue(':price', $product['price']);
