@@ -11219,11 +11219,14 @@ a {
 }
 
 .btn-outline-small {
-  display: inline-flex;
+  display: inline-flex;          
   align-items: center;
-  padding: 6px 12px;
+  justify-content: center;       
+  padding: 6px 14px;             
   font-size: 0.9rem;
   font-weight: 500;
+  max-width: max-content;        
+  white-space: nowrap;           
   color: #000 !important;
   background-color: #fff;
   border: 2px solid #000;

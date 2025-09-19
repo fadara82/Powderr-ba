@@ -420,20 +420,19 @@ You must be logged in to access the checkout. Would you like to log in?      </d
     </div>
   </div>
 </div>
-<div class="modal fade" id="profilePromptModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Login required</h5>
-
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        You must be logged in to access your profile. Would you like to log in?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="profileCancelBtn">No</button>
-        <button type="button" class="btn btn-primary" id="profileLoginBtn">Yes, log me in.</button>
+<div class="modal fade" id="ProfileModal" tabindex="-1" aria-labelledby="loginPromptLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginPromptLabel">Login required</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvori"></button>
+        </div>
+        <div class="modal-body">
+You must log in to enter Profile Section. Would you like to log in now?        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" id="loginNowBtn">Yes, log me in.</button>
+        </div>
       </div>
     </div>
   </div>

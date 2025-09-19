@@ -1517,34 +1517,31 @@ $(document).ready(function () {
     load: "profileusers.html",
     onReady: function () {
       const token = Utilis.get_token();
-
       if (!token) {
-        $("#profilePromptModal").modal({
-          backdrop: "static",
-          keyboard: false,
-          show: true,
-        });
+        $("#ProfileModal").modal("show");
 
-        $("#profileLoginBtn")
+        $("#loginNowBtn")
           .off("click")
           .on("click", function () {
-            $("#profilePromptModal").modal("hide");
+            $("#ProfileModal").modal("hide");
             window.location.hash = "#login";
+            location.reload();
           });
 
-        $("#profileCancelBtn")
+        $("#loginCancelBtn")
           .off("click")
           .on("click", function () {
-            $("#profilePromptModal").modal("hide");
+            $("#ProfileModal").modal("hide");
             window.location.hash = "#main";
           });
 
         return;
       }
 
-      initProfileModals();
+      renderCart();
     },
   });
+  initProfileModals();
 
   app.run();
 });
