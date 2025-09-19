@@ -46,10 +46,9 @@ public function __construct(){
             if (!empty($p["productImg"])) {
                 $decoded = json_decode($p["productImg"], true);
                 if ($decoded && is_array($decoded)) {
-                    // ako je JSON niz → uzmi prvu sliku
+                    
                     $p["productImg"] = $decoded[0];
                 }
-                // ako nije JSON → ostaje originalni string
             }
         }
 

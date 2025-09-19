@@ -1028,7 +1028,6 @@ $(document).ready(function () {
       });
     },
   });
-
   app.route({
     view: "login",
     load: "login.html",
@@ -1093,6 +1092,8 @@ $(document).ready(function () {
                   alert("User with this email does not exist.");
                 } else if (response.message === "Incorrect password") {
                   alert("The password you entered is incorrect.");
+                } else {
+                  alert(response.message || "Invalid login credentials!");
                 }
               }
             },

@@ -14,56 +14,10 @@ Flight::route('POST /login', function () {
     $authService = Flight::get('auth_service');
     $loginResult = $authService->login_user($payload['email'], $payload['password']);
 
-    if ($loginResult !== false) {
-        Flight::json(['message' => 'Successfully logged in', 'data' => $loginResult]);
-    } else {
-        Flight::json(['error' => 'Login failed'], 401);
-    }
+    Flight::json($loginResult);
 });
 
 
-
-
-/**
-     * @OA\Post(
-     *      path="/login/",
-     *      tags={"users"},
-     *      summary="Login Users",
-     *      @OA\Response(
-     *           response=200,
-     *           description="Users Login Data"
-     *      ),
-     * * security={
-     *          {"ApiKey": {}}   
-     *      },
-     *      @OA\RequestBody(
-     *          description="Login Payload",
-     *          @OA\JsonContent(
-     *              required={"email","password"},
-     *              @OA\Property(property="email", type="string", example="1", description="User email"),
-     *              @OA\Property(property="password", type="string", example="1234", description="User password"),
-
-
-     *          )
-     *      )
-     * )
-     */
-
-  
-        /**
-     * @OA\Post(
-     *      path="/logout",
-     *      tags={"auth"},
-     *      summary="Logout from the system",
-     *      security={
-     *          {"ApiKey": {}}   
-     *      },
-     *      @OA\Response(
-     *           response=200,
-     *           description="Success response or exception if unable to verify jwt token"
-     *      ),
-     * )
-     */
 Flight::route('POST /change-password', function () {
     try {
         $authHeader = Flight::request()->getHeader("Authorization");
