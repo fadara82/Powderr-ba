@@ -1034,16 +1034,27 @@ $(document).ready(function () {
     onReady: function () {
       $("#loginform").validate({
         rules: {
-          email: { required: true, email: true },
-          password: { required: true },
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 6,
+            maxlength: 20,
+            strongPassword: true,
+          },
         },
         messages: {
           email: {
-            required: "Please enter your email",
-            email: "Enter a valid email address",
+            required: "Please enter your email address",
+            email: "Enter a valid email address (e.g. name@example.com)",
           },
           password: {
             required: "Please enter your password",
+            minlength: "Password must be at least 6 characters long",
+            maxlength: "Password cannot be longer than 20 characters",
+            pattern: "Password must contain at least one letter and one number",
           },
         },
         submitHandler: function (form, event) {
