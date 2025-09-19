@@ -963,6 +963,8 @@ $(document).ready(function () {
     view: "main",
     load: "home.html",
     onReady: function () {
+      setupNavbar();
+
       loadAndRenderProducts();
     },
   });
@@ -1178,6 +1180,8 @@ $(document).ready(function () {
     view: "admin",
     load: "admin.html",
     onReady: function () {
+      setupNavbar();
+
       loadAndRenderProducts();
 
       $(document).on("submit", "#a", function (e) {
