@@ -346,21 +346,22 @@ function getProteini() {
   });
 }
 
-$.ajax({
-  url: API_BASE_URL + "/products/get/vitamini",
-  method: "GET",
-  dataType: "json",
-
-  success: function (data) {
-    renderCategory(data);
-  },
-  error: function (xhr, status, error) {
-    console.log("Error loading vitamini:");
-    console.log("Status:", status);
-    console.log("Error:", error);
-    console.log("Response:", xhr.responseText);
-  },
-});
+function getVitamini() {
+  $.ajax({
+    url: API_BASE_URL + "/products/get/vitamini",
+    method: "GET",
+    dataType: "json",
+    success: function (data) {
+      renderCategory(data);
+    },
+    error: function (xhr, status, error) {
+      console.log("Error loading vitamini:");
+      console.log("Status:", status);
+      console.log("Error:", error);
+      console.log("Response:", xhr.responseText);
+    },
+  });
+}
 
 function getKreatin() {
   $.ajax({
