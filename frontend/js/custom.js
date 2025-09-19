@@ -1516,9 +1516,10 @@ $(document).ready(function () {
     view: "profileusers",
     load: "profileusers.html",
     onReady: function () {
-      var token = Utilis.get_token();
+      const token = Utilis.get_token();
 
       if (!token) {
+        // blokiraj pristup stranici
         $("#profilePromptModal").modal("show");
 
         $("#profileLoginBtn")
@@ -1536,20 +1537,14 @@ $(document).ready(function () {
             window.location.hash = "#main";
           });
 
+        // --- najbitnije ---
+        $("#profileusers").empty(); // očisti sekciju da se ne prikaže sadržaj
         return;
       }
 
+      // Ako je logovan, tek onda inicijaliziraj profile
       initProfileModals();
     },
-  });
-  $(function () {
-    $(document).on("click", ".back-to-shop a", function () {
-      $(".modal-backdrop").remove();
-      $("body").removeClass("modal-open").css("overflow", "auto");
-      if ($.unblockUI) {
-        $.unblockUI();
-      }
-    });
   });
 
   app.run();
