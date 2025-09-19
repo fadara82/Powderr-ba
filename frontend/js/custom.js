@@ -1118,8 +1118,11 @@ $(document).ready(function () {
       const pendingId = localStorage.getItem("pendingProductId");
       if (!pendingId) return;
 
-      $("#shopitemdiv").html("<p>Loading...</p>");
-
+      $("#shopitemdiv").html(`
+  <div class="loading-full">
+    <h3>Loading...</h3>
+  </div>
+`);
       $.get(
         API_BASE_URL + "/products/get/byid?id=" + pendingId,
         function (product) {
@@ -1538,6 +1541,15 @@ $(document).ready(function () {
 
       initProfileModals();
     },
+  });
+  $(function () {
+    $(document).on("click", ".back-to-shop a", function () {
+      $(".modal-backdrop").remove();
+      $("body").removeClass("modal-open").css("overflow", "auto");
+      if ($.unblockUI) {
+        $.unblockUI();
+      }
+    });
   });
 
   app.run();
