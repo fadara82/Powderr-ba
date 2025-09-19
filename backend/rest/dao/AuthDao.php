@@ -10,47 +10,54 @@ class AuthDao extends BaseDao {
         parent::__construct("users");
     }
 
-    // LOGIN korisnika
     public function login_user($email, $password) {
-        try {
-            $query = "SELECT * FROM users WHERE email = :email";
-            $stmt = $this->connection->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
+    try {
+        $query = "SELECT * FROM users WHERE email = :email";
+        $stmt = $this->connection->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
 
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) {
-                unset($user['password']); // ukloni šifru iz podataka
-
-                $jwt_payload = [
-                    'user' => $user,
-                    'iat' => time(),
-                    'exp' => time() + (60 * 60 * 24) // token važi 24h
-                ];
-
-                $jwt_token = JWT::encode($jwt_payload, JWT_SECRET, 'HS256');
-
-                return [
-                    'success' => true,
-                    'token'   => $jwt_token,
-                    'user'    => $user
-                ];
-            }
-
+        if (!$user) {
             return [
                 'success' => false,
-                'message' => 'Invalid email or password'
-            ];
-
-        } catch (PDOException $e) {
-            error_log("Login error: " . $e->getMessage());
-            return [
-                'success' => false,
-                'message' => 'Login failed'
+                'message' => 'User does not exist'
             ];
         }
+
+        if (!password_verify($password, $user['password'])) {
+            return [
+                'success' => false,
+                'message' => 'Incorrect password'
+            ];
+        }
+
+        unset($user['password']); 
+
+        $jwt_payload = [
+            'user' => $user,
+            'iat' => time(),
+            'exp' => time() + (60 * 60 * 24) 
+        ];
+
+        $jwt_token = JWT::encode($jwt_payload, JWT_SECRET, 'HS256');
+
+        return [
+            'success' => true,
+            'token'   => $jwt_token,
+            'user'    => $user
+        ];
+
+    } catch (PDOException $e) {
+        error_log("Login error: " . $e->getMessage());
+        return [
+            'success' => false,
+            'message' => 'Login failed'
+        ];
     }
+}
+
 
     public function change_user_password($userId, $newPassword) {
         $sql = "UPDATE users SET password = :password WHERE id = :userId";
@@ -84,7 +91,6 @@ class AuthDao extends BaseDao {
         }
     }
 
-    // GET USER BY ID
     public function get_user_by_id($userId) {
         try {
             $query = "SELECT id, first_name, last_name, email, mobile_number 
@@ -101,7 +107,6 @@ class AuthDao extends BaseDao {
         }
     }
 
-    // UPDATE USER
     public function update_user($userId, $data) {
         try {
             $sql = "UPDATE users 

@@ -1065,14 +1065,10 @@ $(document).ready(function () {
             success: function (response) {
               console.log("Login response:", response);
 
-              if (
-                response.data &&
-                response.data.success &&
-                response.data.token
-              ) {
-                Utilis.set_token(response.data.token);
+              if (response.success && response.token) {
+                Utilis.set_token(response.token);
 
-                const token = response.data.token;
+                const token = response.token;
                 const payloadBase64 = token.split(".")[1];
                 const payloadJson = atob(payloadBase64);
                 const payload = JSON.parse(payloadJson);
@@ -1092,7 +1088,12 @@ $(document).ready(function () {
                 }
               } else {
                 $.unblockUI();
-                alert(response.message || "Invalid login credentials!");
+
+                if (response.message === "User does not exist") {
+                  alert("User with this email does not exist.");
+                } else if (response.message === "Incorrect password") {
+                  alert("The password you entered is incorrect.");
+                }
               }
             },
             error: function (xhr, status, error) {
