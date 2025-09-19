@@ -674,28 +674,47 @@ function editProduct(id) {
                       </div>
                       <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
                         <div style="display:flex; align-items:center; gap:10px;">
-                          <img src="${item.productImg}" style="max-height:100px; max-width:100px;">
-                          <input type="text" name="image" id="addimage" value="${item.productImg}" placeholder="Add Image link" style="flex:1;">
+                         <img src="${
+                           Array.isArray(item.productImg)
+                             ? item.productImg[0]
+                             : item.productImg
+                         }" style="max-height:100px; max-width:100px;">
+<input type="text" name="image" id="addimage" value="${
+        Array.isArray(item.productImg)
+          ? item.productImg.join(", ")
+          : item.productImg
+      }" placeholder="Add Image link" style="flex:1;">
+
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                           <label style="flex-basis:150px;">Product Name</label>
-                          <input type="text" name="productName" value="${item.productName}" style="flex:1;">
+                          <input type="text" name="productName" value="${
+                            item.productName
+                          }" style="flex:1;">
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                           <label style="flex-basis:150px;">Flavour</label>
-                          <input type="text" name="flavour" value="${item.flavour}" style="flex:1;">
+                          <input type="text" name="flavour" value="${
+                            item.flavour
+                          }" style="flex:1;">
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                           <label style="flex-basis:150px;">Price</label>
-                          <input type="text" name="price" value="${item.price}" style="flex:1;">
+                          <input type="text" name="price" value="${
+                            item.price
+                          }" style="flex:1;">
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                           <label style="flex-basis:150px;">Description</label>
-                          <input type="text" name="desc" value="${item.description}" style="flex:1;">
+                          <input type="text" name="desc" value="${
+                            item.description
+                          }" style="flex:1;">
                         </div>
                         <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
                           <label style="width:150px;">Category</label>
-                          <input type="text" id="categoryText" value="${item.category}" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
+                          <input type="text" id="categoryText" value="${
+                            item.category
+                          }" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
                           <select id="categorySelect" style="flex:1; padding:5px; border:1px solid #ccc; border-radius:5px;">
                             <option value="">Select Category</option>
                             <option value="Proteini">Proteini</option>
