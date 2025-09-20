@@ -234,11 +234,10 @@ function renderPage(page) {
   $(".edit").hide();
 
   currentPage = page;
-  pageInfo.text(`Stranica ${currentPage} od ${totalPages}`);
+  pageInfo.text(`Page ${currentPage} of ${totalPages}`);
   prevBtn.prop("disabled", currentPage === 1);
   nextBtn.prop("disabled", currentPage === totalPages);
 
-  // navigation
   prevBtn.off("click").on("click", function () {
     if (currentPage > 1) renderPage(currentPage - 1);
   });
@@ -644,7 +643,6 @@ $(document).ready(() => {
 
 function unhideER() {
   $(".edit").toggle();
-  console.log("Kuca Da");
 }
 
 function editProduct(id) {
@@ -1109,7 +1107,6 @@ $(document).ready(function () {
           event.preventDefault();
 
           var formData = $(form).serialize();
-          console.log("Form data:", formData);
 
           $.ajax({
             url: API_BASE_URL + "/login",
@@ -1121,8 +1118,6 @@ $(document).ready(function () {
             },
 
             success: function (response) {
-              console.log("Login response:", response);
-
               if (response.success && response.token) {
                 Utilis.set_token(response.token);
 
@@ -1266,13 +1261,13 @@ $(document).ready(function () {
             }
           },
           success: function (response) {
-            console.log("Proizvod dodan:", response);
+            console.log("Product added", response);
             loadAndRenderProducts();
             $("#a")[0].reset();
             location.reload();
           },
           error: function (xhr, status, error) {
-            console.error("Greška:", error);
+            console.error("Mistake:", error);
           },
           complete: function () {
             $("#a").data("submitted", false);
@@ -1401,7 +1396,7 @@ $(document).ready(function () {
 
         $("#usersdiv").on("click", ".deleteUserBtn", function () {
           const id = $(this).data("id");
-          if (confirm("Jeste li sigurni da želite obrisati korisnika?")) {
+          if (confirm("Are you sure you want to delete the user?")) {
             deleteUser(id);
           }
         });
