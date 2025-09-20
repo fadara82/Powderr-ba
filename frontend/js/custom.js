@@ -962,8 +962,9 @@ function initProfileModals() {
 }
 
 function goHome() {
-  window.location.hash = "#main";
   loadAndRenderProducts();
+
+  window.location.hash = "#main";
 }
 
 $(document).ready(function () {
