@@ -316,6 +316,8 @@ function setupNavbar() {
         $("#adminP").hide();
         $("#homeNav").show();
       }
+
+      $("a[href='#profileusers']").show();
     } catch (e) {
       console.error("Nevažeći token:", e);
       $("#adminP").hide();
@@ -1560,23 +1562,19 @@ $(document).ready(function () {
       }
     },
   });
+
   app.route({
     view: "profileusers",
     load: "profileusers.html",
     onReady: function () {
       const token = Utilis.get_token();
-
       if (!token) {
-        $("#loginPromptMessage").text(
-          "You need to register and login to access your profile section."
-        );
-
-        $("#loginPromptModal").show();
+        $("#ProfileModal").modal("show");
 
         $("#loginNowBtn")
           .off("click")
           .on("click", function () {
-            $("#loginPromptModal").hide();
+            $("#ProfileModal").modal("hide");
             window.location.hash = "#login";
             location.reload();
           });
@@ -1584,7 +1582,7 @@ $(document).ready(function () {
         $("#loginCancelBtn")
           .off("click")
           .on("click", function () {
-            $("#loginPromptModal").hide();
+            $("#ProfileModal").modal("hide");
             window.location.hash = "#main";
           });
 
