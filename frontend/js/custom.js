@@ -1136,10 +1136,8 @@ $(document).ready(function () {
 
                 if (role === "admin") {
                   window.location.hash = "#admin";
-                  location.reload();
                 } else {
                   window.location.hash = "#main";
-                  location.reload();
                 }
               } else {
                 $.unblockUI();

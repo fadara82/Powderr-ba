@@ -12,7 +12,7 @@
 
 #loginPage .card-img-left {
   width: 45%;
-  object-fit: cover;
+  background: url("../images/regslika.jpg") center center/cover no-repeat;
 }
 
 #loginPage .card-body {
