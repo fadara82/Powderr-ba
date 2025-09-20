@@ -532,6 +532,7 @@ function addToCart(id) {
     renderCart();
   });
 }
+
 function renderCart() {
   let totalprice = 0;
   let data = JSON.parse(localStorage.getItem("cart")) || [];

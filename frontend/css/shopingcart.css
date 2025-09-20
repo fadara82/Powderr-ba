@@ -11235,66 +11235,61 @@ a {
 }
 
 
-.back-to-shop h6 {
-  margin-bottom: 0;
+.back-to-shop {
+  margin-top: 20px;
 }
 
 .back-to-shop a {
   display: inline-flex;
   align-items: center;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #007bff;
   text-decoration: none;
-  transition: color 0.3s, transform 0.3s;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 .back-to-shop a i {
-  font-size: 1.2rem; /* veća strelica */
+  font-size: 1.2rem;
   margin-right: 8px;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease;
 }
 
-/* Hover efekt */
 .back-to-shop a:hover {
-  color: #0056b3;
+  color: #fff;
+  background: #007bff;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .back-to-shop a:hover i {
-  transform: translateX(-4px); /* pomak strelice lijevo */
+  transform: translateX(-4px);
 }
 
 .btn-outline-small {
   display: inline-flex;
   align-items: center;
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 0.9rem;
-  font-weight: 500;
-  color: #000 !important; /* uvijek crni tekst */
-  background-color: #fff; /* bijela pozadina */
-  border: 2px solid #000; /* crni rub */
+  font-weight: 600;
+  color: #212529 !important;
+  background-color: #fff;
+  border: 2px solid #212529;
   border-radius: 8px;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
 .btn-outline-small i {
   margin-right: 6px;
+  font-size: 1rem;
 }
 
-/* Hover efekt */
 .btn-outline-small:hover {
-  background-color: #000; /* crna pozadina */
-  color: #fff !important; /* bijeli tekst */
-  transform: translateY(-2px);
-}
-
-.btn-outline-small i {
-  margin-right: 6px; /* razmak strelice */
-}
-
-/* Hover efekt */
-.btn-outline-small:hover {
-  background-color: #000;
+  background-color: #212529;
   color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
