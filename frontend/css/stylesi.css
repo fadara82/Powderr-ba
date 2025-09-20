@@ -11287,18 +11287,16 @@ footer {
   margin-right: 6px;
 }
 
-/* Hover efekt */
 .btn-outline-small:hover {
-  background-color: #000; /* crna pozadina */
-  color: #fff !important; /* bijeli tekst */
+  background-color: #000;
+  color: #fff !important; 
   transform: translateY(-2px);
 }
 
 .btn-outline-small i {
-  margin-right: 6px; /* razmak strelice */
+  margin-right: 6px; 
 }
 
-/* Hover efekt */
 .btn-outline-small:hover {
   background-color: #000;
   color: #fff !important;
