@@ -823,7 +823,6 @@ function deleteUsers(id) {
     });
   }
 }
-
 function initProfileModals() {
   $("#editDataBtn")
     .off("click")
@@ -846,12 +845,12 @@ function initProfileModals() {
             return;
           }
 
-          const modal = $("#editDataModal");
-          modal.find("#fname").val(res.user.first_name);
-          modal.find("#lname").val(res.user.last_name);
-          modal.find("#email").val(res.user.email);
-          modal.find("#mobile").val(res.user.mobile_number);
-          modal.addClass("show");
+          $("#fname").val(res.user.first_name);
+          $("#lname").val(res.user.last_name);
+          $("#email").val(res.user.email);
+          $("#mobile").val(res.user.mobile_number);
+
+          $("#editDataModal").show().addClass("show");
         },
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Greška pri dohvaćanju podataka");
@@ -859,16 +858,14 @@ function initProfileModals() {
       });
     });
 
-  // --- Save Edit ---
   $(document)
     .off("click", "#saveEditBtn")
     .on("click", "#saveEditBtn", function () {
-      const modal = $("#editDataModal");
       const payload = {
-        first_name: modal.find("#fname").val(),
-        last_name: modal.find("#lname").val(),
-        email: modal.find("#email").val(),
-        mobile_number: modal.find("#mobile").val(),
+        first_name: $("#fname").val(),
+        last_name: $("#lname").val(),
+        email: $("#email").val(),
+        mobile_number: $("#mobile").val(),
       };
 
       const token = Utilis.get_token();
@@ -887,7 +884,7 @@ function initProfileModals() {
         },
         success: function (res) {
           alert(res.message || "Podaci uspješno ažurirani");
-          modal.removeClass("show");
+          $("#editDataModal").hide().removeClass("show"); // 👈 direktno hide
           window.location.reload();
         },
         error: function (xhr) {
@@ -904,17 +901,15 @@ function initProfileModals() {
         alert("Niste prijavljeni! Molimo prijavite se.");
         return;
       }
-      $("#changePasswordModal").addClass("show");
+      $("#changePasswordModal").show().addClass("show");
     });
 
   $("#savePasswordBtn")
     .off("click")
     .on("click", () => {
-      const modal = $("#changePasswordModal");
-      const inputs = modal.find("input");
-      const currentPassword = inputs.eq(0).val();
-      const newPassword = inputs.eq(1).val();
-      const confirmPassword = inputs.eq(2).val();
+      const currentPassword = $("#currentPassword").val();
+      const newPassword = $("#newPassword").val();
+      const confirmPassword = $("#confirmPassword").val();
 
       if (!currentPassword || !newPassword || !confirmPassword) {
         alert("Please fill all fields");
@@ -944,9 +939,9 @@ function initProfileModals() {
         },
         success: function (res) {
           alert(res.message || "Password changed successfully");
+          $("#changePasswordModal").hide().removeClass("show"); // 👈 direktno hide
         },
         error: function (xhr) {
-          console.log("RAW response:", xhr.responseText);
           alert(xhr.responseJSON?.error || "Error changing password");
         },
       });
@@ -955,7 +950,7 @@ function initProfileModals() {
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
-      $(this).closest(".modal-custom").removeClass("show");
+      $(this).closest(".modal-custom").hide().removeClass("show"); // 👈 direktno hide
     });
 }
 
