@@ -1,102 +1,80 @@
-<div class="container" id="registrationPage">
-  <div class="card-body">
-    <h1 class="card-title">Registration</h1>
-    <form id="regform">
-      <div class="mb-3">
-        <label for="floatingInputUsername">First Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="floatingInputUsername"
-          placeholder="First Name"
-          name="fname"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="floatingInputUserlname">Last Name</label>
-        <input
-          type="text"
-          class="form-control"
-          id="floatingInputUserlname"
-          placeholder="Last Name"
-          name="lname"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="floatingInputEmail">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="floatingInputEmail"
-          placeholder="name@example.com"
-          name="email"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="mobilenumber">Mobile Number</label>
-        <input
-          type="text"
-          class="form-control"
-          id="mobilenumber"
-          placeholder="Mobile Number"
-          name="mobilenumber"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="floatingPassword">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="floatingPassword"
-          placeholder="Password"
-          name="password"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="floatingPasswordConfirm">Confirm Password</label>
-        <input
-          type="password"
-          class="form-control"
-          id="floatingPasswordConfirm"
-          placeholder="Confirm Password"
-          name="cpassword"
-        />
-      </div>
-      <div class="d-grid mb-2">
-        <button
-          class="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
-          type="submit"
-        >
-          Register
-        </button>
-      </div>
-    </form>
-    <a class="d-block text-center mt-2 small" href="#login">
-      Have an account? Sign In
-    </a>
+<div id="registrationPage">
+  <div class="container">
+    <div class="card-body">
+      <h1 class="card-title">Registration</h1>
+      <form id="regform">
+        <div class="mb-3">
+          <label for="floatingInputUsername">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInputUsername"
+            placeholder="First Name"
+            name="fname"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="floatingInputUserlname">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInputUserlname"
+            placeholder="Last Name"
+            name="lname"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="floatingInputEmail">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInputEmail"
+            placeholder="name@example.com"
+            name="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="mobilenumber">Mobile Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="mobilenumber"
+            placeholder="Mobile Number"
+            name="mobilenumber"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="floatingPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+            name="password"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="floatingPasswordConfirm">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPasswordConfirm"
+            placeholder="Confirm Password"
+            name="cpassword"
+          />
+        </div>
+        <div class="d-grid mb-2">
+          <button
+            class="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+      <a class="d-block text-center mt-2 small" href="#login">
+        Have an account? Sign In
+      </a>
+    </div>
   </div>
 </div>
-
-<style>
-  #registrationPage {
-    max-width: 500px;
-    margin: 40px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  #registrationPage .card-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  #registrationPage .form-control {
-    border-radius: 6px;
-  }
-
-  #registrationPage button {
-    width: 100%;
-  }
-</style>

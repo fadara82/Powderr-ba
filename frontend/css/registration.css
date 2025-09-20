@@ -1,5 +1,4 @@
-/* Body sa centriranjem */
-body {
+#registrationPage {
   height: 100vh;
   margin: 0;
   padding: 0;
@@ -10,17 +9,15 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Container za centriranje */
-.container {
+#registrationPage .container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh; /* osigurava vertikalno centriranje */
+  min-height: 100vh;
 }
 
-/* Kartica za formu */
-.card-body {
+#registrationPage .card-body {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -29,8 +26,7 @@ body {
   padding: 30px 25px;
 }
 
-/* Naslov */
-.card-title {
+#registrationPage .card-title {
   text-align: center;
   font-size: 1.8rem;
   font-weight: bold;
@@ -38,23 +34,20 @@ body {
   color: #333;
 }
 
-/* Labeli */
-label {
+#registrationPage label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-/* Input polja */
-.form-control {
+#registrationPage .form-control {
   border-radius: 10px;
   padding: 10px;
   font-size: 1rem;
   margin-bottom: 15px;
 }
 
-/* Dugme */
-.btn-login {
+#registrationPage .btn-login {
   border-radius: 10px;
   padding: 12px;
   font-size: 1rem;
@@ -64,16 +57,17 @@ label {
   transition: background 0.3s;
 }
 
-.btn-login:hover {
+#registrationPage .btn-login:hover {
   background-color: #0056b3;
+  color: #fff;
 }
 
 /* Link ispod forme */
-a {
+#registrationPage a {
   color: #007bff;
   text-decoration: none;
 }
 
-a:hover {
+#registrationPage a:hover {
   text-decoration: underline;
 }
