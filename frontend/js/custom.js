@@ -1082,7 +1082,6 @@ $(document).ready(function () {
     view: "login",
     load: "login.html",
     onReady: function () {
-      // sigurnosna mreža
       $("#loginform").on("submit", function (e) {
         e.preventDefault();
       });
@@ -1137,12 +1136,14 @@ $(document).ready(function () {
 
                 if (role === "admin") {
                   window.location.hash = "#admin";
+                  location.reload();
                 } else {
                   window.location.hash = "#main";
+                  location.reload();
                 }
               } else {
                 $.unblockUI();
-                $("#loginError").show(); // pokaži alert u HTML-u
+                $("#loginError").show();
               }
             },
             error: function (xhr, status, error) {
