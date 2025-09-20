@@ -1560,7 +1560,6 @@ $(document).ready(function () {
       }
     },
   });
-
   app.route({
     view: "profileusers",
     load: "profileusers.html",
@@ -1569,15 +1568,15 @@ $(document).ready(function () {
 
       if (!token) {
         $("#loginPromptMessage").text(
-          "You need to login to access your profile."
+          "You need to register and login to access your profile section."
         );
 
-        $("#loginPromptModal").modal("show");
+        $("#loginPromptModal").show();
 
         $("#loginNowBtn")
           .off("click")
           .on("click", function () {
-            $("#loginPromptModal").modal("hide");
+            $("#loginPromptModal").hide();
             window.location.hash = "#login";
             location.reload();
           });
@@ -1585,7 +1584,7 @@ $(document).ready(function () {
         $("#loginCancelBtn")
           .off("click")
           .on("click", function () {
-            $("#loginPromptModal").modal("hide");
+            $("#loginPromptModal").hide();
             window.location.hash = "#main";
           });
 
