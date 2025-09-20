@@ -987,6 +987,20 @@ $(document).ready(function () {
         e.preventDefault();
       });
 
+      $.validator.addMethod(
+        "strongPassword",
+        function (value, element) {
+          return (
+            this.optional(element) ||
+            (/[a-z]/.test(value) &&
+              /[A-Z]/.test(value) &&
+              /\d/.test(value) &&
+              value.length >= 8)
+          );
+        },
+        "Password must contain at least 8 characters, one uppercase, one lowercase and one number."
+      );
+
       $("#regform").validate({
         rules: {
           fname: { required: true, minlength: 2 },
@@ -995,15 +1009,16 @@ $(document).ready(function () {
 
           password: {
             required: true,
-            minlength: 8,
-            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
+            strongPassword: true,
           },
 
           cpassword: { required: true, equalTo: "#floatingPassword" },
 
           mobilenumber: {
             required: true,
-            pattern: /^[0-9]{8,15}$/,
+            digits: true,
+            minlength: 8,
+            maxlength: 15,
           },
         },
         messages: {
@@ -1021,9 +1036,8 @@ $(document).ready(function () {
           },
           password: {
             required: "Please enter a password",
-            minlength: "Password must be at least 8 characters long",
-            pattern:
-              "Password must contain at least one uppercase, one lowercase and one number.",
+            strongPassword:
+              "Password must contain at least 8 characters, one uppercase, one lowercase and one number.",
           },
           cpassword: {
             required: "Please confirm your password",
@@ -1031,7 +1045,9 @@ $(document).ready(function () {
           },
           mobilenumber: {
             required: "Please enter your phone number",
-            pattern: "Please enter a valid phone number (8–15 digits).",
+            digits: "Only numbers are allowed",
+            minlength: "Phone must be at least 8 digits",
+            maxlength: "Phone must be max 15 digits",
           },
         },
         submitHandler: function (form, event) {
