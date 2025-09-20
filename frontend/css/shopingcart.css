@@ -11174,7 +11174,6 @@ a {
   }
 }
 
-
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
   font-size: 1rem;
   line-height: 2.15;
@@ -11234,62 +11233,66 @@ a {
   }
 }
 
-
-.back-to-shop {
-  margin-top: 20px;
+.back-to-shop h6 {
+  margin-bottom: 0;
 }
 
 .back-to-shop a {
   display: inline-flex;
   align-items: center;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #007bff;
   text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: color 0.3s, transform 0.3s;
 }
 
 .back-to-shop a i {
-  font-size: 1.2rem;
+  font-size: 1.2rem; /* veća strelica */
   margin-right: 8px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s;
 }
 
+/* Hover efekt */
 .back-to-shop a:hover {
-  color: #fff;
-  background: #007bff;
-  transform: translateY(-2px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  color: #0056b3;
 }
 
 .back-to-shop a:hover i {
-  transform: translateX(-4px);
+  transform: translateX(-4px); /* pomak strelice lijevo */
 }
 
 .btn-outline-small {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
+  padding: 6px 12px;
   font-size: 0.9rem;
-  font-weight: 600;
-  color: #212529 !important;
-  background-color: #fff;
-  border: 2px solid #212529;
+  font-weight: 500;
+  color: #000 !important; /* uvijek crni tekst */
+  background-color: #fff; /* bijela pozadina */
+  border: 2px solid #000; /* crni rub */
   border-radius: 8px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
 .btn-outline-small i {
   margin-right: 6px;
-  font-size: 1rem;
 }
 
+/* Hover efekt */
 .btn-outline-small:hover {
-  background-color: #212529;
-  color: #fff !important;
+  background-color: #000; /* crna pozadina */
+  color: #fff !important; /* bijeli tekst */
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.btn-outline-small i {
+  margin-right: 6px; /* razmak strelice */
+}
+
+/* Hover efekt */
+.btn-outline-small:hover {
+  background-color: #000;
+  color: #fff !important;
 }
