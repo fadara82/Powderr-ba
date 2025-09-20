@@ -291,15 +291,15 @@ function getId(id) {
 }
 
 function setupNavbar() {
+  // sakrij sve na početku
+  $("#guestNav, #homeNav, #adminP").hide();
+
   const hash = window.location.hash;
+  const token = Utilis.get_token();
 
   if (hash.includes("login") || hash.includes("registration")) {
-    $("#adminP").hide();
-    $("#homeNav").hide();
     return;
   }
-
-  const token = Utilis.get_token();
 
   if (token) {
     try {
@@ -311,23 +311,21 @@ function setupNavbar() {
 
       if (role === "admin") {
         $("#adminP").show();
-        $("#homeNav").hide();
       } else {
-        $("#adminP").hide();
         $("#homeNav").show();
       }
 
       $("a[href='#profileusers']").show();
     } catch (e) {
       console.error("Nevažeći token:", e);
-      $("#adminP").hide();
-      $("#homeNav").show();
+      $("#guestNav").show();
     }
   } else {
-    $("#adminP").hide();
-    $("#homeNav").show();
+    $("#guestNav").show();
   }
 }
+
+$(window).on("hashchange", setupNavbar);
 
 function getProteini() {
   $.ajax({
@@ -1131,15 +1129,13 @@ $(document).ready(function () {
                   payload.role || (payload.user && payload.user.role);
                 console.log("User role:", role);
 
-                $.unblockUI();
-                $("a[href='#profileusers']").show();
-
                 setupNavbar();
 
                 if (role === "admin") {
                   window.location.hash = "#admin";
-                } else {
+                } else if (role == "user") {
                   window.location.hash = "#main";
+                } else {
                 }
               } else {
                 $.unblockUI();

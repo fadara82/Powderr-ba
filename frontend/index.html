@@ -28,6 +28,82 @@
     <form id="modalje"></form>
 
     <nav role="navigation">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="guestNav" style="display:none;" >
+        <div class="container px-4 px-lg-5">
+          <a class="navbar-brand naslov" href="#main">Powder.ba</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+              <li class="nav-item">
+                <a
+                  class="nav-link active homara"
+                  aria-current="page"
+                  onclick=goHome()
+              
+                  
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >Shop</a
+                >
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" onclick="getProteini()"
+                      >Protein Powder</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getVitamini()"
+                      >Vitamins</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getCokoladice()"
+                      >Healthy Bars</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <form class="d-flex" onsubmit="return false;">
+              <a
+                href="#shopingcart"
+                id="btnCart"
+                class="btn btn-outline-dark"
+                role="button"
+              >
+                <i class="bi-cart-fill me-1"></i> Cart
+              </a>
+    
+
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                onclick="logout()"
+              >
+                Logout
+              </button>
+            </form>
+
+            <div id="cartItems"></div>
+          </div>
+        </div>
+      </nav>
+
+    <nav role="navigation">
       <nav class="navbar navbar-expand-lg navbar-light bg-light" id="homeNav" style="display:none;" >
         <div class="container px-4 px-lg-5">
           <a class="navbar-brand naslov" href="#main">Powder.ba</a>
