@@ -1082,6 +1082,11 @@ $(document).ready(function () {
     view: "login",
     load: "login.html",
     onReady: function () {
+      // sigurnosna mreža
+      $("#loginform").on("submit", function (e) {
+        e.preventDefault();
+      });
+
       $("#loginform").validate({
         rules: {
           email: { required: true, email: true },
@@ -1137,20 +1142,13 @@ $(document).ready(function () {
                 }
               } else {
                 $.unblockUI();
-
-                if (response.message === "User does not exist") {
-                  alert("User with this email does not exist.");
-                } else if (response.message === "Incorrect password") {
-                  alert("The password you entered is incorrect.");
-                } else {
-                  alert(response.message || "Invalid login credentials!");
-                }
+                $("#loginError").show(); // pokaži alert u HTML-u
               }
             },
             error: function (xhr, status, error) {
               $.unblockUI();
               console.error("Login error:", xhr.responseText);
-              alert("Server error: " + xhr.responseText);
+              $("#loginError").show();
             },
             complete: function () {
               $.unblockUI();
