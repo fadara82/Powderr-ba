@@ -1025,9 +1025,7 @@ $(document).ready(function () {
             success: function (response) {
               console.log("Form data sent successfully:", response);
               window.location.href = "#login";
-              location.reload();
             },
-
             error: function (xhr, status, error) {
               console.error("Error sending form data:", error);
               alert("This email or mobile phone is already registered");
@@ -1037,6 +1035,7 @@ $(document).ready(function () {
       });
     },
   });
+
   app.route({
     view: "login",
     load: "login.html",
