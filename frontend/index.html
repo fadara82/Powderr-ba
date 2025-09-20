@@ -4,27 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Powder.ba</title>
-    <link rel="stylesheet" href="css/spapp.css" />
-        <link rel="stylesheet" href="css/registration.css" />
 
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="css/spapp.css" />
+    <link rel="stylesheet" href="css/registration.css" />
     <link
       rel="stylesheet"
       href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css"
     />
 
-    <!-- JS Libraries - samo JEDNOM učitati -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70.0-2014.11.23/jquery.blockUI.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
   </head>
-  <body>
-    <!-- Tvoj sadržaj -->
 
-    <!-- Modal -->
+  <body>
     <form id="modalje"></form>
 
     <nav role="navigation">
@@ -87,14 +88,14 @@
               >
                 <i class="bi-cart-fill me-1"></i> Cart
               </a>
-                <a
-  href="#profileusers"
-  class="btn btn-outline-dark"
-  role="button"
-  style="display:none"
->
-  👥
-</a>
+              <a
+                href="#profileusers"
+                class="btn btn-outline-dark"
+                role="button"
+                style="display: none"
+              >
+                👥
+              </a>
 
               <button
                 type="button"
@@ -159,7 +160,6 @@
                   </li>
                 </ul>
               </li>
-            
 
               <li class="nav-item dropdown">
                 <a
@@ -176,7 +176,10 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><hr class="dropdown-divider" /></li>
                   <li>
-                    <a id="addProductBtn"class="dropdown-item" onclick="showEdit()"
+                    <a
+                      id="addProductBtn"
+                      class="dropdown-item"
+                      onclick="showEdit()"
                       >Add Product</a
                     >
                   </li>
@@ -391,48 +394,83 @@
         </div>
       </form>
     </div>
-<div class="modal fade" id="loginPromptModal" tabindex="-1" aria-labelledby="loginPromptLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginPromptLabel">Login required</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvori"></button>
-        </div>
-        <div class="modal-body">
-You must log in to add a product to your cart. Would you like to log in now?        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" id="loginNowBtn">Yes, log me in.</button>
+    <div
+      class="modal fade"
+      id="loginPromptModal"
+      tabindex="-1"
+      aria-labelledby="loginPromptLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginPromptLabel">Login required</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Zatvori"
+            ></button>
+          </div>
+          <div class="modal-body">
+            You must log in to add a product to your cart. Would you like to log
+            in now?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              No
+            </button>
+            <button type="button" class="btn btn-primary" id="loginNowBtn">
+              Yes, log me in.
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-<div class="modal fade" id="checkoutPromptModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Login required</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div
+      class="modal fade"
+      id="checkoutPromptModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login required</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            You must be logged in to access the checkout. Would you like to log
+            in?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="checkoutCancelBtn"
+            >
+              No
+            </button>
+            <button type="button" class="btn btn-primary" id="checkoutLoginBtn">
+              Yes, log me in.
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-You must be logged in to access the checkout. Would you like to log in?      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="checkoutCancelBtn">No</button>
-        <button type="button" class="btn btn-primary" id="checkoutLoginBtn">Yes, log me in.</button>
-      </div>
+
+      <script src="https://js.stripe.com/v3/"></script>
+      <script src="js/jquery.spapp.js"></script>
+      <script src="js/custom.js"></script>
+      <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+      <script src="js/utilis.js"></script>
     </div>
-  </div>
-
-
-
-<script src="https://js.stripe.com/v3/"></script>
-<script src="js/jquery.spapp.js"></script>
-<script src="js/custom.js"></script>
-<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
-<script src="js/utilis.js"></script>
-
-</body>
-</html>
-
   </body>
 </html>
