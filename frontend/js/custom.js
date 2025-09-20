@@ -1566,13 +1566,18 @@ $(document).ready(function () {
     load: "profileusers.html",
     onReady: function () {
       const token = Utilis.get_token();
+
       if (!token) {
-        $("#ProfileModal").modal("show");
+        $("#loginPromptMessage").text(
+          "You need to login to access your profile."
+        );
+
+        $("#loginPromptModal").modal("show");
 
         $("#loginNowBtn")
           .off("click")
           .on("click", function () {
-            $("#ProfileModal").modal("hide");
+            $("#loginPromptModal").modal("hide");
             window.location.hash = "#login";
             location.reload();
           });
@@ -1580,7 +1585,7 @@ $(document).ready(function () {
         $("#loginCancelBtn")
           .off("click")
           .on("click", function () {
-            $("#ProfileModal").modal("hide");
+            $("#loginPromptModal").modal("hide");
             window.location.hash = "#main";
           });
 
@@ -1588,9 +1593,9 @@ $(document).ready(function () {
       }
 
       renderCart();
+      initProfileModals();
     },
   });
-  initProfileModals();
 
   app.run();
 });
