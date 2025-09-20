@@ -12,39 +12,39 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70.0-2014.11.23/jquery.blockUI.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="card-body">
         <h1 class="card-title">Registration</h1>
-        <form id="regform">
+
+        <form id="regform" novalidate>
           <div class="mb-3">
-            <label for="floatingInputUsername">First Name</label>
+            <label for="fname">First Name</label>
             <input
               type="text"
               class="form-control"
-              id="floatingInputUsername"
+              id="fname"
               placeholder="First Name"
               name="fname"
             />
           </div>
           <div class="mb-3">
-            <label for="floatingInputUserlname">Last Name</label>
+            <label for="lname">Last Name</label>
             <input
               type="text"
               class="form-control"
-              id="floatingInputUserlname"
+              id="lname"
               placeholder="Last Name"
               name="lname"
             />
           </div>
           <div class="mb-3">
-            <label for="floatingInputEmail">Email address</label>
+            <label for="email">Email address</label>
             <input
               type="email"
               class="form-control"
-              id="floatingInputEmail"
+              id="email"
               placeholder="name@example.com"
               name="email"
             />
@@ -88,6 +88,7 @@
             </button>
           </div>
         </form>
+
         <a class="d-block text-center mt-2 small" href="#login">
           Have an account? Sign In
         </a>

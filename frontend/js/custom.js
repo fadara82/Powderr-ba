@@ -983,13 +983,16 @@ $(document).ready(function () {
     view: "registration",
     load: "registration.html",
     onReady: function () {
+      $("#regform").on("submit", function (e) {
+        e.preventDefault();
+      });
+
       $("#regform").validate({
         rules: {
           fname: { required: true, minlength: 2 },
           lname: { required: true, minlength: 2 },
           email: { required: true, email: true },
 
-          // ✅ Password: min 8 karaktera, mora imati bar jedno malo, jedno veliko i jedan broj
           password: {
             required: true,
             minlength: 8,
@@ -998,8 +1001,7 @@ $(document).ready(function () {
 
           cpassword: { required: true, equalTo: "#floatingPassword" },
 
-          // ✅ Phone number: samo cifre, od 8 do 15 znakova
-          mobile_number: {
+          mobilenumber: {
             required: true,
             pattern: /^[0-9]{8,15}$/,
           },
@@ -1027,7 +1029,7 @@ $(document).ready(function () {
             required: "Please confirm your password",
             equalTo: "Passwords do not match",
           },
-          mobile_number: {
+          mobilenumber: {
             required: "Please enter your phone number",
             pattern: "Please enter a valid phone number (8–15 digits).",
           },
