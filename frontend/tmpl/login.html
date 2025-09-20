@@ -1,86 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="css/login.css" />
-    <style>
-      /* Sakrij grešku na početku */
-      #loginError {
-        display: none;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      class="full-page-container d-flex justify-content-center align-items-center"
-    >
-      <div
-        class="card flex-row border-0 shadow rounded-3 overflow-hidden login-card"
-      >
-        <!-- Dodana slika kao pravi element -->
-        <div class="card-img-left d-none d-md-flex">
-          <img src="images/regslika.jpg" alt="Login Image" class="img-fluid" />
-        </div>
-
-        <div class="card-body p-4 p-sm-5">
-          <h5 class="card-title text-center mb-5 fw-light fs-5">Login</h5>
-          <form id="loginform" novalidate>
-            <label for="floatingInputEmail">Email address</label>
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control"
-                id="floatingInputEmail"
-                placeholder="name@example.com"
-                name="email"
-                required
-              />
-            </div>
-
-            <hr />
-
-            <label for="floatingPassword">Password</label>
-            <div class="form-floating mb-3">
-              <input
-                type="password"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Password"
-                name="password"
-                required
-              />
-            </div>
-
-            <div
-              id="loginError"
-              class="alert alert-danger"
-              role="alert"
-              style="height: auto"
-            >
-              Wrong password, or your account doesn't exist, Please try again
-            </div>
-
-            <div class="d-grid mb-2">
-              <button
-                class="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
-                type="submit"
-                id="login"
-              >
-                Login
-              </button>
-            </div>
-            <a class="d-block text-center mt-2 small" href="#registration"
-              >Don't have account? Register</a
-            >
-          </form>
-        </div>
-      </div>
+<div
+  id="loginPage"
+  class="full-page-container d-flex justify-content-center align-items-center"
+>
+  <div
+    class="card flex-row border-0 shadow rounded-3 overflow-hidden login-card"
+  >
+    <div class="card-img-left d-none d-md-flex">
+      <img src="images/regslika.jpg" alt="Login Image" class="img-fluid" />
     </div>
-  </body>
-</html>
+
+    <div class="card-body p-4 p-sm-5">
+      <h5 class="card-title text-center mb-5 fw-light fs-5">Login</h5>
+      <form id="loginform" novalidate>
+        <label for="floatingInputEmail">Email address</label>
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInputEmail"
+            placeholder="name@example.com"
+            name="email"
+            required
+            autofocus
+          />
+        </div>
+
+        <label for="floatingPassword">Password</label>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+            name="password"
+            required
+          />
+        </div>
+
+        <div
+          id="loginError"
+          class="alert alert-danger"
+          role="alert"
+          style="display: none"
+        >
+          Wrong password, or your account doesn't exist. Please try again.
+        </div>
+
+        <div class="d-grid mb-2">
+          <button
+            class="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
+            type="submit"
+            id="login"
+          >
+            Login
+          </button>
+        </div>
+
+        <a class="d-block text-center mt-2 small" href="#registration">
+          Don't have an account? Register
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
