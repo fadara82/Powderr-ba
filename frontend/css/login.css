@@ -12,6 +12,7 @@
 
 #loginPage .card-img-left {
   width: 45%;
+  min-height: 100%;
   background: url("../images/regslika.jpg") center center/cover no-repeat;
 }
 
