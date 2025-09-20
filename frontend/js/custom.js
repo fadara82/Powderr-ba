@@ -979,58 +979,65 @@ $(document).ready(function () {
     },
   });
 
-  app.route({
-    view: "registration",
-    load: "registration.html",
-    onReady: function () {
-      $("#regform").validate({
-        rules: {
-          fname: { required: true, minlength: 2 },
-          lname: { required: true, minlength: 2 },
-          email: { required: true, email: true },
-          password: { required: true, minlength: 6 },
-          cpassword: { required: true, equalTo: "#floatingPassword" },
-        },
-        messages: {
-          fname: {
-            required: "Please enter your first name",
-            minlength: "First name must be at least 2 characters long",
-          },
-          lname: {
-            required: "Please enter your last name",
-            minlength: "Last name must be at least 2 characters long",
-          },
-          email: {
-            required: "Please enter your email",
-            email: "Enter a valid email address",
-          },
-          password: {
-            required: "Please enter a password",
-            minlength: "Password must be at least 6 characters long",
-          },
-          cpassword: {
-            required: "Please confirm your password",
-            equalTo: "Passwords do not match",
-          },
-        },
-        submitHandler: function (form, event) {
-          event.preventDefault();
+  $("#regform").validate({
+    rules: {
+      fname: { required: true, minlength: 2 },
+      lname: { required: true, minlength: 2 },
+      email: { required: true, email: true },
+      password: {
+        required: true,
+        minlength: 8,
+        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      },
+      cpassword: { required: true, equalTo: "#floatingPassword" },
+      mobile_number: {
+        required: true,
+        pattern: /^[0-9]{8,15}$/,
+      },
+    },
+    messages: {
+      fname: {
+        required: "Please enter your first name",
+        minlength: "First name must be at least 2 characters long",
+      },
+      lname: {
+        required: "Please enter your last name",
+        minlength: "Last name must be at least 2 characters long",
+      },
+      email: {
+        required: "Please enter your email",
+        email: "Enter a valid email address",
+      },
+      password: {
+        required: "Please enter a password",
+        minlength: "Password must be at least 8 characters long",
+        pattern: "Password must include one uppercase letter, one number.",
+      },
+      cpassword: {
+        required: "Please confirm your password",
+        equalTo: "Passwords do not match",
+      },
+      mobile_number: {
+        required: "Please enter your phone number",
+        pattern: "Please enter a valid phone number (8–15 digits).",
+      },
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
 
-          var formData = $(form).serialize();
+      var formData = $(form).serialize();
 
-          $.ajax({
-            url: API_BASE_URL + "/users",
-            method: "POST",
-            data: formData,
-            success: function (response) {
-              console.log("Form data sent successfully:", response);
-              window.location.href = "#login";
-            },
-            error: function (xhr, status, error) {
-              console.error("Error sending form data:", error);
-              alert("This email or mobile phone is already registered");
-            },
-          });
+      $.ajax({
+        url: API_BASE_URL + "/users",
+        method: "POST",
+        data: formData,
+        success: function (response) {
+          console.log("Form data sent successfully:", response);
+          window.location.href = "#login";
+        },
+        error: function (xhr, status, error) {
+          console.error("Error sending form data:", error);
+          alert("This email or mobile phone is already registered");
         },
       });
     },
