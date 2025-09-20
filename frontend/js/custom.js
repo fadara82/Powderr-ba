@@ -1001,6 +1001,14 @@ $(document).ready(function () {
         "Password must contain at least 8 characters, one uppercase, one lowercase and one number."
       );
 
+      $.validator.addMethod(
+        "phoneWithPlus",
+        function (value, element) {
+          return this.optional(element) || /^\+[0-9]{8,15}$/.test(value);
+        },
+        "Please enter a valid phone number starting with + and 8–15 digits."
+      );
+
       $("#regform").validate({
         rules: {
           fname: { required: true, minlength: 2 },
@@ -1016,9 +1024,7 @@ $(document).ready(function () {
 
           mobilenumber: {
             required: true,
-            digits: true,
-            minlength: 8,
-            maxlength: 15,
+            phoneWithPlus: true,
           },
         },
         messages: {
@@ -1045,9 +1051,8 @@ $(document).ready(function () {
           },
           mobilenumber: {
             required: "Please enter your phone number",
-            digits: "Only numbers are allowed",
-            minlength: "Phone must be at least 8 digits",
-            maxlength: "Phone must be max 15 digits",
+            phoneWithPlus:
+              "Phone number must start with + and have 8–15 digits",
           },
         },
         submitHandler: function (form, event) {
