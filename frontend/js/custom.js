@@ -532,7 +532,6 @@ function addToCart(id) {
     renderCart();
   });
 }
-
 function renderCart() {
   let totalprice = 0;
   let data = JSON.parse(localStorage.getItem("cart")) || [];
@@ -544,10 +543,23 @@ function renderCart() {
     let price = parseFloat(item.price);
     let subtotal = price * item.quantity;
 
+    // Riješi problem sa slikom (ako je spremljena kao JSON array string)
+    let img = item.productImg;
+    if (typeof img === "string" && img.startsWith("[")) {
+      try {
+        let parsed = JSON.parse(img);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          img = parsed[0];
+        }
+      } catch (e) {
+        console.error("Greška parsiranja slike:", e);
+      }
+    }
+
     let htmlt = `
       <div class="row mb-4 d-flex justify-content-between align-items-center">
         <div class="col-md-2 col-lg-2 col-xl-2">
-          <img src="${item.productImg}" class="img-fluid rounded-3" />
+          <img src="${img}" class="img-fluid rounded-3" />
         </div>
         <div class="col-md-3 col-lg-3 col-xl-3">
           <h6 class="text-muted">${item.category}</h6>
