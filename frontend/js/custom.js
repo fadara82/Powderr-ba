@@ -528,7 +528,6 @@ function renderCart() {
     let price = parseFloat(item.price);
     let subtotal = price * item.quantity;
 
-    // Riješi problem sa slikom (ako je spremljena kao JSON array string)
     let img = item.productImg;
     if (typeof img === "string" && img.startsWith("[")) {
       try {
