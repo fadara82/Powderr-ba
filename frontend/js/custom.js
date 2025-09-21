@@ -1016,6 +1016,17 @@ function goHome() {
   }
 }
 
+function initUsersTable() {
+  if (!$.fn.DataTable.isDataTable("#example")) {
+    $("#example").DataTable({
+      responsive: true,
+      paging: true,
+      searching: true,
+      info: true,
+    });
+  }
+}
+
 $(document).ready(function () {
   $("main#spapp > section").height($(document).height() - 60);
 
@@ -1434,10 +1445,8 @@ $(document).ready(function () {
         });
       }
 
-      // pozovi odmah
       getUsers();
 
-      // uvijek prije .on napravi .off
       $("#usersdiv")
         .off("click", ".deleteUserBtn")
         .on("click", ".deleteUserBtn", function () {
@@ -1460,6 +1469,7 @@ $(document).ready(function () {
           success: function () {
             alert("User successfully deleted.");
             getUsers();
+            initUsersTable();
           },
         });
       }
@@ -1473,56 +1483,72 @@ $(document).ready(function () {
       renderCart();
       loadAndRenderProducts();
 
-      $.get({
-        url: API_BASE_URL + "/orders/get",
-        beforeSend: function (xhr) {
-          const token = Utilis.get_token();
-          if (token) {
-            xhr.setRequestHeader("Authorization", "Bearer " + token);
-          }
-        },
-        success: function (data) {
-          $("#tabeladiv").empty();
+      function loadOrders() {
+        $.get({
+          url: API_BASE_URL + "/orders/get",
+          beforeSend: function (xhr) {
+            const token = Utilis.get_token();
+            if (token) {
+              xhr.setRequestHeader("Authorization", "Bearer " + token);
+            }
+          },
+          success: function (data) {
+            $("#tabeladiv").empty();
 
-          const cart = JSON.parse(localStorage.getItem("cart")) || [];
-          let productsList = cart
-            .map((p) => `${p.productName} (x${p.quantity})`)
-            .join(",<br>");
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let productsList = cart
+              .map((p) => `${p.productName} (x${p.quantity})`)
+              .join(",<br>");
 
-          data.forEach((item) => {
-            let htmlt = `
-          <tr>
-            <td>${item.id}</td>
-            <td>${item.first_name}</td>
-            <td>${item.last_name}</td>
-            <td>${item.email}</td>
-            <td>${item.mobile_number}</td>
-            <td>${item.city}</td>
-            <td>${item.address}</td>
-            <td>${item.status}</td>
-            <td>${item.total_price}</td>
-            <td class="small-text">${productsList || "-"}</td>
-            <td>
-              <button class="updateOrderBtn btn btn-sm btn-success" data-id="${
-                item.id
-              }">✔️</button>
-              <button class="updateOrder2Btn btn btn-sm btn-warning" data-id="${
-                item.id
-              }">↩</button>
-              <button class="deleteOrderBtn btn btn-sm btn-danger" data-id="${
-                item.id
-              }">🗑️</button>
-            </td>
-          </tr>`;
-            $("#tabeladiv").append(htmlt);
-          });
-        },
-        error: function (xhr, status, error) {
-          console.error("Greška pri učitavanju narudžbi:", error);
-        },
-      });
+            data.forEach((item) => {
+              let htmlt = `
+              <tr>
+                <td>${item.id}</td>
+                <td>${item.first_name}</td>
+                <td>${item.last_name}</td>
+                <td>${item.email}</td>
+                <td>${item.mobile_number}</td>
+                <td>${item.city}</td>
+                <td>${item.address}</td>
+                <td>${item.status}</td>
+                <td>${item.total_price}</td>
+                <td class="small-text">${productsList || "-"}</td>
+                <td>
+                  <button class="updateOrderBtn btn btn-sm btn-success" data-id="${
+                    item.id
+                  }">✔️</button>
+                  <button class="updateOrder2Btn btn btn-sm btn-warning" data-id="${
+                    item.id
+                  }">↩</button>
+                  <button class="deleteOrderBtn btn btn-sm btn-danger" data-id="${
+                    item.id
+                  }">🗑️</button>
+                </td>
+              </tr>`;
+              $("#tabeladiv").append(htmlt);
+            });
+
+            if (!$.fn.DataTable.isDataTable("#ordersTable")) {
+              $("#ordersTable").DataTable({
+                responsive: true,
+                paging: true,
+                searching: true,
+                info: true,
+              });
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Greška pri učitavanju narudžbi:", error);
+          },
+        });
+      }
+
+      loadOrders();
 
       $("#tabeladiv")
+        .off("click", ".updateOrderBtn")
+        .off("click", ".updateOrder2Btn")
+        .off("click", ".deleteOrderBtn")
         .on("click", ".updateOrderBtn", function () {
           updateOrder($(this).data("id"));
         })
@@ -1546,7 +1572,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated.");
-              location.reload();
+              loadOrders();
             },
             error: function (err) {
               console.error("Error updating:", err);
@@ -1568,7 +1594,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated (Back).");
-              location.reload();
+              loadOrders();
             },
             error: function (err) {
               console.error("Error updating (Back):", err);
@@ -1590,9 +1616,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order deleted.");
-              $(`#tabeladiv button.deleteOrderBtn[data-id="${id}"]`)
-                .closest("tr")
-                .remove();
+              loadOrders();
             },
             error: function (err) {
               console.error("Error deleting:", err);
