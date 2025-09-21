@@ -1261,11 +1261,12 @@ $(document).ready(function () {
           </div>
         </div>
 
-        <div class="back-to-shop mt-3">
-          <a href="#main" class="btn-outline-small" onclick="history.back()">
-            <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
-          </a>
-        </div>
+      <div class="back-to-shop mt-3">
+  <a href="#main" class="btn-outline-small">
+    <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
+  </a>
+</div>
+
       `;
 
           $("#shopitemdiv").empty().append(html);
