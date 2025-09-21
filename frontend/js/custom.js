@@ -17,7 +17,6 @@ window.Utilis = {
 };
 
 var stripe, elements, cardElement;
-
 function initializeStripeElements() {
   if (typeof Stripe === "undefined") {
     console.error("Stripe.js nije učitan!");
@@ -74,15 +73,17 @@ function initializeStripeElements() {
 
       const totalPrice = parseFloat(localStorage.getItem("total_price")) || 0;
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
       const productDescriptions = cart
-        .map((item) => item.description)
+        .map(
+          (item) => `${item.productName} (x${item.quantity}) - ${item.price} KM`
+        )
         .join(", ");
 
       const amount = Math.round(totalPrice * 100);
 
       $.ajax({
         url: API_BASE_URL + "/stripe/create-payment-intent",
-
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({ amount: amount }),
@@ -133,6 +134,9 @@ function initializeStripeElements() {
                   paymentIntentId: result.paymentIntent.id,
                   total_price: totalPrice,
                   product_description: productDescriptions,
+                  product_names: cart
+                    .map((item) => item.productName)
+                    .join(", "),
                 };
 
                 $.ajax({

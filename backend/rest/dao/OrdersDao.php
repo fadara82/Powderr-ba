@@ -19,9 +19,9 @@ class OrdersDao extends BaseDao {
 
 public function add_orders($order) {
     $sql = "INSERT INTO orders 
-            (first_name, last_name, email, mobile_number, city, address, total_price, product_description) 
+            (first_name, last_name, email, mobile_number, city, address, total_price, product_description,product_names) 
             VALUES 
-            (:first_name, :last_name, :email, :mobile_number, :city, :address, :total_price, :product_description)";
+            (:first_name, :last_name, :email, :mobile_number, :city, :address, :total_price, :product_description,:product_names)";
 
     try {
         $statement = $this->connection->prepare($sql);
@@ -34,6 +34,7 @@ public function add_orders($order) {
         $statement->bindValue(':address', $order['address']);
         $statement->bindValue(':total_price', $order['total_price']);
         $statement->bindValue(':product_description', $order['product_description']);
+        $statement->bindValue(':product_names', $order['product_names']); 
 
         $statement->execute();
 
@@ -192,7 +193,6 @@ public function update_byidB($id){
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
-        // vrati true ako je update izvršen na barem jednom redu
         return $statement->rowCount() > 0;
     } catch (PDOException $e) {
         error_log('Error updating order (Back): ' . $e->getMessage());
