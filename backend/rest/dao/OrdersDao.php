@@ -124,39 +124,41 @@ private function sendConfirmationEmail($toEmail, $toName, $productDescription, $
         }
     }
 
+public function update_byidO($id) {
+    try {
+        $stmt = $this->connection->prepare("SELECT * FROM orders WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
- public function update_byidO($id) {
-        try {
-            $stmt = $this->connection->prepare("SELECT * FROM orders WHERE id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $order = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$order) {
-                throw new Exception("Order not found");
-            }
-
-            $sql = "UPDATE orders SET status = 'SENT' WHERE id = :id";
-            $statement = $this->connection->prepare($sql);
-            $statement->bindParam(':id', $id, PDO::PARAM_INT);
-            $statement->execute();
-
-            $this->sendSentEmail(
-                $order['email'], 
-                $order['first_name'], 
-                $order['product_description'], 
-                $order['total_price']
-            );
-
-            return $order;
-
-        } catch (PDOException $e) {
-            error_log('Error updating order: ' . $e->getMessage());
-            throw new Exception('Failed to update order');
+        if (!$order) {
+            throw new Exception("Order not found");
         }
-    }
 
-private function sendSentEmail($toEmail, $toName, $productDescription, $totalPrice) {
+        // Update status
+        $sql = "UPDATE orders SET status = 'SENT' WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $this->sendSentEmail(
+            $order['email'],               
+            $order['first_name'],          
+            $order['product_description'],
+            $order['product_names'],       
+            $order['product_ids'],        
+            $order['total_price']          
+        );
+
+        return $order;
+
+    } catch (PDOException $e) {
+        error_log('Error updating order: ' . $e->getMessage());
+        throw new Exception('Failed to update order');
+    }
+}
+
+private function sendSentEmail($toEmail, $toName, $productDescription, $productNames, $productIds, $totalPrice) {
     $mail = new PHPMailer(true);
 
     try {
@@ -172,13 +174,15 @@ private function sendSentEmail($toEmail, $toName, $productDescription, $totalPri
         $mail->addAddress($toEmail, $toName);
 
         $mail->isHTML(true);
-        $mail->Subject = 'Your order has been sent! It will arrive within 24–48 hours.';
+        $mail->Subject = "Your order has been sent!";
 
         $mail->Body = "
             Dear $toName,<br><br>
             Your order has been <strong>sent</strong>! 📦<br><br>
             <strong>Order details:</strong><br>
-            Product(s): $productDescription <br>
+            Product ID(s): $productIds <br>
+            Product name(s): $productNames <br>
+            Description(s): $productDescription <br>
             Total price: $totalPrice KM <br><br>
             Your package should arrive within <strong>48-72 hours</strong>.<br><br>
             Thank you for shopping with us!<br>
@@ -191,6 +195,7 @@ private function sendSentEmail($toEmail, $toName, $productDescription, $totalPri
         error_log("Email not sent. Error: {$mail->ErrorInfo}");
     }
 }
+
 
 
 public function update_byidB($id){
