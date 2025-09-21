@@ -46,12 +46,13 @@ Flight::route('POST /orders', function () {
    Flight::get("orders_service")->add_orders($payload);
 });
 */
+
+
 Flight::route('POST /orders', function () {
-    // Pretvori payload u asocijativni niz
     $payload = Flight::request()->data->getData();
 
     $orderData = [
-        'fName' => $payload['firstName'] ?? '',
+        'firstName' => $payload['firstName'] ?? '',
         'lastName' => $payload['lastName'] ?? '',
         'email' => $payload['email'] ?? '',
         'mobilenumber' => $payload['mobilenumber'] ?? '',
@@ -59,6 +60,7 @@ Flight::route('POST /orders', function () {
         'address' => $payload['address'] ?? '',
         'total_price' => $payload['total_price'] ?? 0,
         'product_description' => $payload['product_description'] ?? '',
+        'product_names' => $payload['product_names'] ?? '', // 👈 dodano
     ];
 
     try {
