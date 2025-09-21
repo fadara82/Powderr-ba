@@ -11268,9 +11268,9 @@ a {
   padding: 6px 12px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #000 !important; /* uvijek crni tekst */
-  background-color: #fff; /* bijela pozadina */
-  border: 2px solid #000; /* crni rub */
+  color: #000 !important; 
+  background-color: #fff; 
+  border: 2px solid #000; 
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.3s;
@@ -11280,19 +11280,21 @@ a {
   margin-right: 6px;
 }
 
-/* Hover efekt */
 .btn-outline-small:hover {
-  background-color: #000; /* crna pozadina */
-  color: #fff !important; /* bijeli tekst */
+  background-color: #000; 
+  color: #fff !important; 
   transform: translateY(-2px);
 }
 
 .btn-outline-small i {
-  margin-right: 6px; /* razmak strelice */
+  margin-right: 6px; 
 }
 
-/* Hover efekt */
 .btn-outline-small:hover {
   background-color: #000;
   color: #fff !important;
+}
+.cart-wrapper {
+  background-color: #eae8e8; 
+  border-radius: 15px;
 }
