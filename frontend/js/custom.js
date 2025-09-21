@@ -982,9 +982,7 @@ function initProfileModals() {
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Error updating profile");
         },
-        complete: function () {
-          $.unblockUI();
-        },
+        complete: function () {},
       });
     },
   });
