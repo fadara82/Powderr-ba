@@ -11189,6 +11189,7 @@ a {
   }
 }
 
+
 .back-to-shop h6 {
   margin-bottom: 0;
 }
@@ -11204,19 +11205,19 @@ a {
 }
 
 .back-to-shop a i {
-  font-size: 1.2rem; /* veća strelica */
+  font-size: 1.2rem;   
   margin-right: 8px;
   transition: transform 0.3s;
 }
 
-/* Hover efekt */
 .back-to-shop a:hover {
   color: #0056b3;
 }
 
 .back-to-shop a:hover i {
-  transform: translateX(-4px); /* pomak strelice lijevo */
+  transform: translateX(-4px); 
 }
+
 
 .btn-outline-small {
   display: inline-flex;          
@@ -11245,14 +11246,6 @@ a {
   transform: translateY(-2px);
 }
 
-.btn-outline-small i {
-  margin-right: 6px;
-}
-
-.btn-outline-small:hover {
-  background-color: #000;
-  color: #fff !important;
-}
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
