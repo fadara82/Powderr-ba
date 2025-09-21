@@ -1009,8 +1009,8 @@ function initProfileModals() {
 }
 
 function goHome() {
-  loadAndRenderProducts();
   window.location.hash = "#main";
+  loadAndRenderProducts();
 }
 
 $(document).ready(function () {
@@ -1262,10 +1262,11 @@ $(document).ready(function () {
         </div>
 
       <div class="back-to-shop mt-3">
-  <a href="#main" class="btn-outline-small">
+  <a href="#main" class="btn-outline-small" onclick="goHome(); return false;">
     <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
   </a>
 </div>
+
 
       `;
 
