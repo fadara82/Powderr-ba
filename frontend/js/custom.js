@@ -256,9 +256,7 @@ function loadAndRenderProducts() {
       products = data;
       renderPage(1);
     },
-    error: function (xhr, status, error) {
-      console.log("Error loading data:", error);
-    },
+    error: function (xhr, status, error) {},
   });
 }
 
@@ -338,12 +336,7 @@ function getProteini() {
       currentPage = 1;
       renderPage(currentPage);
     },
-    error: function (xhr, status, error) {
-      console.log("Error loading proteini:");
-      console.log("Status:", status);
-      console.log("Error:", error);
-      console.log("Response:", xhr.responseText);
-    },
+    error: function (xhr, status, error) {},
   });
 }
 
@@ -355,12 +348,7 @@ function getVitamini() {
     success: function (data) {
       renderCategory(data);
     },
-    error: function (xhr, status, error) {
-      console.log("Error loading vitamini:");
-      console.log("Status:", status);
-      console.log("Error:", error);
-      console.log("Response:", xhr.responseText);
-    },
+    error: function (xhr, status, error) {},
   });
 }
 
@@ -373,9 +361,7 @@ function getKreatin() {
     success: function (data) {
       renderCategory(data);
     },
-    error: function (xhr, status, error) {
-      console.log("Error loading kreatin:", error);
-    },
+    error: function (xhr, status, error) {},
   });
 }
 
@@ -388,9 +374,7 @@ function getCokoladice() {
     success: function (data) {
       renderCategory(data);
     },
-    error: function (xhr, status, error) {
-      console.log("Error loading cokoladice:", error);
-    },
+    error: function (xhr, status, error) {},
   });
 }
 
@@ -659,7 +643,6 @@ function unhideER() {
 }
 
 function editProduct(id) {
-  console.log(id);
   $.ajax({
     url: API_BASE_URL + `/products/get/byid?id=${id}`,
     method: "GET",
@@ -766,12 +749,9 @@ function editProduct(id) {
               }
             },
             success: function (response) {
-              console.log("Form data sent successfully:", response);
               location.reload();
             },
             error: function (xhr, status, error) {
-              console.error("Error sending form data:", error);
-              console.error("Response text:", xhr.responseText);
               alert("Error updating product: " + xhr.responseText);
             },
           });
@@ -796,13 +776,11 @@ function deleteUser(id) {
         }
       },
       success: function (response) {
-        console.log("Delete successful:", response);
         alert("User deleted successfully!");
         window.location.reload();
       },
       error: function (xhr, status, error) {
         console.error("Error deleting user:", error);
-        console.log("Response text:", xhr.responseText);
         alert("Failed to delete user: " + xhr.responseText);
       },
     });
@@ -952,7 +930,7 @@ function initProfileModals() {
         },
         success: function (res) {
           alert(res.message || "Password changed successfully");
-          $("#changePasswordModal").hide().removeClass("show"); // 👈 direktno hide
+          $("#changePasswordModal").hide().removeClass("show");
         },
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Error changing password");
@@ -963,7 +941,7 @@ function initProfileModals() {
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
-      $(this).closest(".modal-custom").hide().removeClass("show"); // 👈 direktno hide
+      $(this).closest(".modal-custom").hide().removeClass("show");
     });
 }
 
@@ -1076,7 +1054,6 @@ $(document).ready(function () {
             method: "POST",
             data: formData,
             success: function (response) {
-              console.log("Form data sent successfully:", response);
               window.location.href = "#login";
             },
             error: function (xhr, status, error) {
@@ -1135,7 +1112,6 @@ $(document).ready(function () {
                 const payload = JSON.parse(payloadJson);
                 const role =
                   payload.role || (payload.user && payload.user.role);
-                console.log("User role:", role);
 
                 setupNavbar();
 
@@ -1267,7 +1243,6 @@ $(document).ready(function () {
             }
           },
           success: function (response) {
-            console.log("Product added", response);
             loadAndRenderProducts();
             $("#a")[0].reset();
             location.reload();
@@ -1361,7 +1336,6 @@ $(document).ready(function () {
             }
           },
           success: function (data) {
-            console.log("Users data:", data);
             renderUsers(data);
 
             $("#example").DataTable();
