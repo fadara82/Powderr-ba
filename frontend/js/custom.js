@@ -875,7 +875,7 @@ function initProfileModals() {
         },
         success: function (res) {
           alert(res.message || "Podaci uspješno ažurirani");
-          $("#editDataModal").hide().removeClass("show"); // 👈 direktno hide
+          $("#editDataModal").hide().removeClass("show");
           window.location.reload();
         },
         error: function (xhr) {
@@ -941,7 +941,7 @@ function initProfileModals() {
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
-      $(this).closest(".modal-custom").hide().removeClass("show");
+      $(this).parents(".profileusers-modal").hide().removeClass("show");
     });
 }
 
