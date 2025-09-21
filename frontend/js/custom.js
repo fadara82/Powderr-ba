@@ -815,43 +815,68 @@ function deleteUsers(id) {
   }
 }
 function initProfileModals() {
-  $("#editDataBtn")
-    .off("click")
-    .on("click", () => {
+  // === Add custom validation methods (ako već nisu definisane) ===
+  if (!$.validator.methods.strongPassword) {
+    $.validator.addMethod(
+      "strongPassword",
+      function (value, element) {
+        return (
+          this.optional(element) ||
+          (/[a-z]/.test(value) &&
+            /[A-Z]/.test(value) &&
+            /\d/.test(value) &&
+            value.length >= 8)
+        );
+      },
+      "Password must contain at least 8 characters, one uppercase, one lowercase and one number."
+    );
+  }
+
+  if (!$.validator.methods.phoneWithPlus) {
+    $.validator.addMethod(
+      "phoneWithPlus",
+      function (value, element) {
+        return this.optional(element) || /^\+[0-9]{8,15}$/.test(value);
+      },
+      "Please enter a valid phone number starting with + and 8–15 digits."
+    );
+  }
+
+  // === Edit Data validation ===
+  $("#editDataForm").validate({
+    rules: {
+      fname: { required: true, minlength: 2 },
+      lname: { required: true, minlength: 2 },
+      email: { required: true, email: true },
+      mobile: { required: true, phoneWithPlus: true },
+    },
+    messages: {
+      fname: {
+        required: "Please enter your first name",
+        minlength: "First name must be at least 2 characters long",
+      },
+      lname: {
+        required: "Please enter your last name",
+        minlength: "Last name must be at least 2 characters long",
+      },
+      email: {
+        required: "Please enter your email",
+        email: "Enter a valid email address",
+      },
+      mobile: {
+        required: "Please enter your phone number",
+        phoneWithPlus: "Phone number must start with + and have 8–15 digits",
+      },
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
+
       const token = Utilis.get_token();
       if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
+        alert("You are not logged. Please login");
         return;
       }
 
-      $.ajax({
-        url: API_BASE_URL + "/user/editme",
-        method: "GET",
-        beforeSend: function (xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + token);
-        },
-        success: function (res) {
-          if (!res.user) {
-            alert("Korisnik nije pronađen!");
-            return;
-          }
-
-          $("#fname").val(res.user.first_name);
-          $("#lname").val(res.user.last_name);
-          $("#email").val(res.user.email);
-          $("#mobile").val(res.user.mobile_number);
-
-          $("#editDataModal").show().addClass("show");
-        },
-        error: function (xhr) {
-          alert(xhr.responseJSON?.error || "Greška pri dohvaćanju podataka");
-        },
-      });
-    });
-
-  $(document)
-    .off("click", "#saveEditBtn")
-    .on("click", "#saveEditBtn", function () {
       const payload = {
         first_name: $("#fname").val(),
         last_name: $("#lname").val(),
@@ -859,66 +884,62 @@ function initProfileModals() {
         mobile_number: $("#mobile").val(),
       };
 
-      const token = Utilis.get_token();
-      if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
-        return;
-      }
-
       $.ajax({
         url: API_BASE_URL + "/user/update",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(payload),
         beforeSend: function (xhr) {
+          $.blockUI({ message: "Please wait" });
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function (res) {
-          alert(res.message || "Podaci uspješno ažurirani");
+          alert(res.message || "Profile updated successfully");
           $("#editDataModal").hide().removeClass("show");
+          form.reset();
           window.location.reload();
         },
         error: function (xhr) {
-          alert(xhr.responseJSON?.error || "Greška pri spremanju promjena");
+          alert(xhr.responseJSON?.error || "Error updating profile");
+        },
+        complete: function () {
+          $.unblockUI();
         },
       });
-    });
+    },
+  });
 
-  $("#changePasswordBtn")
-    .off("click")
-    .on("click", () => {
-      const token = Utilis.get_token();
-      if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
-        return;
-      }
-      $("#changePasswordModal").show().addClass("show");
-    });
-
-  $("#savePasswordBtn")
-    .off("click")
-    .on("click", () => {
-      const currentPassword = $("#currentPassword").val();
-      const newPassword = $("#newPassword").val();
-      const confirmPassword = $("#confirmPassword").val();
-
-      if (!currentPassword || !newPassword || !confirmPassword) {
-        alert("Please fill all fields");
-        return;
-      }
-
-      if (newPassword !== confirmPassword) {
-        alert("Passwords do not match");
-        return;
-      }
+  // === Change Password validation ===
+  $("#changePasswordForm").validate({
+    rules: {
+      currentPassword: { required: true },
+      newPassword: { required: true, strongPassword: true },
+      confirmPassword: { required: true, equalTo: "#newPassword" },
+    },
+    messages: {
+      currentPassword: {
+        required: "Please enter your current password",
+      },
+      newPassword: {
+        required: "Please enter a new password",
+        strongPassword:
+          "Password must contain at least 8 characters, one uppercase, one lowercase and one number.",
+      },
+      confirmPassword: {
+        required: "Please confirm your password",
+        equalTo: "Passwords do not match",
+      },
+    },
+    submitHandler: function (form, event) {
+      event.preventDefault();
 
       const token = Utilis.get_token();
       if (!token) {
-        alert("Niste prijavljeni! Molimo prijavite se.");
+        alert("You are not logged. Please login");
         return;
       }
 
-      const payload = { newPassword: newPassword };
+      const payload = { newPassword: $("#newPassword").val() };
 
       $.ajax({
         url: API_BASE_URL + "/change-password",
@@ -926,18 +947,25 @@ function initProfileModals() {
         contentType: "application/json",
         data: JSON.stringify(payload),
         beforeSend: function (xhr) {
+          $.blockUI({ message: "Please wait" });
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function (res) {
           alert(res.message || "Password changed successfully");
           $("#changePasswordModal").hide().removeClass("show");
+          form.reset();
         },
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Error changing password");
         },
+        complete: function () {
+          $.unblockUI();
+        },
       });
-    });
+    },
+  });
 
+  // === Close buttons ===
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
