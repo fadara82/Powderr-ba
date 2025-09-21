@@ -1580,6 +1580,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated.");
+              window.location.reload();
             },
             error: function (err) {
               console.error("Error updating:", err);
@@ -1601,7 +1602,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated (Back).");
-              loadOrders();
+              window.location.reload();
             },
             error: function (err) {
               console.error("Error updating (Back):", err);
