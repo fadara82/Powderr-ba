@@ -339,7 +339,6 @@ function getProteini() {
     success: function (data) {
       products = data;
       currentPage = 1;
-      currentPage = 1;
       renderPage(currentPage);
     },
     error: function (xhr, status, error) {},
@@ -352,6 +351,7 @@ function getVitamini() {
     method: "GET",
     dataType: "json",
     success: function (data) {
+      products = data;
       currentPage = 1;
       renderPage(currentPage);
     },
@@ -366,6 +366,7 @@ function getKreatin() {
     dataType: "json",
 
     success: function (data) {
+      products = data;
       currentPage = 1;
       renderPage(currentPage);
     },
@@ -380,6 +381,7 @@ function getCokoladice() {
     dataType: "json",
 
     success: function (data) {
+      products = data;
       currentPage = 1;
       renderPage(currentPage);
     },
