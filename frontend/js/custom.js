@@ -1550,8 +1550,6 @@ $(document).ready(function () {
         });
       }
 
-      loadOrders();
-
       $("#tabeladiv")
         .off("click", ".updateOrderBtn")
         .off("click", ".updateOrder2Btn")
