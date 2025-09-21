@@ -1009,8 +1009,11 @@ function initProfileModals() {
 }
 
 function goHome() {
-  window.location.hash = "#main";
-  loadAndRenderProducts();
+  if (window.location.hash === "#main") {
+    loadAndRenderProducts();
+  } else {
+    window.location.hash = "#main";
+  }
 }
 
 $(document).ready(function () {
