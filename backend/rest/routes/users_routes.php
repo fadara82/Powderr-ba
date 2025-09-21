@@ -41,24 +41,21 @@ Flight::route('DELETE /users/delete/byid', function () {
 });
 
 Flight::route('GET /admin/secret-data', function () {
-    // Uzmi user iz middleware-a (tokena)
     $user = Flight::get('user');
     if (!$user) {
         Flight::halt(401, json_encode(['message' => 'Unauthorized']));
     }
 
-    $userId = $user->user->id; // Pretpostavka da je user ID ovdje
+    $userId = $user->user->id; 
 
-    // Dohvati rolu iz servisa (koji poziva dao)
     $role = Flight::get('users_service')->get_user_role_by_id($userId);
 
     if ($role !== 'admin') {
         Flight::halt(403, json_encode(['message' => 'Access denied. Admins only']));
     }
 
-    // Ako je admin, ovdje ide logika koju želiš prikazati
     $secretData = [
-        'message' => 'Ovo je tajni admin sadržaj!'
+        'message' => 'Z'
     ];
 
     Flight::json($secretData);
