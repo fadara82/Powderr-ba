@@ -190,7 +190,7 @@ function initializeStripeElements() {
                     $("#order").attr("disabled", false);
                     form.reset();
                     cardElement.clear();
-                    localStorage.clear();
+                    cart.clear();
                     window.location.hash = "#main";
                   },
                   error: function (xhr) {
@@ -1525,6 +1525,8 @@ $(document).ready(function () {
       renderCart();
       loadAndRenderProducts();
 
+      let ordersTable = null;
+
       function loadOrders() {
         $.get({
           url: API_BASE_URL + "/orders/get",
@@ -1535,52 +1537,40 @@ $(document).ready(function () {
             }
           },
           success: function (data) {
-            $("#tabeladiv").empty();
-
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            let productsList = cart
-              .map((p) => `${p.productName} (x${p.quantity})`)
-              .join(",<br>");
-
-            data.forEach((item) => {
-              let htmlt = `
-              <tr>
-                <td>${item.id}</td>
-                <td>${item.first_name}</td>
-                <td>${item.last_name}</td>
-                <td>${item.email}</td>
-                <td>${item.mobile_number}</td>
-                <td>${item.city}</td>
-                <td>${item.address}</td>
-                <td>${item.status}</td>
-                <td>${item.total_price}</td>
-                <td class="small-text">${productsList || "-"}</td>
-                <td>
-                  <button class="updateOrderBtn btn btn-sm btn-success" data-id="${
-                    item.id
-                  }">✔️</button>
-                  <button class="updateOrder2Btn btn btn-sm btn-warning" data-id="${
-                    item.id
-                  }">↩</button>
-                  <button class="deleteOrderBtn btn btn-sm btn-danger" data-id="${
-                    item.id
-                  }">🗑️</button>
-                </td>
-              </tr>`;
-              $("#tabeladiv").append(htmlt);
-            });
-
-            setTimeout(() => {
-              if ($.fn.DataTable.isDataTable("#ordersTable")) {
-                $("#ordersTable").DataTable().clear().destroy();
-              }
-              $("#ordersTable").DataTable({
+            // ako tablica prvi put
+            if (!ordersTable) {
+              ordersTable = $("#ordersTable").DataTable({
                 responsive: true,
                 paging: true,
                 searching: true,
                 info: true,
+                data: data,
+                columns: [
+                  { data: "id" },
+                  { data: "first_name" },
+                  { data: "last_name" },
+                  { data: "email" },
+                  { data: "mobile_number" },
+                  { data: "city" },
+                  { data: "address" },
+                  { data: "status" },
+                  { data: "total_price" },
+                  {
+                    data: null,
+                    render: function (row) {
+                      return `
+                      <button class="updateOrderBtn btn btn-sm btn-success" data-id="${row.id}">✔️</button>
+                      <button class="updateOrder2Btn btn btn-sm btn-warning" data-id="${row.id}">↩</button>
+                      <button class="deleteOrderBtn btn btn-sm btn-danger" data-id="${row.id}">🗑️</button>
+                    `;
+                    },
+                  },
+                ],
               });
-            }, 100);
+            } else {
+              // ako već postoji – samo refresha podatke
+              ordersTable.clear().rows.add(data).draw();
+            }
           },
           error: function (xhr, status, error) {
             console.error("Greška pri učitavanju narudžbi:", error);
@@ -1589,7 +1579,8 @@ $(document).ready(function () {
       }
       loadOrders();
 
-      $("#tabeladiv")
+      // delegirani click handleri
+      $("#ordersTable")
         .off("click", ".updateOrderBtn")
         .off("click", ".updateOrder2Btn")
         .off("click", ".deleteOrderBtn")
@@ -1616,7 +1607,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated.");
-              window.location.reload();
+              loadOrders(); // samo refresha podatke
             },
             error: function (err) {
               console.error("Error updating:", err);
@@ -1638,7 +1629,7 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated (Back).");
-              window.location.reload();
+              loadOrders(); // samo refresha podatke
             },
             error: function (err) {
               console.error("Error updating (Back):", err);
@@ -1660,7 +1651,11 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order deleted.");
-              loadOrders();
+              // odmah skini red iz DataTables bez ponovnog loadanja cijelog
+              ordersTable
+                .row($(`.deleteOrderBtn[data-id="${id}"]`).parents("tr"))
+                .remove()
+                .draw();
             },
             error: function (err) {
               console.error("Error deleting:", err);
