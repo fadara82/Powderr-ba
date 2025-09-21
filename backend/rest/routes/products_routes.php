@@ -7,11 +7,17 @@ header("Access-Control-Allow-Origin: *");
 Flight::set('products_service', new ProductsService());
 
 Flight::route('POST /products', function () {
-  
+    $payload = json_decode(file_get_contents("php://input"), true);
 
- 
-$payload = Flight::request()->data->getData();
-   Flight::get("products_service")->add_products($payload);
+    error_log("Received payload: " . print_r($payload, true));
+
+    Flight::get("products_service")->add_products($payload);
+
+    Flight::json([
+        "status" => "success",
+        "message" => "Product added successfully",
+        "data" => $payload
+    ]);
 });
 
 

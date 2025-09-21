@@ -1329,7 +1329,6 @@ $(document).ready(function () {
           success: function (response) {
             loadAndRenderProducts();
             $("#a")[0].reset();
-            location.reload();
           },
           error: function (xhr, status, error) {
             console.error("Mistake:", error);
