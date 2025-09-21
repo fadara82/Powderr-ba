@@ -928,7 +928,6 @@ function initProfileModals() {
         contentType: "application/json",
         data: JSON.stringify(payload),
         beforeSend: function (xhr) {
-          $.blockUI({ message: "Please wait" });
           xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function (res) {
