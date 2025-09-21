@@ -117,7 +117,7 @@ private function sendConfirmationEmail($toEmail, $toName, $productDescription, $
             $statement = $this->connection->prepare($sql);
             $statement->bindParam(':id', $id, PDO::PARAM_INT);
             $statement->execute();
-            return $statement->rowCount() > 0; // true ako je obrisano
+            return $statement->rowCount() > 0; 
         } catch (PDOException $e) {
             error_log('Error deleting order: ' . $e->getMessage());
             throw new Exception('Failed to delete order');
@@ -158,7 +158,7 @@ public function update_byidO($id) {
     }
 }
 
-private function sendSentEmail($toEmail, $toName, $productDescription, $productNames, $productIds, $totalPrice) {
+private function sendSentEmail($toEmail, $toName, $productDescription, $productNames, $totalPrice) {
     $mail = new PHPMailer(true);
 
     try {
@@ -180,7 +180,6 @@ private function sendSentEmail($toEmail, $toName, $productDescription, $productN
             Dear $toName,<br><br>
             Your order has been <strong>sent</strong>! 📦<br><br>
             <strong>Order details:</strong><br>
-            Product ID(s): $productIds <br>
             Product name(s): $productNames <br>
             Description(s): $productDescription <br>
             Total price: $totalPrice KM <br><br>
