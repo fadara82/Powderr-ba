@@ -1528,14 +1528,17 @@ $(document).ready(function () {
               $("#tabeladiv").append(htmlt);
             });
 
-            if (!$.fn.DataTable.isDataTable("#ordersTable")) {
+            setTimeout(() => {
+              if ($.fn.DataTable.isDataTable("#ordersTable")) {
+                $("#ordersTable").DataTable().clear().destroy();
+              }
               $("#ordersTable").DataTable({
                 responsive: true,
                 paging: true,
                 searching: true,
                 info: true,
               });
-            }
+            }, 100);
           },
           error: function (xhr, status, error) {
             console.error("Greška pri učitavanju narudžbi:", error);
