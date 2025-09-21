@@ -1388,6 +1388,7 @@ $(document).ready(function () {
     load: "users.html",
     onReady: function () {
       renderCart();
+      loadAndRenderProducts();
 
       function getUsers() {
         $.ajax({
@@ -1475,6 +1476,7 @@ $(document).ready(function () {
     load: "orders.html",
     onReady: function () {
       renderCart();
+      loadAndRenderProducts();
 
       $.get({
         url: API_BASE_URL + "/orders/get",
