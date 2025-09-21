@@ -1670,6 +1670,7 @@ $(document).ready(function () {
           });
         }
       }
+      loadOrders();
     },
   });
 
