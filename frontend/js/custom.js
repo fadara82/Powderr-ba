@@ -1555,6 +1555,7 @@ $(document).ready(function () {
           },
         });
       }
+      loadOrders();
 
       $("#tabeladiv")
         .off("click", ".updateOrderBtn")
