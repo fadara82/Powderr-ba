@@ -19,7 +19,7 @@ window.Utilis = {
 var stripe, elements, cardElement;
 function initializeStripeElements() {
   if (typeof Stripe === "undefined") {
-    console.error("Stripe.js nije učitan!");
+    console.error("Stripe.js not loaded!");
     return false;
   }
 
@@ -45,20 +45,54 @@ function initializeStripeElements() {
     }
   });
 
+  if (!$.validator.methods.phoneWithPlus) {
+    $.validator.addMethod(
+      "phoneWithPlus",
+      function (value, element) {
+        return this.optional(element) || /^\+[0-9]{8,15}$/.test(value);
+      },
+      "Please enter a valid phone number starting with + and 8–15 digits."
+    );
+  }
+
   $("#check").validate({
     rules: {
       firstName: { required: true, minlength: 2 },
       lastName: { required: true, minlength: 2 },
       email: { required: true, email: true },
-      mobilenumber: { required: true, minlength: 6 },
+      mobilenumber: { required: true, phoneWithPlus: true },
       city: { required: true, minlength: 2 },
       address: { required: true },
       cardholderName: { required: true, minlength: 2 },
     },
     messages: {
+      firstName: {
+        required: "Please enter your first name",
+        minlength: "First name must be at least 2 characters long",
+      },
+      lastName: {
+        required: "Please enter your last name",
+        minlength: "Last name must be at least 2 characters long",
+      },
+      email: {
+        required: "Please enter your email address",
+        email: "Please enter a valid email address",
+      },
+      mobilenumber: {
+        required: "Please enter your mobile number",
+        phoneWithPlus:
+          "Mobile number must start with + and contain 8–15 digits",
+      },
+      city: {
+        required: "Please enter your city",
+        minlength: "City must be at least 2 characters long",
+      },
+      address: {
+        required: "Please enter your address",
+      },
       cardholderName: {
-        required: "Ime na kartici je obavezno",
-        minlength: "Ime na kartici mora imati barem 2 znaka",
+        required: "Cardholder name is required",
+        minlength: "Cardholder name must have at least 2 characters",
       },
     },
     submitHandler: function (form, event) {
@@ -66,7 +100,7 @@ function initializeStripeElements() {
       $("#order").attr("disabled", true);
 
       if (!cardElement || !$("#card-element").length) {
-        alert("Kartični element nije montiran. Molimo osvježite stranicu.");
+        alert("Card element is not mounted. Please refresh the page.");
         $("#order").attr("disabled", false);
         return;
       }
@@ -93,10 +127,9 @@ function initializeStripeElements() {
             xhr.setRequestHeader("Authorization", "Bearer " + token);
           }
         },
-
         success: function (data) {
           if (!data.clientSecret) {
-            alert("Nema clientSecret u odgovoru backend-a!");
+            alert("No clientSecret returned from backend!");
             $("#order").attr("disabled", false);
             return;
           }
@@ -150,7 +183,6 @@ function initializeStripeElements() {
                       xhr.setRequestHeader("Authorization", "Bearer " + token);
                     }
                   },
-
                   success: function () {
                     alert(
                       "Your order has been successfully processed. Thank you!"
@@ -164,7 +196,7 @@ function initializeStripeElements() {
                   error: function (xhr) {
                     alert(
                       "Error saving the order: " +
-                        (xhr.responseJSON?.error || "Nešto nije u redu")
+                        (xhr.responseJSON?.error || "Something went wrong")
                     );
                     $("#order").attr("disabled", false);
                   },
@@ -174,8 +206,8 @@ function initializeStripeElements() {
         },
         error: function (xhr) {
           alert(
-            "An error occurred during payment:" +
-              (xhr.responseJSON?.error || "Something went wrong u redu")
+            "An error occurred during payment: " +
+              (xhr.responseJSON?.error || "Something went wrong")
           );
           $("#order").attr("disabled", false);
         },
