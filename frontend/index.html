@@ -1,296 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Powder.ba</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Powder.ba</title>
 
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
+  <link 
+    rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+  />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
-    />
+  <link rel="stylesheet" href="css/spapp.css" />
+  <link rel="stylesheet" href="css/stylesi.css" />
+  <link rel="stylesheet" href="css/registration.css" />
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="css/shopingcart.css" />
+  <link rel="stylesheet" href="css/shopitem.css" />
+  <link rel="stylesheet" href="css/users.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css"
-    />
 
-    <link rel="stylesheet" href="css/spapp.css" />
-    <link rel="stylesheet" href="css/stylesi.css" />
-    <link rel="stylesheet" href="css/registration.css" />
-    <link rel="stylesheet" href="css/login.css" />
-    <link rel="stylesheet" href="css/shopingcart.css" />
-    <link rel="stylesheet" href="css/shopitem.css" />
-    <link rel="stylesheet" href="css/users.css" />
-  </head>
+
+  
+ 
+  <link 
+    rel="stylesheet" 
+    href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css"
+  />
+
+  
+</head>
 
   <body>
+ 
     <form id="modalje"></form>
 
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-light"
-      id="guestNav"
-      style="display: none"
-    >
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand naslov" href="#main">Powder.ba</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item">
-              <a
-                class="nav-link active homara"
-                aria-current="page"
-                onclick="goHome()"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                onclick="goHome()"
-                >Shop</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" onclick="getProteini()"
-                    >Protein Powder</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getVitamini()">Vitamins</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getCokoladice()"
-                    >Healthy Bars</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
+    <nav role="navigation">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="guestNav" style="display:none;" >
+        <div class="container px-4 px-lg-5">
+          <a class="navbar-brand naslov" href="#main">Powder.ba</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+              <li class="nav-item">
+                <a
+                  class="nav-link active homara"
+                  aria-current="page"
+                  onclick=goHome()
+              
+                  
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                                    onclick=goHome()
 
-          <form class="d-flex" onsubmit="return false;">
-            <a
-              href="#shopingcart"
-              id="btnCart"
-              class="btn btn-outline-dark"
-              role="button"
-            >
-              <i class="bi-cart-fill me-1"></i> Cart
-            </a>
-            <button
-              type="button"
-              class="btn btn-outline-dark"
-              onclick="logout()"
-            >
-              Logout
-            </button>
-          </form>
-          <div id="cartItems"></div>
-        </div>
-      </div>
-    </nav>
+                  >Shop</a
+                >
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" onclick="getProteini()"
+                      >Protein Powder</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getVitamini()"
+                      >Vitamins</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getCokoladice()"
+                      >Healthy Bars</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
 
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-light"
-      id="homeNav"
-      style="display: none"
-    >
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand naslov" href="#main">Powder.ba</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item">
-              <a
-                class="nav-link active homara"
-                aria-current="page"
-                onclick="goHome()"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                onclick="goHome()"
-                >Shop</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" onclick="getProteini()"
-                    >Protein Powder</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getVitamini()">Vitamins</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getCokoladice()"
-                    >Healthy Bars</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <form class="d-flex" onsubmit="return false;">
-            <a
-              href="#shopingcart"
-              id="btnCart"
-              class="btn btn-outline-dark"
-              role="button"
-            >
-              <i class="bi-cart-fill me-1"></i> Cart
-            </a>
-            <a
-              href="#profileusers"
-              class="btn btn-outline-dark"
-              role="button"
-              style="display: none"
-              >👥</a
-            >
-            <button
-              type="button"
-              class="btn btn-outline-dark"
-              onclick="logout()"
-            >
-              Logout
-            </button>
-          </form>
-          <div id="cartItems"></div>
-        </div>
-      </div>
-    </nav>
-
-    <nav
-      class="navbar navbar-expand-lg navbar-light bg-light"
-      id="adminP"
-      style="display: none"
-    >
-      <div class="container px-4 px-lg-5">
-        <a class="navbar-brand naslov" href="#main">Powder.ba</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-            <li class="nav-item">
-              <a
-                href="#main"
-                class="nav-link active homara"
-                aria-current="page"
-                onclick="goHome()"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item dropdown" id="shopo">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Shop</a
-              >
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" onclick="getProteini()"
-                    >Protein Powder</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getVitamini()">Vitamins</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" onclick="getCokoladice()"
-                    >Healthy Bars</a
-                  >
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <strong id="adminop">Admin Options</strong>
-                <strong id="adminop2">ADM</strong>
+            <form class="d-flex" onsubmit="return false;">
+            <a href="#shopingcart" id="btnCart" class="btn btn-outline-dark" role="button">
+                <i class="bi-cart-fill me-1"></i> Cart
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a
-                    id="addProductBtn"
-                    class="dropdown-item"
-                    onclick="showEdit()"
-                    >Add Product</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    id="editRemoveBtn"
-                    onclick="unhideER()"
-                    >Edit/Remove Product</a
-                  >
-                </li>
-                <li><a class="dropdown-item" href="#users">Users</a></li>
-                <li><a class="dropdown-item" href="#orders">Orders</a></li>
-              </ul>
-            </li>
-          </ul>
+    
 
-          <form class="d-flex">
-            <a
-              href="#shopingcart"
-              class="btn btn-outline-dark"
-              style="
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
-            >
-              <i class="bi-cart-fill me-1"></i>
-            </a>
-            <button
-              type="button"
-              class="btn btn-outline-dark"
-              onclick="logout()"
-            >
-              Logout
-            </button>
-          </form>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                onclick="logout()"
+              >
+                Logout
+              </button>
+            </form>
+
+            <div id="cartItems"></div>
+          </div>
         </div>
-      </div>
+      </nav>
+
+    <nav role="navigation">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="homeNav" style="display:none;" >
+        <div class="container px-4 px-lg-5">
+          <a class="navbar-brand naslov" href="#main">Powder.ba</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+              <li class="nav-item">
+                <a
+                  class="nav-link active homara"
+                  aria-current="page"
+                  onclick=goHome()
+              
+                  
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  
+                  >Shop</a
+                >
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" onclick="getProteini()"
+                      >Protein Powder</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getVitamini()"
+                      >Vitamins</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getCokoladice()"
+                      >Healthy Bars</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <form class="d-flex" onsubmit="return false;">
+              <a href="#shopingcart" id="btnCart" class="btn btn-outline-dark" role="button">
+                <i class="bi-cart-fill me-1"></i> Cart
+              </a>
+                <a
+  href="#profileusers"
+  class="btn btn-outline-dark"
+  role="button"
+  style="display:none"
+>
+  👥
+</a>
+
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                onclick="logout()"
+              >
+                Logout
+              </button>
+            </form>
+
+            <div id="cartItems"></div>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="adminP" style="display:none;">
+        <div class="container px-4 px-lg-5">
+          <a class="navbar-brand naslov" href="#main">Powder.ba</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+              <li class="nav-item">
+                <a
+                  href="#main"
+                  class="nav-link active homara"
+                  aria-current="page"
+                  onclick="goHome()"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item dropdown" id="shopo">
+                <a
+                  class="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  href="#main"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >Shop</a
+                >
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" onclick="getProteini()"
+                      >Protein Powder</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getVitamini()"
+                      >Vitamins</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getKreatin()">Creatine</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="getCokoladice()"
+                      >Healthy Bars</a
+                    >
+                  </li>
+                </ul>
+              </li>
+            
+
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <strong id="adminop">Admin Options</strong>
+                  <strong id="adminop2">ADM</strong>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a id="addProductBtn"class="dropdown-item" onclick="showEdit()"
+                      >Add Product</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      id="editRemoveBtn"
+                      onclick="unhideER()"
+                      >Edit/Remove Product</a
+                    >
+                  </li>
+                  <li><a class="dropdown-item" href="#users">Users</a></li>
+                  <li><a class="dropdown-item" href="#orders">Orders</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <form class="d-flex">
+              <a
+                href="#shopingcart"
+                class="btn btn-outline-dark"
+                style="
+                  width: 40px;
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <i class="bi-cart-fill me-1"></i>
+              </a>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                onclick="logout()"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
     </nav>
 
     <main id="spapp" role="main">
@@ -303,105 +302,217 @@
       <section id="checkout"></section>
       <section id="admin"></section>
       <section id="profileusers"></section>
+
       <section id="main" data-load="home.html"></section>
     </main>
 
+    <!-- Modalovi -->
     <div
-      class="modal fade"
-      id="loginPromptModal"
+      class="modal show"
+      id="exampleModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="loginPromptLabel"
-      aria-hidden="true"
+      aria-labelledby="exampleModalLabel"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="loginPromptLabel">Login required</h5>
+            <h5 class="modal-title" id="exampleModalLabel">CONFIRMATION</h5>
             <button
               type="button"
               class="close"
               data-dismiss="modal"
               aria-label="Close"
+              onclick="showModal()"
             >
-              <span aria-hidden="true">&times;</span>
+              X
             </button>
           </div>
-          <div class="modal-body">
-            You must log in to add a product to your cart. Would you like to log
-            in now?
-          </div>
-          <div class="modal-footer">
+          <div class="modal-body">Are you sure?</div>
+          <div
+            class="modal-footer"
+            style="display: flex; justify-content: space-between"
+          >
             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
+              onclick="showModal()"
             >
-              No
+              Close
             </button>
-            <button type="button" class="btn btn-primary" id="loginNowBtn">
-              Yes, log me in.
-            </button>
+            <button type="button" class="btn btn-primary">Confirm</button>
           </div>
         </div>
       </div>
     </div>
 
     <div
-      class="modal fade"
-      id="checkoutPromptModal"
+      class="modal show"
+      id="exampleModale"
       tabindex="-1"
       role="dialog"
-      aria-hidden="true"
+      aria-labelledby="exampleModalLabel"
     >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Login required</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+      <form id="a">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Product</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                onclick="showEdit()"
+              >
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <div style="display: flex; justify-content: space-between">
+                  <input
+                    type="text"
+                    name="productImg"
+                    id="addimage"
+                    placeholder="Image URL"
+                  />
+                  <p>Add Image link</p>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <input
+                    type="text"
+                    name="productName"
+                    id="productName"
+                    placeholder="Product Name"
+                  />
+                  <p>Product Name</p>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <input
+                    type="text"
+                    name="flavour"
+                    id="flavour"
+                    placeholder="Flavour"
+                  />
+                  <p>Flavour</p>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <input
+                    type="text"
+                    name="price"
+                    id="price"
+                    placeholder="Price"
+                  />
+                  <p>Price</p>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <input
+                    type="text"
+                    name="description"
+                    id="desc"
+                    placeholder="Description"
+                  />
+                  <p>Description</p>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <select name="category" id="category">
+                    <option value="">Select Category</option>
+                    <option value="Proteini">Proteini</option>
+                    <option value="Vitamini">Vitamini</option>
+                    <option value="Creatine">Creatine</option>
+                    <option value="Cokoladice">Cokoladice</option>
+                  </select>
+                  <p>Category</p>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
+                  <input
+                    type="number"
+                    name="quantity"
+                    id="quantity"
+                    placeholder="Quantity"
+                    min="0"
+                    style="width: 60px"
+                  />
+                  <p style="margin: 0 0 0 10px">Quantity</p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                onclick="showEdit()"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
           </div>
-          <div class="modal-body">
-            You must be logged in to access the checkout. Would you like to log
-            in?
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              No
-            </button>
-            <button type="button" class="btn btn-primary" id="checkoutLoginBtn">
-              Yes, log me in.
-            </button>
-          </div>
+        </div>
+      </form>
+    </div>
+<div class="modal fade" id="loginPromptModal" tabindex="-1" aria-labelledby="loginPromptLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginPromptLabel">Login required</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zatvori"></button>
+        </div>
+        <div class="modal-body">
+You must log in to add a product to your cart. Would you like to log in now?        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" id="loginNowBtn">Yes, log me in.</button>
         </div>
       </div>
     </div>
+  </div>
+<div class="modal fade" id="checkoutPromptModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login required</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+You must be logged in to access the checkout. Would you like to log in?      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="checkoutCancelBtn">No</button>
+        <button type="button" class="btn btn-primary" id="checkoutLoginBtn">Yes, log me in.</button>
+      </div>
+    </div>
+  </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70.0-2014.11.23/jquery.blockUI.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-    <script src="https://js.stripe.com/v3/"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-    <script src="js/jquery.spapp.js"></script>
-    <script src="js/utilis.js"></script>
-    <script src="js/custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.20.0/dist/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70.0-2014.11.23/jquery.blockUI.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+
+<script src="js/jquery.spapp.js"></script>
+<script src="js/utilis.js"></script>
+<script src="js/custom.js"></script>
+
+</body>
+</html>
+
   </body>
 </html>
