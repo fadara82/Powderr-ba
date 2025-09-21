@@ -55,3 +55,7 @@ main#spapp > section {
     display: block !important;
   }
 }
+
+.nav-link {
+  cursor: pointer;
+}
