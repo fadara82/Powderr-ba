@@ -146,7 +146,6 @@ public function update_byidO($id) {
             $order['first_name'],          
             $order['product_description'],
             $order['product_names'],       
-            $order['product_ids'],        
             $order['total_price']          
         );
 
