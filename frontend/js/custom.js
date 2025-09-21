@@ -1580,7 +1580,6 @@ $(document).ready(function () {
             },
             success: function () {
               alert("Order updated.");
-              loadOrders();
             },
             error: function (err) {
               console.error("Error updating:", err);
