@@ -814,7 +814,6 @@ function deleteUsers(id) {
     });
   }
 }
-
 function initProfileModals() {
   if (!$.validator.methods.strongPassword) {
     $.validator.addMethod(
