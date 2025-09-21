@@ -158,6 +158,7 @@ function initializeStripeElements() {
                     $("#order").attr("disabled", false);
                     form.reset();
                     cardElement.clear();
+                    localStorage.clear();
                     window.location.hash = "#main";
                   },
                   error: function (xhr) {
