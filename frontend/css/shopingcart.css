@@ -11298,3 +11298,8 @@ a {
   background-color: #eae8e8; 
   border-radius: 15px;
 }
+#shopingcart {
+  min-height: 100vh; /
+  display: flex;
+  align-items: center;
+}
