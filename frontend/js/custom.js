@@ -1407,12 +1407,8 @@ $(document).ready(function () {
           success: function (data) {
             renderUsers(data);
 
-            $("#example").DataTable();
-          },
-          error: function (xhr, status, error) {
-            console.error("Greška pri učitavanju korisnika:", error);
-            if (xhr.status === 401) {
-              alert("You are not authorized. Please log in again.");
+            if (!$.fn.DataTable.isDataTable("#example")) {
+              $("#example").DataTable();
             }
           },
         });
@@ -1422,34 +1418,34 @@ $(document).ready(function () {
         $("#usersdiv").empty();
         users.forEach((user, index) => {
           let row = `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${user.first_name}</td>
-        <td>${user.last_name}</td>
-        <td>${user.email}</td>
-        <td>${user.mobile_number}</td>
-        <td>
-          <!-- Ovdje možeš dodati dugmad za upravljanje, npr. brisanje ili uređivanje -->
-          <button class="btn btn-danger btn-sm deleteUserBtn" data-id="${
-            user.id
-          }">Delete</button>
-        </td>
-      </tr>
-    `;
+          <tr>
+            <td>${index + 1}</td>
+            <td>${user.first_name}</td>
+            <td>${user.last_name}</td>
+            <td>${user.email}</td>
+            <td>${user.mobile_number}</td>
+            <td>
+              <button class="btn btn-danger btn-sm deleteUserBtn" data-id="${
+                user.id
+              }">Delete</button>
+            </td>
+          </tr>`;
           $("#usersdiv").append(row);
         });
       }
 
-      $(document).ready(function () {
-        getUsers();
+      // pozovi odmah
+      getUsers();
 
-        $("#usersdiv").on("click", ".deleteUserBtn", function () {
+      // uvijek prije .on napravi .off
+      $("#usersdiv")
+        .off("click", ".deleteUserBtn")
+        .on("click", ".deleteUserBtn", function () {
           const id = $(this).data("id");
           if (confirm("Are you sure you want to delete the user?")) {
             deleteUser(id);
           }
         });
-      });
 
       function deleteUser(id) {
         $.ajax({
@@ -1464,10 +1460,6 @@ $(document).ready(function () {
           success: function () {
             alert("User successfully deleted.");
             getUsers();
-          },
-          error: function (xhr, status, error) {
-            console.error("Greška pri brisanju korisnika:", error);
-            alert("An error occurred while deleting the user.");
           },
         });
       }
