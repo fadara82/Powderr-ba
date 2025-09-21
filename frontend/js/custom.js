@@ -1010,7 +1010,7 @@ function initProfileModals() {
 
 function goHome() {
   window.location.hash = "#main";
-  window.reload();
+  loadAndRenderProducts();
 }
 
 $(document).ready(function () {
