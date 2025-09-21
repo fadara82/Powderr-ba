@@ -1010,9 +1010,12 @@ function initProfileModals() {
 
 function goHome() {
   window.location.hash = "#main";
+  loadAndRenderProducts();
 
   $(".modal-backdrop").remove();
   $("body").removeClass("modal-open").css("overflow", "auto");
+
+  setupNavbar();
 }
 
 $(document).ready(function () {
@@ -1264,7 +1267,7 @@ $(document).ready(function () {
         </div>
 
       <div class="back-to-shop mt-3">
-  <a href="#main" class="btn-outline-small" onclick="goHome(); return false;">
+  <a href="#main" class="btn-outline-small" onclick="history.back(); return false;">
     <i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop
   </a>
 </div>
