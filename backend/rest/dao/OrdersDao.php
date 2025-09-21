@@ -19,26 +19,32 @@ class OrdersDao extends BaseDao {
 
 public function add_orders($order) {
     $sql = "INSERT INTO orders 
-            (first_name, last_name, email, mobile_number, city, address, total_price, product_description,product_names) 
+            (first_name, last_name, email, mobile_number, city, address, total_price, product_description, product_names) 
             VALUES 
-            (:first_name, :last_name, :email, :mobile_number, :city, :address, :total_price, :product_description,:product_names)";
+            (:first_name, :last_name, :email, :mobile_number, :city, :address, :total_price, :product_description, :product_names)";
 
     try {
         $statement = $this->connection->prepare($sql);
-$statement->bindValue(':first_name', $order['firstName']);
-$statement->bindValue(':last_name', $order['lastName']);
-$statement->bindValue(':email', $order['email']);
-$statement->bindValue(':mobile_number', $order['mobilenumber']);
-$statement->bindValue(':city', $order['city']);
-$statement->bindValue(':address', $order['address']);
-$statement->bindValue(':total_price', $order['total_price']);
-$statement->bindValue(':product_description', $order['product_description']);
-$statement->bindValue(':product_names', $order['product_names']); 
-
+        $statement->bindValue(':first_name', $order['firstName']);
+        $statement->bindValue(':last_name', $order['lastName']);
+        $statement->bindValue(':email', $order['email']);
+        $statement->bindValue(':mobile_number', $order['mobilenumber']);
+        $statement->bindValue(':city', $order['city']);
+        $statement->bindValue(':address', $order['address']);
+        $statement->bindValue(':total_price', $order['total_price']);
+        $statement->bindValue(':product_description', $order['product_description']);
+        $statement->bindValue(':product_names', $order['product_names']);  
 
         $statement->execute();
 
-        $this->sendConfirmationEmail($order['email'], $order['firstName'], $order['product_description'], $order['total_price']);
+        // Poziv email funkcije
+        $this->sendConfirmationEmail(
+            $order['email'],
+            $order['firstName'],
+            $order['product_description'],
+            $order['product_names'],
+            $order['total_price']
+        );
 
         return $order;  
     } catch (PDOException $e) {
@@ -47,7 +53,7 @@ $statement->bindValue(':product_names', $order['product_names']);
     }
 }
 
-private function sendConfirmationEmail($toEmail, $toName, $productDescription, $totalPrice) {
+private function sendConfirmationEmail($toEmail, $toName, $productDescription, $productNames, $totalPrice) {
     $mail = new PHPMailer(true);
 
     try {
@@ -55,7 +61,7 @@ private function sendConfirmationEmail($toEmail, $toName, $productDescription, $
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'powderbashop@gmail.com'; 
-        $mail->Password   = 'lboc shsuetwzyfvl';   
+        $mail->Password   = 'lboc shsuetwzyfvl';   // app password
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
 
@@ -69,7 +75,8 @@ private function sendConfirmationEmail($toEmail, $toName, $productDescription, $
             Dear $toName,<br><br>
             Your order has been successfully placed! 🎉<br><br>
             <strong>Order details:</strong><br>
-            Product(s): $productDescription <br>
+            Product name(s): $productNames <br>
+            Description(s): $productDescription <br>
             Total price: $totalPrice KM <br><br>
             Your package should arrive within <strong>48-72 hours</strong>.<br><br>
             Thank you for shopping with us!<br>
