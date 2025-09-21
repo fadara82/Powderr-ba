@@ -1011,6 +1011,11 @@ function initProfileModals() {
 function goHome() {
   window.location.hash = "#main";
   loadAndRenderProducts();
+
+  $(".modal-backdrop").remove();
+  $("body").removeClass("modal-open").css("overflow", "auto");
+
+  setupNavbar();
 }
 
 $(document).ready(function () {
