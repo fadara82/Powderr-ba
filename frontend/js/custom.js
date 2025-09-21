@@ -814,8 +814,8 @@ function deleteUsers(id) {
     });
   }
 }
+
 function initProfileModals() {
-  // === Add custom validation methods (ako već nisu definisane) ===
   if (!$.validator.methods.strongPassword) {
     $.validator.addMethod(
       "strongPassword",
@@ -842,7 +842,47 @@ function initProfileModals() {
     );
   }
 
-  // === Edit Data validation ===
+  $("#editDataBtn")
+    .off("click")
+    .on("click", () => {
+      const token = Utilis.get_token();
+      if (!token) {
+        alert("You are not logged. Please login");
+        return;
+      }
+
+      $.ajax({
+        url: API_BASE_URL + "/user/editme",
+        method: "GET",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
+        },
+        success: function (res) {
+          if (res.user) {
+            $("#fname").val(res.user.first_name);
+            $("#lname").val(res.user.last_name);
+            $("#email").val(res.user.email);
+            $("#mobile").val(res.user.mobile_number);
+          }
+          $("#editDataModal").show().addClass("show");
+        },
+        error: function () {
+          alert("Error fetching user data");
+        },
+      });
+    });
+
+  $("#changePasswordBtn")
+    .off("click")
+    .on("click", () => {
+      const token = Utilis.get_token();
+      if (!token) {
+        alert("You are not logged. Please login");
+        return;
+      }
+      $("#changePasswordModal").show().addClass("show");
+    });
+
   $("#editDataForm").validate({
     rules: {
       fname: { required: true, minlength: 2 },
@@ -909,7 +949,6 @@ function initProfileModals() {
     },
   });
 
-  // === Change Password validation ===
   $("#changePasswordForm").validate({
     rules: {
       currentPassword: { required: true },
@@ -965,7 +1004,6 @@ function initProfileModals() {
     },
   });
 
-  // === Close buttons ===
   $(document)
     .off("click", ".closeModal")
     .on("click", ".closeModal", function () {
