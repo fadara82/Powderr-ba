@@ -75,7 +75,7 @@ class UsersDao extends BaseDao {
             $statement = $this->connection->prepare($sql);
             $statement->bindParam(':id', $id, PDO::PARAM_INT);
             $statement->execute();
-            return $statement->fetchColumn(); // vraća 'admin', 'user', itd.
+            return $statement->fetchColumn(); 
         } catch (PDOException $e) {
             error_log('Error getting user role by ID: ' . $e->getMessage());
             throw new Exception('Failed to get user role by ID');

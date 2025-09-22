@@ -37,7 +37,6 @@ public function add_orders($order) {
 
         $statement->execute();
 
-        // Poziv email funkcije
         $this->sendConfirmationEmail(
             $order['email'],
             $order['firstName'],

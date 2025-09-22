@@ -16,7 +16,6 @@ class UsersService {
     public function add_users($user){
         $exists = $this->users_dao->user_exists($user['email'], $user['mobilenumber']);
           if ($exists) {
-        // vraćamo string umjesto izuzetka – jednostavnije za tvoju logiku
         return "EXISTS";
     }
 
