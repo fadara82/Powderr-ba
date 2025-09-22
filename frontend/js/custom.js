@@ -326,7 +326,6 @@ function getId(id) {
 }
 
 function setupNavbar() {
-  // sakrij sve na početku
   $("#guestNav, #homeNav, #adminP").hide();
 
   const hash = window.location.hash;
