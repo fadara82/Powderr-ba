@@ -1033,9 +1033,7 @@ function initProfileModals() {
         error: function (xhr) {
           alert(xhr.responseJSON?.error || "Error changing password");
         },
-        complete: function () {
-          $.unblockUI();
-        },
+        complete: function () {},
       });
     },
   });
